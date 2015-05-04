@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>FRANGO</h1>
+        <h1>FRANGO1</h1>
     </body>
 </html>
