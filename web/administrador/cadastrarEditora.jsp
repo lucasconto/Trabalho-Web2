@@ -45,7 +45,7 @@
                         </div>
                     </fieldset>
                     <div class="form-group">
-                        <label for="" class="col-sm-2 control-label">Descrição</label>
+                        <label for="" class="col-sm-2 control-label">Nome</label>
                         <div class="col-sm-6">
                             <input type="text" class="form-control" id="" placeholder="" required />
                         </div>

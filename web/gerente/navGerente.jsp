@@ -40,7 +40,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#"><img src="images/logo.png"/></a>
+                <a class="navbar-brand" href="#"><img src="../images/logo.png"/></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -58,7 +58,7 @@
                 <ul class="nav pull-right navbar-nav">
                     <li class="dropdown" id="menuCliente">
                       <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navCliente">
-                          <span class="glyphicon glyphicon-picture"></span> Razer Montano<strong class="caret"></strong>
+                          <span class="glyphicon glyphicon-picture"></span> Razer Gerente<strong class="caret"></strong>
                       
                       </a>
                       
