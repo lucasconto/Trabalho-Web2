@@ -1,0 +1,1 @@
+1. Somente clientes maiores de 13 anos podem realizar compras.
