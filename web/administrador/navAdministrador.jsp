@@ -13,10 +13,10 @@
     <title>Magazine Store</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="../css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/shop-homepage.css" rel="stylesheet">
+    <link href="../css/shop-homepage.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -40,11 +40,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#"><img src="images/logo.png"/></a>
+                <a class="navbar-brand" href="#"><img src="../images/logo.png"/></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
+<!--                <ul class="nav navbar-nav">
                     <li>
                         <a href="#">Home</a>
                     </li>
@@ -54,11 +54,11 @@
                     <li>
                         <a href="#">Contato</a>
                     </li>
-                </ul>
+                </ul>-->
                 <ul class="nav pull-right navbar-nav">
                     <li class="dropdown" id="menuCliente">
                       <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navCliente">
-                          <span class="glyphicon glyphicon-picture"></span> Razer Montano<strong class="caret"></strong>
+                          <span class="glyphicon glyphicon-picture"></span> Razer Administrador<strong class="caret"></strong>
                       
                       </a>
                       
@@ -117,10 +117,10 @@
 
 
     <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
 
 </body>
 

@@ -30,14 +30,96 @@
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
         <script>
-            $(function() {
-              $( "#datepicker" ).datepicker({ 
-                minDate: "-100Y",
-                maxDate: "-13Y",
+            function formatar(src, mask){
+            var i = src.value.length;
+            var saida = mask.substring(0,1);
+            var texto = mask.substring(i)
+          if (texto.substring(0,1) != saida)
+            {
+              src.value += texto.substring(0,1);
+            }
+          }
+            
+           $(function () {
+            
+            var start = new Date();
+            start.setFullYear(start.getFullYear() - 100);
+            var end = new Date();
+            end.setFullYear(end.getFullYear() - 13);
+
+    $('#datepicker').datepicker({
+		dateFormat: 'dd/mm/yy',
+		dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+		dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+		dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+		monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+		monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+		nextText: 'Próximo',
+		prevText: 'Anterior',
                 changeMonth: true,
-                changeYear: true
-                });
-            });
+                changeYear: true,
+                minDate: start,
+                maxDate: end,
+                yearRange: -100 + ':' + end.getFullYear(),
+    });
+           });
+           
+           function valida(form) 
+	{
+
+		if (form.sexo.value=="Selecione") 
+		{
+			alert("Escolha um sexo.");
+			form.nome.focus();
+			return false;
+		}
+		
+    }
+	function verificarCPF(c)
+	{
+    		var i;
+			c = c.replace(".","");
+			c = c.replace(".","");
+			c = c.replace("-","");
+    		s = c;
+  		  var c = s.substr(0,9);
+   		  var dv = s.substr(9,2);
+  		  var d1 = 0;
+    		  var v = false;
+ 
+   		  for (i = 0; i < 9; i++)
+		  {
+     			   d1 += c.charAt(i)*(10-i);
+   		  }
+  		  if (d1 == 0)
+		  {
+       			 alert("CPF Inválido")
+        		 v = true;
+         		 return false;
+ 	          }
+    		d1 = 11 - (d1 % 11);
+    		if (d1 > 9) d1 = 0;
+    		if (dv.charAt(0) != d1)
+		{
+       			 alert("CPF Inválido")
+       			 v = true;
+        		 return false;
+   	        }
+ 
+   		 d1 *= 2;
+  		  for (i = 0; i < 9; i++)
+		  {
+       			 d1 += c.charAt(i)*(11-i);
+  		  }
+   		 d1 = 11 - (d1 % 11);
+    		 if (d1 > 9) d1 = 0;
+   		 if (dv.charAt(1) != d1)
+		 {
+       			 alert("CPF Inválido")
+        		 v = true;
+       			 return false;
+   		 }
+	}
         </script>
     </head>
     <body>
@@ -47,51 +129,51 @@
         <div class="container">
             <div class=" col-sm-offset-3 col-sm-6">
         <h1>Dados Cadastrais</h1>
-        <form class="form-horizontal">
+        <form class="form-horizontal" id="form" onsubmit="return valida(this);">
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Nome Completo</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="" placeholder="">
+                    <input type="text" class="form-control" id="" placeholder="" required>
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Sexo</label>
                 <div class="col-sm-8">
-                    <select class="form-control">
-                        <option>Selecione</option>
-                        <option>Masculino</option>
-                        <option>Feminino</option>
+                    <select name="sexo" id="sexo" class="form-control">
+                        <option >Selecione</option>
+                        <option value="m" required>Masculino</option>
+                        <option value="f" required>Feminino</option>
                     </select>
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">CPF</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="" placeholder="">
+                    <input type="text" class="form-control" maxlength="14" id="cpf" placeholder="000.000.000-00" OnKeyPress="formatar(this,'###.###.###-##')"  required/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Data de Nascimento</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="datepicker" placeholder="">
+                    <input type="text" class="form-control" maxlength="10" id="datepicker" placeholder="dd/mm/aaa" OnKeyPress="formatar(this,'##/##/####')" required/>
                 </div>
             </div>      
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Telefone</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="" placeholder=""/>
+                    <input type="text" class="form-control" maxlength="14" id="" placeholder="DDD-0000-00000" OnKeyPress="formatar(this,'###-####-#####')" required/>
                 </div>
             </div>   
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Senha</label>
                 <div class="col-sm-8">
-                    <input type="password" class="form-control" id="" placeholder=""/>
+                    <input type="password" class="form-control" id="" placeholder="" required/>
                 </div>
             </div> 
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Confirme sua Senha</label>
                 <div class="col-sm-8">
-                    <input type="password" class="form-control" id="" placeholder="">
+                    <input type="password" class="form-control" id="" placeholder="" required/>
                 </div>
             </div>       
             
@@ -99,43 +181,43 @@
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">CEP</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="" placeholder="">
+                    <input type="text" class="form-control" maxlength="9" id="" placeholder="00000-000" OnKeyPress="formatar(this,'#####-###')" required />
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Endereço</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="" placeholder="">
+                    <input type="text" class="form-control" id="" placeholder="" required />
                 </div>
             </div>            
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Número</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="" placeholder="">
+                    <input type="text" class="form-control" id="" placeholder="" required />
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Complemento</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="" placeholder="">
+                    <input type="text" class="form-control" id="" placeholder="" required />
                 </div>
             </div>            
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Bairro</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="" placeholder="">
+                    <input type="text" class="form-control" id="" placeholder="" required />
                 </div>
             </div>  
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Cidade</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="" placeholder="">
+                    <input type="text" class="form-control" id="" placeholder="" required />
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Estado</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="" placeholder="">
+                    <input type="text" class="form-control" id="" placeholder="" required />
                 </div>
             </div> 
             <div class="form-group">

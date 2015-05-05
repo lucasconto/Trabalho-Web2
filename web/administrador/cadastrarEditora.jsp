@@ -10,7 +10,7 @@
         <title>Cadastro de Categoria</title>
 
         <!-- Bootstrap -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -20,49 +20,64 @@
         <![endif]-->
     </head>
     <body>
+        <!--Inclui cabeçalho-->
+        <jsp:include page="navAdministrador.jsp"/>
         <div class="container">
-            <div class=" col-sm-offset-3 col-sm-6">
-                <h1>Cadastro de Categoria</h1>
+           <div class="row">
+            <div class="col-md-3">
+                <p class="lead">Magazine Store</p>
+                <div class="list-group">
+                    <a href="buscarCliente.jsp" class="list-group-item">Buscar Cliente</a>
+                    <a href="cadastrarProduto.jsp" class="list-group-item">Cadastrar Produto</a>
+                    <a href="cadastrarCategoria.jsp" class="list-group-item">Cadastrar Categoria</a>
+                    <a href="cadastrarEditora.jsp" class="list-group-item">Cadastrar Editora</a>
+                </div>
+            </div>
+            <div class="col-md-9 ">
+                <h1>Cadastro de Editora</h1>
                 <form class="form-horizontal">
                     <fieldset disabled>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="disabledTextInput">Código</label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-2 control-label" for="disabledTextInput">Código</label>
+                            <div class="col-sm-6">
                                 <input type="text" id="disabledTextInput" class="form-control" placeholder="1234">
                             </div>
                         </div>
                     </fieldset>
                     <div class="form-group">
-                        <label for="" class="col-sm-4 control-label">Descrição</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="" placeholder="">
+                        <label for="" class="col-sm-2 control-label">Descrição</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="" placeholder="" required />
                         </div>
                     </div>   
                     <div class="form-group">
-                        <label for="" class="col-sm-4 control-label">Ativo</label>  
-                        <div class="radio col-sm-8 ">
+                        <label for="" class="col-sm-2 control-label">Ativo</label>  
+                        <div class="radio col-sm-6 ">
                             <label class="radio-inline">
                                 <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
                                 Ativo
                             </label>
                                                         <label class="radio-inline">
-                                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1">
+                                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" />
                                 Inativo
                             </label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-sm-offset-4 col-sm-8">
+                        <div class="col-sm-offset-2 col-sm-6">
                             <button type="submit" class="btn btn-success btn-lg btn-block ">Cadastrar</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-
+        </div>
+        <!--Inclui Rodapé-->
+        <jsp:include page="../comum/rodape.jsp"/>
+        
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="js/jquery.min.js"></script>
+        <script src="../js/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="js/bootstrap.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
     </body>
 </html>

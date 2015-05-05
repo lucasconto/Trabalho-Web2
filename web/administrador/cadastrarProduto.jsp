@@ -10,7 +10,7 @@
         <title>Cadastro de Produto</title>
 
         <!-- Bootstrap -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -20,8 +20,20 @@
         <![endif]-->
     </head>
     <body>
+        <!--Inclui cabeçalho-->
+        <jsp:include page="navAdministrador.jsp"/>
         <div class="container">
-            <div class=" col-sm-offset-3 col-sm-6">
+            <div class="row">
+                <div class="col-md-3">
+                <p class="lead">Magazine Store</p>
+                <div class="list-group">
+                    <a href="buscarCliente.jsp" class="list-group-item">Buscar Cliente</a>
+                    <a href="cadastrarProduto.jsp" class="list-group-item">Cadastrar Produto</a>
+                    <a href="cadastrarCategoria.jsp" class="list-group-item">Cadastrar Categoria</a>
+                    <a href="cadastrarEditora.jsp" class="list-group-item">Cadastrar Editora</a>
+                </div>
+            </div>
+            <div class=" col-sm-6">
                 <h1>Cadastro de Produto</h1>
                 <form class="form-horizontal">
                     <div class="form-group">
@@ -80,10 +92,15 @@
                 </form>
             </div>
         </div>
+        </div>
+        
+        
+        <!--Inclui Rodapé-->
+        <jsp:include page="../comum/rodape.jsp"/>
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="js/jquery.min.js"></script>
+        <script src="../js/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="js/bootstrap.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
     </body>
 </html>
