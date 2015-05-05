@@ -42,7 +42,6 @@
                         <span class="input-group-btn">
                             <button class="btn btn-default " type="button">
                                 <span class="glyphicon glyphicon-search"></span>
-                                
                             </button>
                         </span>
                     </div> <br />
@@ -100,7 +99,7 @@
                             <div class="thumbnail">
                                 <img src="http://placehold.it/320x150" alt="">
                                 <div class="caption">
-                                    <h4><a href="#">Monica Edição 1000</a>
+                                    <h4><a href="verProduto.jsp">Monica Edição 1000</a>
                                     </h4>
                                     <p>
                                         Gênero: Comédia<br/>
@@ -109,7 +108,7 @@
                                         Autor: Maurício de Souza<br/>
                                     <h4 class="pull-left">R$24.99</h4>
                                     <br/>
-                                    <a href="#" class="pull-right">
+                                    <a href="carrinhoCompras.jsp " class="pull-right">
                                         Adicionar ao Carrinho
                                         <span class="glyphicon glyphicon-shopping-cart"></span></a>
                                     </p>

@@ -10,7 +10,7 @@
         <title>Produtos</title>
 
         <!-- Bootstrap -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -20,9 +20,8 @@
         <![endif]-->
     </head>
     <body>
-
-
-        <div class="container">
+        <jsp:include page="navAnonimo.jsp"/>
+        <div class="container" style="padding-top:100px;">
             <div class="row">
                 <div class="col-md-3">
                     <div class="list-group">
@@ -55,9 +54,9 @@
                                 <img src="http://placehold.it/320x150" alt="">
                                 <div class="caption">
                                     <h4 class="pull-right text-success">R$ 24.99</h4>
-                                    <h4><a href="#">First Product</a>
+                                    <h4><a href="verProduto.jsp">First Product</a>
                                     </h4>
-                                    <p>See more snippets like this online store item at Bpp </a>.</p>
+                                    <p>See more snippets like this online store item at Bpp .</p>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +67,7 @@
                                     <h4 class="pull-right text-success">R$ 24.99</h4>
                                     <h4><a href="#">First Product</a>
                                     </h4>
-                                    <p>See more snippets like this online store item at Bpp </a>.</p>
+                                    <p>See more snippets like this online store item at Bpp .</p>
                                 </div>
                             </div>
                         </div>
@@ -79,7 +78,7 @@
                                     <h4 class="pull-right text-success">R$ 24.99</h4>
                                     <h4><a href="#">First Product</a>
                                     </h4>
-                                    <p>See more snippets like this online store item at Bpp </a>.</p>
+                                    <p>See more snippets like this online store item at Bpp .</p>
                                 </div>
                             </div>
                         </div>
@@ -90,7 +89,7 @@
                                     <h4 class="pull-right text-success">R$ 24.99</h4>
                                     <h4><a href="#">First Product</a>
                                     </h4>
-                                    <p>See more snippets like this online store item at Bpp </a>.</p>
+                                    <p>See more snippets like this online store item at Bpp .</p>
                                 </div>
                             </div>
                         </div>
@@ -101,7 +100,7 @@
                                     <h4 class="pull-right text-success">R$ 24.99</h4>
                                     <h4><a href="#">First Product</a>
                                     </h4>
-                                    <p>See more snippets like this online store item at Bpp </a>.</p>
+                                    <p>See more snippets like this online store item at Bpp .</p>
                                 </div>
                             </div>
                         </div>
@@ -111,9 +110,10 @@
 
                 </div>
             </div>
+            <jsp:include page="rodape.jsp"/>
             <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-            <script src="js/jquery.min.js"></script>
+            <script src="../js/jquery.min.js"></script>
             <!-- Include all compiled plugins (below), or include individual files as needed -->
-            <script src="js/bootstrap.min.js"></script>
+            <script src="../js/bootstrap.min.js"></script>
     </body>
 </html>

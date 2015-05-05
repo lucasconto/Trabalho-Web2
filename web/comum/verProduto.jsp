@@ -10,7 +10,7 @@
         <title>Produtos</title>
 
         <!-- Bootstrap -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -20,13 +20,13 @@
         <![endif]-->
     </head>
     <body>
-
-
+    <jsp:include page="navAnonimo.jsp"/>
+    <br /><br /><br />
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
                     <div class="list-group">
-                        <a href="#" class="list-group-item">Ação</a>
+                        <a href="listarProdutos.jsp" class="list-group-item">Ação</a>
                         <a href="#" class="list-group-item">Aventura</a>
                         <a href="#" class="list-group-item">Infantil</a>
                     </div>
@@ -60,16 +60,17 @@
                         </div>
                         
                         <br />
+                        <a href="carrinhoCompras.jsp">
                         <button class="btn btn-success btn-lg">
                             <span class="glyphicon glyphicon-shopping-cart"></span> Adicionar ao carrinho
-                        </button>
+                        </button></a>
                     </div>
                 </div>
             </div>
         </div>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="js/jquery.min.js"></script>
+        <script src="../js/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="js/bootstrap.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
     </body>
 </html>

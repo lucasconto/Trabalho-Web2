@@ -32,59 +32,6 @@
         <jsp:include page="navAnonimo.jsp"/>
 
         <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#"><img src="images/logo.png"/></a>
-                </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <a href="#">Home</a>
-                        </li>
-                        <li>
-                            <a href="#">Serviços</a>
-                        </li>
-                        <li>
-                            <a href="#">Contato</a>
-                        </li>
-                    </ul>
-                    <ul class="nav pull-right navbar-nav">
-                        <li class="dropdown" id="menuLogin">
-                            <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">Login<strong class="caret"></strong></a>
-
-                            <div class="dropdown-menu pull-left" style="padding:17px;">
-                                <form class="form" id="formLogin">
-                                    <div style="padding: 5px">
-                                        <input name="email" id="username" type="text" placeholder="Username">
-                                    </div>
-                                    <div style="padding: 5px">
-                                        <input name="password" id="password" type="password" placeholder="Password"><br>
-                                    </div>
-                                    <div style="padding: 5px">
-                                        <button type="button" id="btnLogin" class="btn" >Login</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="#"> Cadastrar </a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.navbar-collapse -->
-            </div>
-            <!-- /.container -->
-        </nav>
-
         <!-- Page Content -->
         <div class="container">
 

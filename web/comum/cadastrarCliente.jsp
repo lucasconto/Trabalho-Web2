@@ -163,7 +163,13 @@
                 <div class="col-sm-8">
                     <input type="text" class="form-control" maxlength="14" id="" placeholder="DDD-0000-00000" OnKeyPress="formatar(this,'###-####-#####')" required/>
                 </div>
-            </div>   
+            </div>  
+            <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Email</label>
+                <div class="col-sm-8">
+                    <input type="email" class="form-control"  id="" placeholder="seuemail@dominio.com"  required/>
+                </div>
+            </div>             
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Senha</label>
                 <div class="col-sm-8">

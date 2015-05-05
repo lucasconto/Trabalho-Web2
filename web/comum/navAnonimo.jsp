@@ -10,7 +10,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><img style="width: 260px" src="../images/logo.png"/></a>
+            <a class="navbar-brand" href="index.jsp"><img style="width: 260px" src="../images/logo.png"/></a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -39,12 +39,12 @@
                     </div>
                 </li>
                 <li>
-                    <a href="#"> Cadastrar </a>
+                    <a href="cadastrarCliente.jsp"> Cadastrar </a>
                 </li>
                 <li class="dropdown" id="menuLogin">
                     <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">
                         <span class="glyphicon glyphicon-shopping-cart"></span>
-                        Carrinho [0 Itens]<strong class="caret"></strong>
+                        Carrinho [3 Itens]<strong class="caret"></strong>
 
                     </a>
 
@@ -56,17 +56,17 @@
                                 <th>Total</th>
                             </tr>
                             <tr>
-                                <td><span class="glyphicon glyphicon-picture"> Turma da Monica Ed.50</span></td>
+                                <td><span class="glyphicon glyphicon-picture"></span> Turma da Monica Ed.50</td>
                                 <td>50</td>
                                 <td>R$ 109,90</td>
                             </tr>
                             <tr>
-                                <td><span class="glyphicon glyphicon-picture"> Wolverine Aniversário</span></td>
+                                <td><span class="glyphicon glyphicon-picture"></span> Wolverine Aniversário</td>
                                 <td>1</td>
                                 <td>R$ 85,60</td>
                             </tr>
                             <tr>
-                                <td><span class="glyphicon glyphicon-picture"> Casa e Construção maio/2015</span></td>
+                                <td><span class="glyphicon glyphicon-picture"></span> Casa e Construção maio/2015</td>
                                 <td>2</td>
                                 <td>R$ 10,99</td>
                             </tr>
