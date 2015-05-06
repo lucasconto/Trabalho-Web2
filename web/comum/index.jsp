@@ -37,14 +37,7 @@
 
                 <div class="col-md-3">
                     
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Pesquisar por...">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default " type="button">
-                                <span class="glyphicon glyphicon-search"></span>
-                            </button>
-                        </span>
-                    </div> <br />
+                    
                     <div class="list-group">
 
                         <a href="#" class="list-group-item">Revistas</a>
@@ -94,6 +87,29 @@
                     
                                             </div>
                                         </div> --> 
+                    <div class="row">
+                        <div class="input-group">
+                            <form method="Post" action="">
+                                <div class="col-md-6">
+                                <select name="sexo" id="sexo" class="form-control ">
+                                    <option >Tudo</option>
+                                    <option value="t" required>Título</option>
+                                    <option value="g" required>Gênero</option>
+                                    <option value="a" required>Autor</option>
+                                </select>
+                                <input type="text" class="form-control" placeholder="Pesquisar por...">
+                                </div>
+                                <div class="col-md-6">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default " type="text">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                </span>
+                                </div>
+                            </form>
+                        </div>
+                        <br/>
+                    </div>
                     <div class="row">
                         <div class="col-sm-4 col-lg-4 col-md-4">
                             <div class="thumbnail">
