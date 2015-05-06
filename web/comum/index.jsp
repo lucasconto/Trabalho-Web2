@@ -36,8 +36,8 @@
             <div class="row">
 
                 <div class="col-md-3">
-                    
-                    
+
+
                     <div class="list-group">
 
                         <a href="#" class="list-group-item">Revistas</a>
@@ -77,30 +77,25 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row col-md-offset-1">
-                        <div class="form-group">
-                            <form method="Post" action="" class="form-inline" >
-                                <div class="input-group pull-left">
-                                    <div class="input-group-btn">
-                                        <input type="text" class="form-control" placeholder="Pesquisar por..." />
-                                        <select name="sexo" id="sexo" class="form-control " >
-                                            <option >Tudo</option>
-                                            <option value="t" required>Título</option>
-                                            <option value="g" required>Gênero</option>
-                                            <option value="a" required>Autor</option>
-                                        </select>
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default " type="text">
-                                                <span class="glyphicon glyphicon-search"></span>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                    <div class="row col-md-12">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Pesquisar por..." />
+                                <select name="sexo" id="sexo" class="form-control " >
+                                    <option >Tudo</option>
+                                    <option value="t" required>Título</option>
+                                    <option value="g" required>Gênero</option>
+                                    <option value="a" required>Autor</option>
+                                </select>
+                                <button class="btn btn-default " type="text">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </div>
+                        </form>
+
                     </div>
-                        <br/>
-                
+                    <br/>
+
                     <div class="row">
                         <div class="col-sm-4 col-lg-4 col-md-4">
                             <div class="thumbnail">
