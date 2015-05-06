@@ -77,23 +77,25 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row col-md-12">
-                        <form class="form-inline">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Pesquisar por..." />
-                                <select name="sexo" id="sexo" class="form-control " >
-                                    <option >Tudo</option>
-                                    <option value="t" required>Título</option>
-                                    <option value="g" required>Gênero</option>
-                                    <option value="a" required>Autor</option>
-                                </select>
-                                <button class="btn btn-default " type="text">
-                                    <span class="glyphicon glyphicon-search"></span>
-                                </button>
-                            </div>
-                        </form>
-
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" placeholder="Pesquisar por..." />
+                        </div>
+                        <div class="col-sm-4">
+                            <select name="sexo" id="sexo" class="form-control " >
+                                <option >Tudo</option>
+                                <option value="t" required>Título</option>
+                                <option value="g" required>Gênero</option>
+                                <option value="a" required>Autor</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <button class="btn btn-default form-control" type="text">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </div>
                     </div>
+
                     <br/>
 
                     <div class="row">
