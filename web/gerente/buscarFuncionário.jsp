@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="col-md-9 ">
-                <h1>Buscar Cliente</h1>
+                <h1>Buscar Funcionário</h1>
                 <form action="listarCliente.jsp" class="form-horizontal">
                         <div class="form-group">
                         <div class="row">
@@ -61,7 +61,7 @@
         </div>
         </div>
         <!--Inclui Rodapé-->
-        <jsp:include page="rodape.jsp"/>
+        <jsp:include page="../comum/rodape.jsp"/>
         
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="../js/jquery.min.js"></script>

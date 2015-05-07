@@ -73,13 +73,19 @@
                 </div>
             </div>
             <div class="col-md-9 ">   
-            <h1>Clientes</h1>
-            <div id="accordion" class="panel-group">
-               <div class="panel panel-default">
-                   <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Joaninha</a>
-                            <div class="pull-right">
+            <h1>Funcionários</h1>
+                           <table class="table table-striped table-bordered">
+                               <tr>
+                                   <th>Nome</th>
+                                   <th>CPF</th>
+                                   <th>Perfil</th>
+                                   <th>Ação</th>
+                               </tr>
+                               <tr>
+                                   <td>Razer</td>
+                                   <td>852.258.963-78</td>
+                                   <td>Gerente</td>
+                                   <td><div class="text-center">
                                 <a href="#">
                                 <span class="glyphicon glyphicon-eye-open" style="font-size: 20px"></span>
                                 </a>
@@ -89,50 +95,13 @@
                                 <a href="#">
                                  <span class="glyphicon glyphicon-trash" style="font-size: 20px"></span>
                                 </a>
-                            </div>
-                       </h4>
-                   </div>
-                   <div id="collapseOne" class="panel-collapse collapse">
-                       <div class="panel-body">
-                           <table class="table table-striped table-bordered">
-                               <tr>
-                                   <th>Número da Compra #</th>
-                                   <th>Data</th>
-                                   <th>Valor Total</th>
-                               </tr>
-                               <tr>
-                                   <td>183</td>
-                                   <td>12/11/2015</td>
-                                   <td>R$ 204,40</td>
+                            </div></td>
                                 </tr>
                                                               <tr>
-                                   <td>183</td>
-                                   <td>12/11/2015</td>
-                                   <td>R$ 204,40</td>
-                                </tr>
-                                                              <tr>
-                                   <td>183</td>
-                                   <td>12/11/2015</td>
-                                   <td>R$ 204,40</td>
-                                </tr>
-                                <tr>
-                                   <td>183</td>
-                                   <td>12/11/2015</td>
-                                   <td>R$ 204,40</td>
-                               </tr>
-                               
-                       <a style="padding-left: 30px;" href="#">
-                           <strong> Visualizar Ações</strong>
-                       </a>
-                           </table>
-                       </div>
-                   </div>
-               </div>
-               <div class="panel panel-default">
-                   <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Evandro João</a>
-                            <div class="pull-right">
+                                   <td>Joao</td>
+                                   <td>123.456.789-00</td>
+                                   <td>Administrador</td>
+                                   <td><div class="text-center">
                                 <a href="#">
                                 <span class="glyphicon glyphicon-eye-open" style="font-size: 20px"></span>
                                 </a>
@@ -142,47 +111,42 @@
                                 <a href="#">
                                  <span class="glyphicon glyphicon-trash" style="font-size: 20px"></span>
                                 </a>
-                            </div>
-                       </h4>
-                   </div>
-                   <div id="collapseTwo" class="panel-collapse collapse">
-                       <div class="panel-body">
-                           <table class="table table-striped table-bordered">
-                               <tr>
-                                   <th>Número da Compra #</th>
-                                   <th>Data</th>
-                                   <th>Valor Total</th>
-                               </tr>
-                               <tr>
-                                   <td>183</td>
-                                   <td>12/11/2015</td>
-                                   <td>R$ 204,40</td>
+                            </div></td>
                                 </tr>
                                                               <tr>
-                                   <td>183</td>
-                                   <td>12/11/2015</td>
-                                   <td>R$ 204,40</td>
-                                </tr>
-                                                              <tr>
-                                   <td>183</td>
-                                   <td>12/11/2015</td>
-                                   <td>R$ 204,40</td>
+                                   <td>Bruno</td>
+                                   <td>789.987.852-88</td>
+                                   <td>Gerente</td>
+                                   <td><div class="text-center">
+                                <a href="#">
+                                <span class="glyphicon glyphicon-eye-open" style="font-size: 20px"></span>
+                                </a>
+                                <a href="#">
+                                 <span class="glyphicon glyphicon-pencil" style="font-size: 20px"></span>
+                                </a>
+                                <a href="#">
+                                 <span class="glyphicon glyphicon-trash" style="font-size: 20px"></span>
+                                </a>
+                            </div></td>
                                 </tr>
                                 <tr>
-                                   <td>183</td>
-                                   <td>12/11/2015</td>
-                                   <td>R$ 204,40</td>
+                                   <td>Yuri</td>
+                                   <td>987.654.321-23</td>
+                                   <td>Gerente</td>
+                                   <td><div class="text-center">
+                                <a href="#" title="Visualizar">
+                                <span class="glyphicon glyphicon-eye-open"  style="font-size: 20px"></span>
+                                </a>
+                                <a href="#">
+                                 <span class="glyphicon glyphicon-pencil" style="font-size: 20px"></span>
+                                </a>
+                                <a href="#">
+                                 <span class="glyphicon glyphicon-trash" style="font-size: 20px"></span>
+                                </a>
+                            </div></td>
                                </tr>
                                
-                       <a style="padding-left: 30px;" href="#">
-                           <strong> Visualizar Ações</strong>
-                       </a>
                            </table>
-                       </div>
-                   </div>
-               </div>
-                
-               </div>
            </div>
         </div>
         </div>

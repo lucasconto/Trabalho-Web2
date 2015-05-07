@@ -1,1 +1,2 @@
 1. Somente clientes maiores de 13 anos podem realizar compras.
+2. Instanciação do primeiro gerente por insert diretamente no banco de dados.

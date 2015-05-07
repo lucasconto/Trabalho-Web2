@@ -135,7 +135,7 @@
         </div>
         </div>
         <!--Inclui Rodapé-->
-        <jsp:include page="rodape.jsp"/>
+        <jsp:include page="../comum/rodape.jsp"/>
         
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="../js/jquery.min.js"></script>
