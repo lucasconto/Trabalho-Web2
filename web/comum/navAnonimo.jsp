@@ -25,7 +25,7 @@
                     <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">Login<strong class="caret"></strong></a>
 
                     <div class="dropdown-menu pull-left" style="padding:17px; min-width: 0px;">
-                        <form class="form" id="formLogin">
+                        <form class="form" id="formLogin" action="../cliente/index.jsp">
                             <div style="padding: 5px">
                                 <input name="email" id="username" type="text" placeholder="Username">
                             </div>
@@ -33,7 +33,7 @@
                                 <input name="password" id="password" type="password" placeholder="Password"><br>
                             </div>
                             <div style="padding: 5px">
-                                <button type="button" id="btnLogin" class="btn" >Login</button>
+                                <button type="submit" id="btnLogin" class="btn" >Login</button>
                             </div>
                         </form>
                     </div>
@@ -71,7 +71,7 @@
                                 <td>R$ 10,99</td>
                             </tr>
                         </table>
-                        <a href="carrinhoCompras.jsp"><button class="btn btn-default">Ver Carrinho</button></a>
+                        <a href="login.jsp"><button class="btn btn-default">Ver Carrinho</button></a>
                         <h4 class="pull-right">Total R$340,00</h4>
                     </div>
                 </li>

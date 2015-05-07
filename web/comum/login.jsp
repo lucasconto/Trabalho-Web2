@@ -57,25 +57,7 @@
         </div>
         <!--/.row-->
         
-        <div class="row">
   
-            
-    <div class="container">
-
-        <hr>
-
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Site desenvolvido por Bruno R. Sella, Evandro LuÃ­s Machado e Yuri Jungles para aprovaÃ§Ã£o nas matÃ©rias de Web 2 e DAC.</p>
-                </div>
-            </div>
-        </footer>
-
-    </div>
-    <!-- /.container -->
-
     <!--Inclui Rodapé-->
     <jsp:include page="rodape.jsp"/>
     

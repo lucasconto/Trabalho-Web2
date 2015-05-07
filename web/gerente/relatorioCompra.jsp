@@ -73,7 +73,7 @@
                 </div>
             </div>
             <div class="col-md-9 ">   
-            <h1>Relatório de Clientes</h1>
+            <h1>Relatório de Compras de Clientes</h1>
             <table class="table table-striped table-bordered">
                 <tr>
                     <th colspan="3" style="font-size: 25px">Bruno Sella</th>

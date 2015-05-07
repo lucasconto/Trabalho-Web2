@@ -64,10 +64,10 @@
                       
                       <div class="dropdown-menu pull-right" style="padding:5px;  min-width: 200px;">
                           <ul>
-                              <a href="#">
+                              <a href="../comum/alterarCliente.jsp">
                               <li>Alterar Perfil</li>
                               </a>
-                              <a href="#">
+                              <a href="../comum/index.jsp">
                               <li>Logout</li>
                               </a>
                           </ul>

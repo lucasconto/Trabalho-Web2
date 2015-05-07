@@ -124,7 +124,7 @@
     </head>
     <body>
             <!--Inclui cabeçalho-->
-            <jsp:include page="navAdministrador.jsp"/>
+            <jsp:include page="../administrador/navAdministrador.jsp"/>
         
         <div class="container">
             <div class=" col-sm-offset-3 col-sm-6">

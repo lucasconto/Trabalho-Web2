@@ -72,67 +72,24 @@
                     <a href="../administrador/cadastrarEditora.jsp" class="list-group-item">Cadastrar Editora</a>
                 </div>
             </div>
-            <div class="col-md-5 ">   
-            <h1>Produtos Mais Vendidos</h1>
-            Período de 12/11/2000 até 13/12/2012
+            <div class="col-md-9 ">   
+            <h1>Relatório Perfil de Cliente</h1>
             <table class="table table-striped table-bordered">
                 <tr>
-                    <th colspan="2" style="font-size: 20px">#1</th>
+                    <th>Nome</th>
+                    <th>Perfil</th>
                 </tr>
                 <tr>
-                    <th>Nome:</th>
-                    <td>Turma da Mônica #45</td>
-                </tr>
+                    <td>Bruno Sella</td>
+                    <td>Comprador Esporádico</td>
+                 </tr>
                 <tr>
-                    <th>Total de Vendas no Período:</th>
-                    <td>589</td>
-                </tr>
+                    <td>Evandro Machado</td>
+                    <td>Comprador Assíduo</td>
+                 </tr>
                 <tr>
-                    <th colspan="2" style="font-size: 20px">#2</th>
-                </tr>
-                <tr>
-                    <th>Nome:</th>
-                    <td>Star Wars Gibi</td>
-                </tr>
-                <tr>
-                    <th>Total de Vendas no Período:</th>
-                    <td>550</td>
-                </tr>
-                <tr>
-                    <th colspan="2" style="font-size: 20px">#3</th>
-                </tr>
-                <tr>
-                    <th>Nome:</th>
-                    <td>Street Fighter Mangá vol. 56</td>
-                </tr>
-                <tr>
-                    <th>Total de Vendas no Período:</th>
-                    <td>450</td>
-                </tr>
-                <tr>
-                    <th colspan="2" style="font-size: 20px">#4</th>
-                </tr>
-                <tr>
-                    <th>Nome:</th>
-                    <td>Wolverine Origens</td>
-                </tr>
-                <tr>
-                    <th>Total de Vendas no Período:</th>
-                    <td>412</td>
-                </tr>
-                <tr>
-                    <th colspan="2" style="font-size: 20px">#5</th>
-                </tr>
-                <tr>
-                    <th>Nome:</th>
-                    <td>Turma da Mônica #1</td>
-                </tr>
-                <tr>
-                    <th>Total de Vendas no Período:</th>
-                    <td>345</td>
-                </tr>
-                
-
+                    <td>Yuri</td>
+                    <td>Comprador Mediano</td>
             </table>
            </div>
         </div>

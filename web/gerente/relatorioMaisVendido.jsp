@@ -92,7 +92,7 @@
                 </div>
             </div>
             <div class="col-md-9 ">   
-            <h1>Produto Mais Vendido</h1>
+            <h1>Produtos Mais Vendidos</h1>
              <div class="row">
                  <form class="form">
                      <div class="form-group">
