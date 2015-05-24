@@ -11,7 +11,8 @@ import java.sql.SQLException;
  */
 public class ConnectionFactory {
 
-    public static Connection getConnection() throws SQLException{
+    public static Connection getConnection() throws SQLException, ClassNotFoundException{
+        Class.forName("org.postgresql.Driver");
         return DriverManager.getConnection("jdbc:postgresql://localhost/web2", "postgres", "admin");
 
     }

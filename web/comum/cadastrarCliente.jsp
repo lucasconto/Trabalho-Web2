@@ -179,7 +179,7 @@
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Confirme sua Senha</label>
                 <div class="col-sm-8">
-                    <input type="password" class="form-control" id="" placeholder="" required/>
+                    <input type="password" name="confirmaSenha" class="form-control" id="" placeholder="" required/>
                 </div>
             </div>       
             
@@ -203,27 +203,27 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="" name="complemento" class="col-sm-4 control-label">Complemento</label>
+                <label for="" class="col-sm-4 control-label">Complemento</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="" placeholder="" required />
+                    <input type="text" name="complemento" class="form-control" id="" placeholder="" required />
                 </div>
             </div>            
             <div class="form-group">
-                <label for="" name="bairro" class="col-sm-4 control-label">Bairro</label>
+                <label for="" class="col-sm-4 control-label">Bairro</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="" placeholder="" required />
+                    <input type="text" name="bairro" class="form-control" id="" placeholder="" required />
                 </div>
             </div>  
             <div class="form-group">
-                <label for="" name="cidade" class="col-sm-4 control-label">Cidade</label>
+                <label for="" class="col-sm-4 control-label">Cidade</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="" placeholder="" required />
+                    <input type="text" name="cidade" class="form-control" id="" placeholder="" required />
                 </div>
             </div>
             <div class="form-group">
-                <label for="" name="estado" class="col-sm-4 control-label">Estado</label>
+                <label for="" class="col-sm-4 control-label">Estado</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="" placeholder="" required />
+                    <input type="text" name="estado" class="form-control" id="" placeholder="" required />
                 </div>
             </div> 
             <div class="form-group">

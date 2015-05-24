@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trabalho;
+package br.com.magazine.dao;
 
 import br.com.magazine.entidade.Cliente;
 import br.com.magazine.util.ConnectionFactory;
@@ -32,7 +32,7 @@ public class ClienteDAO {
 
     
 
-    public void cadastrarCliente(Cliente cliente) {
+    public void cadastrarCliente(Cliente cliente) throws ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
         try {

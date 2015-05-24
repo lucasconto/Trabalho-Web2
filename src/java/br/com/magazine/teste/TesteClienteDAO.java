@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -5,6 +6,7 @@
  */
 package br.com.magazine.teste;
 
+import br.com.magazine.dao.ClienteDAO;
 import br.com.magazine.entidade.Cliente;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -14,7 +16,7 @@ import java.text.SimpleDateFormat;
  * @author Evandro-PC
  */
 public class TesteClienteDAO {
-    public static void main(String[] args) throws ParseException{
+    public static void main(String[] args) throws ParseException, ClassNotFoundException{
     Cliente evandro = new Cliente();
     evandro.setNome("Evandro Luis Machado");
     evandro.setSexo("m");
