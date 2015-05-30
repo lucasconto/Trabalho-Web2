@@ -27,3 +27,14 @@ categoria varchar(30),
 preco double,
 idImg int
 );
+
+
+Create table Marca(
+idMarca serial,
+titulo varchar(100)
+);
+
+Create table Genero(
+idGenero serial,
+titulo varchar(100)
+);
