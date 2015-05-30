@@ -18,6 +18,26 @@
           <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <script>
+            function valida(form) 
+	{
+
+		if (form.editora.value=="Selecione") 
+		{
+			alert("Escolha uma editora.");
+			form.nome.focus();
+			return false;
+		}
+                
+                if (form.categoria.value=="Selecione") 
+		{
+			alert("Escolha uma categoria.");
+			form.nome.focus();
+			return false;
+		}
+		
+    }
+        </script>
     </head>
     <body>
         <!--Inclui cabeçalho-->
@@ -35,23 +55,23 @@
             </div>
             <div class=" col-sm-6">
                 <h1>Cadastro de Produto</h1>
-                <form class="form-horizontal">
+                <form class="form-horizontal" id="form" method="POST" action="../Produtos?action=cadastrar" onsubmit="//return valida(this);">
                     <div class="form-group">
                         <label for="" class="col-sm-4 control-label">Título</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="" placeholder="">
+                            <input name="titulo" id="titulo" type="text" class="form-control" placeholder="">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="" class="col-sm-4 control-label">Autor</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="" placeholder="">
+                            <input name="autor" id="autor" type="text" class="form-control" id="" placeholder="">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="" class="col-sm-4 control-label">Editora</label>
                         <div class="col-sm-8">
-                            <select class="form-control">
+                            <select name="editora" id="editora" class="form-control">
                                 <option>Selecione</option>
                                 <option>Editora 1</option>
                                 <option>Editora 2</option>
@@ -61,7 +81,7 @@
                     <div class="form-group">
                         <label for="" class="col-sm-4 control-label">Categoria</label>
                         <div class="col-sm-8">
-                            <select class="form-control">
+                            <select name="categoria" id="categoria" class="form-control">
                                 <option>Selecione</option>
                                 <option>Categoria 1</option>
                                 <option>Categoria 2</option>
@@ -73,14 +93,14 @@
                         <div class="col-sm-8">
                             <div class="input-group">
                             <span class="input-group-addon">R$</span>
-                            <input type="text" class="form-control" id="" placeholder="">
+                            <input name="preco" id="preco" type="text" class="form-control" id="" placeholder="">
                             </div>
                         </div>
                     </div>                    
                     <div class="form-group">
                         <label for="" class="col-sm-4 control-label">Imagem</label>
                         <div class="col-sm-8">
-                            <input type="file" class="" id="">
+                            <input name="idImg" id="idImg"  type="file" class="" id="">
                             
                         </div>
                     </div>  

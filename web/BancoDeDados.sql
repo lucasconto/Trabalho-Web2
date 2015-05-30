@@ -18,4 +18,12 @@ cidade varchar(30),
 estado varchar(30)
 );
 
-
+Create table Produto(
+idProduto serial,
+titulo varchar(100),
+autor varchar(50),
+editora varchar(30),
+categoria varchar(30),
+preco double,
+idImg int
+);
