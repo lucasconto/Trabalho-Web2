@@ -6,6 +6,7 @@
 package br.com.magazine.servlet;
 
 import br.com.magazine.dao.MarcaDAO;
+import br.com.magazine.entidade.Marca;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -48,10 +49,10 @@ public class Marcas extends HttpServlet {
                 out.println("</body>");
                 out.println("</html>");
 
-                String marca;
-                marca = request.getParameter("titulo");
+                Marca m = new Marca();
+                m.setTitulo(request.getParameter("titulo"));
                 MarcaDAO mdao = new MarcaDAO();
-                mdao.cadastrarMarca(marca);
+                mdao.cadastrarMarca(m);
             }
         }
     }

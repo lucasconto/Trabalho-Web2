@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package br.com.magazine.dao;
+import br.com.magazine.entidade.Marca;
 import br.com.magazine.util.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,14 +18,14 @@ public class MarcaDAO {
     //sem imagem
     private final String stmtCadastraMarca = "insert into marca (titulo) values (?)";
 
-    public void cadastrarMarca (String m) throws ClassNotFoundException{ 
+    public void cadastrarMarca (Marca m) throws ClassNotFoundException{ 
         Connection con = null;
         PreparedStatement stmt = null;
         try {
             con = ConnectionFactory.getConnection();
             con.setAutoCommit(false);
             stmt = con.prepareStatement(stmtCadastraMarca, PreparedStatement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, m);
+            stmt.setString(1, m.getTitulo());
             stmt.executeUpdate();
             con.commit();
         } catch (SQLException e) {

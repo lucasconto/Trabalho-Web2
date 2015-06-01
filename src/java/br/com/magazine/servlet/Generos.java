@@ -6,6 +6,7 @@
 package br.com.magazine.servlet;
 
 import br.com.magazine.dao.GeneroDAO;
+import br.com.magazine.entidade.Genero;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -48,10 +49,10 @@ public class Generos extends HttpServlet {
                 out.println("</body>");
                 out.println("</html>");
                 
-                String genero;
-                genero = request.getParameter("titulo");
+                Genero g = new Genero();
+                g.setTitulo(request.getParameter("titulo"));
                 GeneroDAO gdao = new GeneroDAO();
-                gdao.cadastrarGenero(genero);
+                gdao.cadastrarGenero(g);
                 
             }
         }
