@@ -44,12 +44,12 @@ public class Produtos extends HttpServlet{
                 Produto produto = new Produto();
                 Genero genero = new Genero();
                 genero.setNome(request.getParameter("nome"));
-                produto.setGenero(genero);
+                
 
                 produto.setTitulo(request.getParameter("titulo"));
                 produto.setAutor(request.getParameter("autor"));
                 produto.setEditora(request.getParameter("editora"));
-                produto.setCategoria(request.getParameter("categoria"));
+                produto.setGenero(genero);
                 produto.setPreco(Double.parseDouble(request.getParameter("preco")));
                 
                

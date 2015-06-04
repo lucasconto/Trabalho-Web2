@@ -14,7 +14,6 @@ public class Produto {
     private String titulo;
     private String autor;
     private String editora;
-    private String Categoria;
     private double preco;
     private Genero genero;
     private int idImg;
@@ -49,14 +48,6 @@ public class Produto {
 
     public void setEditora(String editora) {
         this.editora = editora;
-    }
-
-    public String getCategoria() {
-        return Categoria;
-    }
-
-    public void setCategoria(String Categoria) {
-        this.Categoria = Categoria;
     }
 
     public double getPreco() {

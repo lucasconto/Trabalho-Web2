@@ -21,7 +21,7 @@ import java.util.List;
 public class ClienteDAO {
 
     private final String stmtCadastraCliente = "insert into Cliente (nome, sexo, cpf, nascimento, telefone, email, senha, cep, endereco, endnumero, endcomplemento, bairro, cidade, estado) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    private final String stmtAtualizaCliente = "update Cliente set nome = ?, sexo = ?, cpf = ?, nascimento = ?, telefone = ?, email = ?, senha = ?, cep = ?, endereco = ?, endnumero = ?, endcomplemento = ?, bairro = ?, cidade = ?, estado = ? where idcliente = ?";
+    private final String stmtAtualizaCliente = "update Cliente set nome = ?, sexo = ?, cpf = ?, nascimento = ?, telefone = ?, email = ?, senha = ?, cep = ?, endereco = ?, endnumero = ?, endcomplemento = ?, bairro = ?, cidade = ?, estado = ? where idCliente = ?";
 //    private final String stmtListaCliente = "select * from Cliente";
 //    private final String stmtRemoveCliente = "delete from Cliente where idCliente = ?";
 //    private final String stmtRemoveItemPedidoCliente = "delete from itempedido where idpedido = (select idpedido from pedido where idcliente = ?)";
