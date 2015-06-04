@@ -8,11 +8,22 @@ public class Pedido {
     int idPedido;
     int idCliente;
     /* talvez mudar para lista de itens pedido */
-    List<Produto> produtos;
+    List<Itempedido> itens;
+    //List<Produto> produtos;
     int status;
     Date data;
     double valorTotal;
 
+    public List<Itempedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<Itempedido> itens) {
+        this.itens = itens;
+    }
+
+    
+    
     public double getValorTotal() {
         return valorTotal;
     }
@@ -51,15 +62,6 @@ public class Pedido {
 
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
-    }
-
-
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
     }
 
 }

@@ -52,19 +52,12 @@ public class PedidoDAO {
                 idPedido = rs.getInt(1);
             }
             con.commit();
-
-            /* montar lista de itens do pedido */
-            List<Itempedido> listaItens = new ArrayList();
-            for (Produto cada : pedido.getProdutos()) {
-                Itempedido ip = new Itempedido();
-                ip.setIdPedido(idPedido);
-                ip.setIdProduto(cada.getIdProduto());
-                ip.setQuantidade(cada.getQuantidade());
-                ip.setValor(cada.getPreco());
-                listaItens.add(ip);
+            List<Itempedido> i =  pedido.getItens();
+            for (Itempedido cada : i) {
+                cada.setIdPedido(idPedido);
             }
             //chamar funcao inserir produtos na item pedido ///
-            this.cadastrarItensDoPedido(listaItens);
+            this.cadastrarItensDoPedido(i);
 
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao inserir um pedido no banco de dados. Origem: " + e.getMessage());
