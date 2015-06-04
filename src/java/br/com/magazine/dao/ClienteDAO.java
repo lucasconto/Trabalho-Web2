@@ -21,7 +21,7 @@ import java.util.List;
 public class ClienteDAO {
 
     private final String stmtCadastraCliente = "insert into Cliente (nome, sexo, cpf, nascimento, telefone, email, senha, cep, endereco, endnumero, endcomplemento, bairro, cidade, estado) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    private final String stmtAtualizaCliente = "update Cliente set nome = ?, sobrenome = ?, cpf = ? where idcliente = ?";
+    private final String stmtAtualizaCliente = "update Cliente set nome = ?, sexo = ?, cpf = ?, nascimento = ?, telefone = ?, email = ?, senha = ?, cep = ?, endereco = ?, endnumero = ?, endcomplemento = ?, bairro = ?, cidade = ?, estado = ? where idcliente = ?";
 //    private final String stmtListaCliente = "select * from Cliente";
 //    private final String stmtRemoveCliente = "delete from Cliente where idCliente = ?";
 //    private final String stmtRemoveItemPedidoCliente = "delete from itempedido where idpedido = (select idpedido from pedido where idcliente = ?)";
@@ -72,33 +72,45 @@ public class ClienteDAO {
         }
     }
 
-//    public void atualizarCliente(Cliente cliente) {
-//        Connection con = null;
-//        PreparedStatement stmt = null;
-//        try {
-//            con = ConnectionFactory.getConnection();
-//            stmt = con.prepareStatement(stmtAtualizaCliente);
-//            stmt.setString(1, cliente.getNome());
-//            stmt.setString(2, cliente.getSobrenome());
-//            stmt.setString(3, cliente.getCPF());
-//            stmt.setInt(4, cliente.getIdCliente());
-//            stmt.executeUpdate();
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        } finally {
-//            try {
-//                stmt.close();
-//            } catch (SQLException ex) {
-//                System.out.println("Erro ao fechar statement. Ex = " + ex.getMessage());
-//            }
-//            try {
-//                con.close();
-//            } catch (SQLException ex) {
-//                System.out.println("Erro ao fechar a conexao. Ex = " + ex.getMessage());
-//            }
-//        }
-//    }
-//
+    public void atualizarCliente(Cliente cliente) throws ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try {
+            con = ConnectionFactory.getConnection();
+            con.setAutoCommit(false);
+            stmt = con.prepareStatement(stmtAtualizaCliente);
+            stmt.setString(1, cliente.getNome());
+            stmt.setString(2, cliente.getSexo());
+            stmt.setString(3, cliente.getCpf());
+            stmt.setDate(4, cliente.getNascimento());
+            stmt.setString(5, cliente.getTelefone());
+            stmt.setString(6, cliente.getEmail());
+            stmt.setString(7, cliente.getSenha());
+            stmt.setString(8, cliente.getCep());
+            stmt.setString(9, cliente.getEndereco());
+            stmt.setString(10, cliente.getEndNumero());
+            stmt.setString(11, cliente.getEndComplemento());
+            stmt.setString(12, cliente.getBairro());
+            stmt.setString(13, cliente.getCidade());
+            stmt.setString(14, cliente.getEstado());
+            stmt.setInt(15, cliente.getId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar statement. Ex = " + ex.getMessage());
+            }
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar a conexao. Ex = " + ex.getMessage());
+            }
+        }
+    }
+
 //    public List<Cliente> listaClientes() throws SQLException {
 //        Connection con = null;
 //        PreparedStatement stmt = null;

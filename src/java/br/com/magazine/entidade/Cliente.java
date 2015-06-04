@@ -33,6 +33,10 @@ public class Cliente {
     /**
      * @return the nome
      */
+    public int getId(){
+        return idCliente;
+    }
+    
     public String getNome() {
         return nome;
     }
