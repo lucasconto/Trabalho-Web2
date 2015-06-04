@@ -23,7 +23,7 @@ public class ClienteDAO {
     private final String stmtCadastraCliente = "insert into Cliente (nome, sexo, cpf, nascimento, telefone, email, senha, cep, endereco, endnumero, endcomplemento, bairro, cidade, estado) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private final String stmtAtualizaCliente = "update Cliente set nome = ?, sexo = ?, cpf = ?, nascimento = ?, telefone = ?, email = ?, senha = ?, cep = ?, endereco = ?, endnumero = ?, endcomplemento = ?, bairro = ?, cidade = ?, estado = ? where idCliente = ?";
 //    private final String stmtListaCliente = "select * from Cliente";
-//    private final String stmtRemoveCliente = "delete from Cliente where idCliente = ?";
+    private final String stmtRemoveCliente = "update Cliente set inativo = 1 where idCliente = ?";
 //    private final String stmtRemoveItemPedidoCliente = "delete from itempedido where idpedido = (select idpedido from pedido where idcliente = ?)";
 //    private final String stmtRemovePedidoCliente = "delete from pedido where idpedido = (select idpedido from pedido where idcliente= ? )";
 //    private final String stmtProcuraNome = "select * from Cliente where nome like ";
@@ -111,6 +111,34 @@ public class ClienteDAO {
         }
     }
 
+    
+    
+        public void removerCliente(Cliente cliente) throws ClassNotFoundException{
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try{
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(stmtRemoveCliente);
+            stmt.setLong(1,cliente.getId());
+            stmt.executeUpdate();
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        } finally{
+            try{
+                stmt.close();
+            }catch (Exception ex){
+                System.out.println("Erro ao fechar stmt. Ex="+ex.getMessage());
+            }
+            try{
+                con.close();
+            }catch(Exception ex){
+                System.out.println("Erro ao fechar conexao. Ex = "+ex.getMessage());
+            }
+        }
+    
+    }
+    
+    
 //    public List<Cliente> listaClientes() throws SQLException {
 //        Connection con = null;
 //        PreparedStatement stmt = null;
@@ -272,38 +300,5 @@ public class ClienteDAO {
 //    }
 //    
 //    
-//        public void removerCliente(Cliente cliente) throws SQLException{
-//        Connection con = null;
-//        PreparedStatement stmt1 = null;
-//        PreparedStatement stmt2 = null;
-//        PreparedStatement stmt3 = null;
-//        try{
-//            con = ConnectionFactory.getConnection();
-//            stmt1 = con.prepareStatement(stmtRemoveItemPedidoCliente);
-//            stmt1.setLong(1,cliente.getIdCliente());
-//            stmt1.executeUpdate();
-//            stmt2 = con.prepareStatement(stmtRemovePedidoCliente);
-//            stmt2.setLong(1,cliente.getIdCliente());
-//            stmt2.executeUpdate();
-//            stmt3 = con.prepareStatement(stmtRemoveCliente);
-//            stmt3.setLong(1,cliente.getIdCliente());
-//            stmt3.executeUpdate();
-//        }catch (SQLException e){
-//            throw new RuntimeException(e);
-//        } finally{
-//            try{
-//                stmt1.close();
-//                stmt2.close();
-//                stmt3.close();
-//            }catch (Exception ex){
-//                System.out.println("Erro ao fechar stmt. Ex="+ex.getMessage());
-//            }
-//            try{
-//                con.close();
-//            }catch(Exception ex){
-//                System.out.println("Erro ao fechar conexao. Ex = "+ex.getMessage());
-//            }
-//        }
-//    
-//    }
+
 }
