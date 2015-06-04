@@ -31,10 +31,10 @@ idImg int
 
 Create table Marca(
 idMarca serial,
-titulo varchar(100)
+marca varchar(100)
 );
 
 Create table Genero(
 idGenero serial,
-titulo varchar(100)
+genero varchar(100)
 );

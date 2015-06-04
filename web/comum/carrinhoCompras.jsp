@@ -92,6 +92,8 @@
                     </footer>
 
                 </div>
+            </div>
+        </div>
                 <!-- /.container -->
 
                 <!-- jQuery -->
