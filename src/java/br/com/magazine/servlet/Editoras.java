@@ -5,8 +5,8 @@
  */
 package br.com.magazine.servlet;
 
-import br.com.magazine.dao.MarcaDAO;
-import br.com.magazine.entidade.Marca;
+import br.com.magazine.dao.EditoraDAO;
+import br.com.magazine.entidade.Editora;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Yuri
  */
-@WebServlet(name = "Marcas", urlPatterns = {"/Marcas"})
-public class Marcas extends HttpServlet {
+@WebServlet(name = "Editoras", urlPatterns = {"/Editoras"})
+public class Editoras extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,17 +42,17 @@ public class Marcas extends HttpServlet {
                 out.println("<!DOCTYPE html>");
                 out.println("<html>");
                 out.println("<head>");
-                out.println("<title>Servlet Marcas</title>");
+                out.println("<title>Servlet Editoras</title>");
                 out.println("</head>");
                 out.println("<body>");
-                out.println("<h1>Servlet Marcas at " + request.getContextPath() + "</h1>");
+                out.println("<h1>Servlet Editoras at " + request.getContextPath() + "</h1>");
                 out.println("</body>");
                 out.println("</html>");
 
-                Marca m = new Marca();
-                m.setTitulo(request.getParameter("titulo"));
-                MarcaDAO mdao = new MarcaDAO();
-                mdao.cadastrarMarca(m);
+                Editora editora = new Editora();
+                editora.setEditora(request.getParameter("editora"));
+                EditoraDAO editoraDAO = new EditoraDAO();
+                editoraDAO.cadastrarEditora(editora);
             }
         }
     }
@@ -72,7 +72,7 @@ public class Marcas extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Marcas.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Editoras.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -90,7 +90,7 @@ public class Marcas extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Marcas.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Editoras.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

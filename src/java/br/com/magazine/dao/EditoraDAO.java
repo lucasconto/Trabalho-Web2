@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package br.com.magazine.dao;
-import br.com.magazine.entidade.Marca;
+import br.com.magazine.entidade.Editora;
 import br.com.magazine.util.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,22 +14,22 @@ import java.sql.SQLException;
  *
  * @author Groupo X
  */
-public class MarcaDAO {
+public class EditoraDAO {
     //sem imagem
-    private final String stmtCadastraMarca = "insert into marca (titulo) values (?)";
+    private final String stmtCadastraEditora = "insert into editora (editora) values (?)";
 
-    public void cadastrarMarca (Marca m) throws ClassNotFoundException{ 
+    public void cadastrarEditora (Editora editora) throws ClassNotFoundException{ 
         Connection con = null;
         PreparedStatement stmt = null;
         try {
             con = ConnectionFactory.getConnection();
             con.setAutoCommit(false);
-            stmt = con.prepareStatement(stmtCadastraMarca, PreparedStatement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, m.getTitulo());
+            stmt = con.prepareStatement(stmtCadastraEditora, PreparedStatement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, editora.getEditora());
             stmt.executeUpdate();
             con.commit();
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao inserir uma marca no banco de dados. Origem: " + e.getMessage());
+            throw new RuntimeException("Erro ao inserir uma editora no banco de dados. Origem: " + e.getMessage());
         } finally {
             try {
                 stmt.close();

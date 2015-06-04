@@ -16,7 +16,7 @@ import java.sql.SQLException;
  */
 public class GeneroDAO {
     //sem imagem
-    private final String stmtCadastraGenero = "insert into genero (titulo) values (?)";
+    private final String stmtCadastraGenero = "insert into genero (genero) values (?)";
 
     public void cadastrarGenero (Genero g) throws ClassNotFoundException{ 
         Connection con = null;
@@ -25,7 +25,7 @@ public class GeneroDAO {
             con = ConnectionFactory.getConnection();
             con.setAutoCommit(false);
             stmt = con.prepareStatement(stmtCadastraGenero, PreparedStatement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, g.getTitulo());
+            stmt.setString(1, g.getGenero());
             stmt.executeUpdate();
             con.commit();
         } catch (SQLException e) {

@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
  *
  * @author Evandro-PC
  */
-public class TesteClienteDAO {
+public class TesteEditoraDAO {
     public static void main(String[] args) throws ParseException, ClassNotFoundException{
     Cliente evandro = new Cliente();
     evandro.setNome("Evandro Luis Machado");
