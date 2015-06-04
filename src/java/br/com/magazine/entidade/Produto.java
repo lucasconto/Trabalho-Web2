@@ -16,6 +16,7 @@ public class Produto {
     private String editora;
     private String Categoria;
     private double preco;
+    private Genero genero;
     private int idImg;
 
     public int getIdProduto() {
@@ -74,5 +75,12 @@ public class Produto {
         this.idImg = idImg;
     }
     
+        public Genero getGenero() {
+        return genero;
+    }
+
+    public void setGenero(Genero genero) {
+        this.genero = genero;
+    }
     
 }
