@@ -31,9 +31,9 @@ Create table Produto(
 );
 
 
-Create table Marca(
-    idMarca serial,
-    marca varchar(100)
+Create table Editora(
+    idEditora serial,
+    editora varchar(100)
 );
 
 Create table Genero(

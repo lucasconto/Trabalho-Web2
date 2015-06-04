@@ -40,7 +40,7 @@
                         <div class="form-group">
                             <label for="" class="col-sm-4 control-label">Título</label>
                             <div class="col-sm-8">
-                                <input name="titulo" id="titulo" type="text" class="form-control" placeholder="">
+                                <input name="genero" id="genero" type="text" class="form-control" placeholder="">
                             </div>
                         </div>
                         <div class="form-group">

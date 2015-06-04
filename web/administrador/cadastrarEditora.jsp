@@ -35,15 +35,7 @@
                 </div>
                 <div class="col-md-9 ">
                     <h1>Cadastro de Editora</h1>
-                    <form class="form-horizontal">
-                        <fieldset disabled>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="disabledTextInput">Código</label>
-                                <div class="col-sm-6">
-                                    <input type="text" id="disabledTextInput" class="form-control" placeholder="1234">
-                                </div>
-                            </div>
-                        </fieldset>
+                    <form class="form-horizontal" method="POST" action="../Editoras?action=cadastrar">
                         <div class="form-group">
                             <label for="" class="col-sm-2 control-label">Nome</label>
                             <div class="col-sm-6">
