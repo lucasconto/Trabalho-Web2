@@ -17,9 +17,9 @@ import java.sql.SQLException;
  */
 public class ProdutoDAO {
     //sem imagem
-    private final String stmtCadastraProduto = "insert into produto (titulo, autor, editora, categoria, preco, genero) values (?,?,?,?,?,?)";
+    private final String stmtCadastraProduto = "insert into produto (titulo, autor, editora, preco, genero) values (?,?,?,?,?)";
     //private final String stmtCadastraProduto = "insert into produto (titulo, autor, editora, categoria, preco, genero, idImg) values (?,?,?,?,?,?)";
-    private final String stmtAtualizaProduto = "update produto set titulo = ?, autor = ?, editora = ?, categoria = ?, preco = ?, genero = ? where idProduto = ?";
+    private final String stmtAtualizaProduto = "update produto set titulo = ?, autor = ?, editora = ?, preco = ?, genero = ? where idProduto = ?";
 
     public void cadastrarProduto (Produto p) throws ClassNotFoundException{ 
         Connection con = null;
@@ -31,9 +31,8 @@ public class ProdutoDAO {
             stmt.setString(1, p.getTitulo());
             stmt.setString(2, p.getAutor());
             stmt.setString(3, p.getEditora());
-            stmt.setString(4, p.getCategoria());
-            stmt.setDouble(5, p.getPreco());
-            stmt.setString(6, p.getGenero().getNome());
+            stmt.setDouble(4, p.getPreco());
+            stmt.setString(5, p.getGenero().getNome());
             //sem imagem
             //stmt.setInt(6, p.getidImg());
             stmt.executeUpdate();
@@ -64,10 +63,9 @@ public class ProdutoDAO {
             stmt.setString(1, p.getTitulo());
             stmt.setString(2, p.getAutor());
             stmt.setString(3, p.getEditora());
-            stmt.setString(4, p.getCategoria());
-            stmt.setDouble(5, p.getPreco());
-            stmt.setString(6, p.getGenero().getNome());
-            stmt.setInt(7, p.getIdProduto());
+            stmt.setDouble(4, p.getPreco());
+            stmt.setString(5, p.getGenero().getNome());
+            stmt.setInt(6, p.getIdProduto());
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
