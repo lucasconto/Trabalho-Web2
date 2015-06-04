@@ -5,9 +5,12 @@
  */
 package br.com.magazine.dao;
 
-import br.com.magazine.entidade.Cliente;
+import br.com.magazine.entidade.Itempedido;
+import br.com.magazine.entidade.Pedido;
+import br.com.magazine.entidade.Produto;
 import br.com.magazine.util.ConnectionFactory;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,46 +21,46 @@ import java.util.List;
  *
  * @author Grupo X
  */
-public class ClienteDAO {
+public class PedidoDAO {
 
-    private final String stmtCadastraCliente = "insert into Cliente (nome, sexo, cpf, nascimento, telefone, email, senha, cep, endereco, endnumero, endcomplemento, bairro, cidade, estado) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    private final String stmtAtualizaCliente = "update Cliente set nome = ?, sexo = ?, cpf = ?, nascimento = ?, telefone = ?, email = ?, senha = ?, cep = ?, endereco = ?, endnumero = ?, endcomplemento = ?, bairro = ?, cidade = ?, estado = ? where idCliente = ?";
+    private final String stmtCadastraPedido = "insert into Pedido (idCliente,status,data,valortotal) values (?,?,?,?)";
+    private final String stmtAtualizaStatusPedido = "update Pedido set status = ? where idPedido = ?";
 //    private final String stmtListaCliente = "select * from Cliente";
-    private final String stmtRemoveCliente = "update Cliente set inativo = 1 where idCliente = ?";
+//    private final String stmtRemoveCliente = "delete from Cliente where idCliente = ?";
 //    private final String stmtRemoveItemPedidoCliente = "delete from itempedido where idpedido = (select idpedido from pedido where idcliente = ?)";
 //    private final String stmtRemovePedidoCliente = "delete from pedido where idpedido = (select idpedido from pedido where idcliente= ? )";
 //    private final String stmtProcuraNome = "select * from Cliente where nome like ";
 //    private final String stmtProcuraSobreNome = "select * from Cliente where sobrenome like ";
 //    private final String stmtProcuraCPF = "select * from Cliente where cpf like ";
 
-    
-
-    public void cadastrarCliente(Cliente cliente) throws ClassNotFoundException {
+    public void cadastrarPedido(Pedido pedido) throws ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
         try {
             con = ConnectionFactory.getConnection();
             con.setAutoCommit(false);
-            stmt = con.prepareStatement(stmtCadastraCliente, PreparedStatement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, cliente.getNome());
-            stmt.setString(2, cliente.getSexo());
-            stmt.setString(3, cliente.getCpf());
-            stmt.setDate(4, cliente.getNascimento());
-            stmt.setString(5, cliente.getTelefone());
-            stmt.setString(6, cliente.getEmail());
-            stmt.setString(7, cliente.getSenha());
-            stmt.setString(8, cliente.getCep());
-            stmt.setString(9, cliente.getEndereco());
-            stmt.setString(10, cliente.getEndNumero());
-            stmt.setString(11, cliente.getEndComplemento());
-            stmt.setString(12, cliente.getBairro());
-            stmt.setString(13, cliente.getCidade());
-            stmt.setString(14, cliente.getEstado());
+            stmt = con.prepareStatement(stmtCadastraPedido, PreparedStatement.RETURN_GENERATED_KEYS);
+            stmt.setInt(1, pedido.getIdCliente());
+            stmt.setInt(2, pedido.getStatus());
+            stmt.setDate(3, (Date) pedido.getData());
+            stmt.setDouble(4, pedido.getValorTotal());
             stmt.executeUpdate();
+            /* pegar id do pedido inserido */
+            ResultSet rs = stmt.getGeneratedKeys();
+            int idPedido = 0;
+            if (rs != null && rs.next()) {
+                idPedido = rs.getInt(1);
+            }
             con.commit();
+            List<Itempedido> i =  pedido.getItens();
+            for (Itempedido cada : i) {
+                cada.setIdPedido(idPedido);
+            }
+            //chamar funcao inserir produtos na item pedido ///
+            this.cadastrarItensDoPedido(i);
 
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao inserir um cliente no banco de dados. Origem: " + e.getMessage());
+            throw new RuntimeException("Erro ao inserir um pedido no banco de dados. Origem: " + e.getMessage());
         } finally {
             try {
                 stmt.close();
@@ -71,29 +74,23 @@ public class ClienteDAO {
             }
         }
     }
+    /* função privada para cadastrar os itens do carrinho*/
 
-    public void atualizarCliente(Cliente cliente) throws ClassNotFoundException {
+    private void cadastrarItensDoPedido(List<Itempedido> p) throws ClassNotFoundException {
+        for (Itempedido cada : p) {
+            ItempedidoDAO ip = new ItempedidoDAO();
+            ip.cadastrarItemPedido(cada);
+        }
+    }
+
+    public void atualizarStatusPedido(Pedido p) throws ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
         try {
             con = ConnectionFactory.getConnection();
-            con.setAutoCommit(false);
-            stmt = con.prepareStatement(stmtAtualizaCliente);
-            stmt.setString(1, cliente.getNome());
-            stmt.setString(2, cliente.getSexo());
-            stmt.setString(3, cliente.getCpf());
-            stmt.setDate(4, cliente.getNascimento());
-            stmt.setString(5, cliente.getTelefone());
-            stmt.setString(6, cliente.getEmail());
-            stmt.setString(7, cliente.getSenha());
-            stmt.setString(8, cliente.getCep());
-            stmt.setString(9, cliente.getEndereco());
-            stmt.setString(10, cliente.getEndNumero());
-            stmt.setString(11, cliente.getEndComplemento());
-            stmt.setString(12, cliente.getBairro());
-            stmt.setString(13, cliente.getCidade());
-            stmt.setString(14, cliente.getEstado());
-            stmt.setInt(15, cliente.getId());
+            stmt = con.prepareStatement(stmtAtualizaStatusPedido);
+            stmt.setInt(1, p.getStatus());
+            stmt.setInt(2, p.getIdPedido());
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -110,35 +107,7 @@ public class ClienteDAO {
             }
         }
     }
-
-    
-    
-        public void removerCliente(Cliente cliente) throws ClassNotFoundException{
-        Connection con = null;
-        PreparedStatement stmt = null;
-        try{
-            con = ConnectionFactory.getConnection();
-            stmt = con.prepareStatement(stmtRemoveCliente);
-            stmt.setLong(1,cliente.getId());
-            stmt.executeUpdate();
-        }catch (SQLException e){
-            throw new RuntimeException(e);
-        } finally{
-            try{
-                stmt.close();
-            }catch (Exception ex){
-                System.out.println("Erro ao fechar stmt. Ex="+ex.getMessage());
-            }
-            try{
-                con.close();
-            }catch(Exception ex){
-                System.out.println("Erro ao fechar conexao. Ex = "+ex.getMessage());
-            }
-        }
-    
-    }
-    
-    
+//
 //    public List<Cliente> listaClientes() throws SQLException {
 //        Connection con = null;
 //        PreparedStatement stmt = null;
@@ -300,5 +269,39 @@ public class ClienteDAO {
 //    }
 //    
 //    
-
+//        public void removerCliente(Cliente cliente) throws SQLException{
+//        Connection con = null;
+//        PreparedStatement stmt1 = null;
+//        PreparedStatement stmt2 = null;
+//        PreparedStatement stmt3 = null;
+//        try{
+//            con = ConnectionFactory.getConnection();
+//            stmt1 = con.prepareStatement(stmtRemoveItemPedidoCliente);
+//            stmt1.setLong(1,cliente.getIdCliente());
+//            stmt1.executeUpdate();
+//            stmt2 = con.prepareStatement(stmtRemovePedidoCliente);
+//            stmt2.setLong(1,cliente.getIdCliente());
+//            stmt2.executeUpdate();
+//            stmt3 = con.prepareStatement(stmtRemoveCliente);
+//            stmt3.setLong(1,cliente.getIdCliente());
+//            stmt3.executeUpdate();
+//        }catch (SQLException e){
+//            throw new RuntimeException(e);
+//        } finally{
+//            try{
+//                stmt1.close();
+//                stmt2.close();
+//                stmt3.close();
+//            }catch (Exception ex){
+//                System.out.println("Erro ao fechar stmt. Ex="+ex.getMessage());
+//            }
+//            try{
+//                con.close();
+//            }catch(Exception ex){
+//                System.out.println("Erro ao fechar conexao. Ex = "+ex.getMessage());
+//            }
+//        }
+//    
+//    }
 }
+

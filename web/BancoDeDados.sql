@@ -17,7 +17,8 @@ Create table Cliente(
     endcomplemento varchar(20),
     bairro varchar(30),
     cidade varchar(30),
-    estado varchar(30)
+    estado varchar(30),
+    inativo int
 );
 
 Create table Produto(

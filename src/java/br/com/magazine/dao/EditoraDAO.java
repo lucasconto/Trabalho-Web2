@@ -17,7 +17,7 @@ import java.sql.SQLException;
 public class EditoraDAO {
     //sem imagem
     private final String stmtCadastraEditora = "insert into editora (nome) values (?)";
-    private final String stmtAtualizaProduto = "update editora set nome = ? where idEditora = ?";
+    private final String stmtAtualizaEditora = "update editora set nome = ? where idEditora = ?";
 
 
     public void cadastrarEditora (Editora editora) throws ClassNotFoundException{ 
@@ -52,7 +52,7 @@ public class EditoraDAO {
         try {
             con = ConnectionFactory.getConnection();
             con.setAutoCommit(false);
-            stmt = con.prepareStatement(stmtAtualizaProduto);
+            stmt = con.prepareStatement(stmtAtualizaEditora);
             stmt.setString(1, ed.getNome());
             stmt.setInt(2, ed.getIdEditora());
             stmt.executeUpdate();
