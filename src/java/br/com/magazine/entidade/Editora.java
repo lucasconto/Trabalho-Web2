@@ -21,8 +21,8 @@ public class Editora {
         return nome;
     }
 
-    public void setNome(String editora) {
-        this.nome = editora;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     

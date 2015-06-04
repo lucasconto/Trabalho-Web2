@@ -16,7 +16,9 @@ import java.sql.SQLException;
  */
 public class EditoraDAO {
     //sem imagem
-    private final String stmtCadastraEditora = "insert into editora (editora) values (?)";
+    private final String stmtCadastraEditora = "insert into editora (nome) values (?)";
+    private final String stmtAtualizaProduto = "update editora set nome = ? where idEditora = ?";
+
 
     public void cadastrarEditora (Editora editora) throws ClassNotFoundException{ 
         Connection con = null;
@@ -43,4 +45,32 @@ public class EditoraDAO {
             }
         }
     }
+    
+            public void atualizarEditora(Editora ed) throws ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try {
+            con = ConnectionFactory.getConnection();
+            con.setAutoCommit(false);
+            stmt = con.prepareStatement(stmtAtualizaProduto);
+            stmt.setString(1, ed.getNome());
+            stmt.setInt(2, ed.getIdEditora());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar statement. Ex = " + ex.getMessage());
+            }
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar a conexao. Ex = " + ex.getMessage());
+            }
+        }
+    }
+    
+    
 }
