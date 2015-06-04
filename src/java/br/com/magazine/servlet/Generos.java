@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Yuri
  */
-@WebServlet(name = "Generos", urlPatterns = {"/Generos"})
+@WebServlet(name = "Generos", urlPatterns = {"/administrador/Generos"})
 public class Generos extends HttpServlet {
 
     /**
@@ -49,11 +49,13 @@ public class Generos extends HttpServlet {
                 gdao.cadastrarGenero(genero);
             }
             else{
-                List<Genero> generoLista = new ArrayList();
+                
+                List<Genero> listaGeneros = new ArrayList();
                 GeneroDAO generoDAO = new GeneroDAO();
-                generoLista = generoDAO.listaGeneros();
-                request.setAttribute("listaGeneros", generoLista);
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("./administrador/cadastrarGenero.jsp");
+                listaGeneros = generoDAO.listaGeneros();
+                
+                request.setAttribute("generoLista", listaGeneros);
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/administrador/cadastrarGenero.jsp");
                 rd.forward(request,response);
                 
             }

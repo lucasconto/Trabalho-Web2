@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -53,13 +54,21 @@
                     <hr />
                     <table class="table">
                         <tr>
-                            <th>#</th><th>Título</th><th>Editar</th><th>Remover</th>
+                            <th>#</th>
+                            <th>Título</th>
+                            <th>Editar</th>
+                            <th>Remover</th>
                         </tr>
                         <!-- inserir via banco de dados -->
-                        <tr>
-                            <td>1</td><td>Aventura</td><td><span class="glyphicon glyphicon-pencil"></span></td><td><span class="glyphicon glyphicon-trash"></span></td>
+                        <c:forEach items="${generoLista}" var="genero">
+                            <tr>
+                                <td>${genero.idGenero}</td>
+                                <td>${genero.nome}</td>
+                                <td><span class="glyphicon glyphicon-pencil"></span></td>
+                                <td><span class="glyphicon glyphicon-trash"></span></td>
 
-                        </tr>
+                            </tr>
+                        </c:forEach>
                     </table>
 
                 </div>

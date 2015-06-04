@@ -7,7 +7,6 @@
 package br.com.magazine.teste;
 
 import br.com.magazine.dao.GeneroDAO;
-import br.com.magazine.entidade.Editora;
 import br.com.magazine.entidade.Genero;
 import java.sql.SQLException;
 import java.text.ParseException;
