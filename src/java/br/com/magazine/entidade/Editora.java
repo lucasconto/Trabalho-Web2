@@ -7,7 +7,7 @@ package br.com.magazine.entidade;
 
 public class Editora {
     private int idEditora;
-    private String editora;
+    private String nome;
 
     public int getIdEditora() {
         return idEditora;
@@ -17,12 +17,12 @@ public class Editora {
         this.idEditora = idEditora;
     }
 
-    public String getEditora() {
-        return editora;
+    public String getNome() {
+        return nome;
     }
 
-    public void setEditora(String editora) {
-        this.editora = editora;
+    public void setNome(String editora) {
+        this.nome = editora;
     }
 
     

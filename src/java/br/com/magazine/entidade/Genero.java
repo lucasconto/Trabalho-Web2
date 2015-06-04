@@ -7,7 +7,7 @@ package br.com.magazine.entidade;
 
 public class Genero {
     private int idGenero;
-    private String genero;
+    private String nome;
 
     public int getIdGenero() {
         return idGenero;
@@ -17,12 +17,12 @@ public class Genero {
         this.idGenero = idGenero;
     }
 
-    public String getGenero() {
-        return genero;
+    public String getNome() {
+        return nome;
     }
 
-    public void setGenero(String genero) {
-        this.genero = genero;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
 

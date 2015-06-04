@@ -18,14 +18,14 @@ public class GeneroDAO {
     //sem imagem
     private final String stmtCadastraGenero = "insert into genero (genero) values (?)";
 
-    public void cadastrarGenero (Genero g) throws ClassNotFoundException{ 
+    public void cadastrarGenero (Genero genero) throws ClassNotFoundException{ 
         Connection con = null;
         PreparedStatement stmt = null;
         try {
             con = ConnectionFactory.getConnection();
             con.setAutoCommit(false);
             stmt = con.prepareStatement(stmtCadastraGenero, PreparedStatement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, g.getGenero());
+            stmt.setString(1, genero.getNome());
             stmt.executeUpdate();
             con.commit();
         } catch (SQLException e) {

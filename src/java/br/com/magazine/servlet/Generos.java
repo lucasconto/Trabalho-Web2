@@ -49,11 +49,10 @@ public class Generos extends HttpServlet {
                 out.println("</body>");
                 out.println("</html>");
                 
-                Genero g = new Genero();
-                g.setGenero(request.getParameter("genero"));
+                Genero genero = new Genero();
+                genero.setNome(request.getParameter("genero"));
                 GeneroDAO gdao = new GeneroDAO();
-                gdao.cadastrarGenero(g);
-                
+                gdao.cadastrarGenero(genero);
             }
         }
     }

@@ -25,7 +25,7 @@ public class EditoraDAO {
             con = ConnectionFactory.getConnection();
             con.setAutoCommit(false);
             stmt = con.prepareStatement(stmtCadastraEditora, PreparedStatement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, editora.getEditora());
+            stmt.setString(1, editora.getNome());
             stmt.executeUpdate();
             con.commit();
         } catch (SQLException e) {

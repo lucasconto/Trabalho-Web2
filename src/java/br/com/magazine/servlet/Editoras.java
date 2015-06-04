@@ -50,7 +50,7 @@ public class Editoras extends HttpServlet {
                 out.println("</html>");
 
                 Editora editora = new Editora();
-                editora.setEditora(request.getParameter("editora"));
+                editora.setNome(request.getParameter("editora"));
                 EditoraDAO editoraDAO = new EditoraDAO();
                 editoraDAO.cadastrarEditora(editora);
             }
