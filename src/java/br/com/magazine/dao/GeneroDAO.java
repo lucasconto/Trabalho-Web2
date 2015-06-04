@@ -22,8 +22,9 @@ public class GeneroDAO {
 
     //sem imagem
 
-    private final String stmtCadastraGenero = "insert into genero (genero) values (?)";
+    private final String stmtCadastraGenero = "insert into genero (nome) values (?)";
     private final String stmtListaGenero = "select * from genero";
+    private final String stmtAtualizaGenero = "update genero set nome = ? where idEditora = ?";
 
     public void cadastrarGenero(Genero genero) throws ClassNotFoundException {
         Connection con = null;
@@ -89,6 +90,32 @@ public class GeneroDAO {
             }
         }
 
+    }
+    
+        public void atualizarGenero(Genero genero) throws ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try {
+            con = ConnectionFactory.getConnection();
+            con.setAutoCommit(false);
+            stmt = con.prepareStatement(stmtAtualizaGenero);
+            stmt.setString(1, genero.getNome());
+            stmt.setInt(2, genero.getIdGenero());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar statement. Ex = " + ex.getMessage());
+            }
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar a conexao. Ex = " + ex.getMessage());
+            }
+        }
     }
 
 }

@@ -33,10 +33,10 @@ Create table Produto(
 
 Create table Editora(
     idEditora serial,
-    editora varchar(100)
+    nome varchar(100)
 );
 
 Create table Genero(
     idGenero serial,
-    genero varchar(100)
+    nome varchar(100)
 );
