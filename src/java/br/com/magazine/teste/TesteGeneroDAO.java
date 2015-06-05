@@ -20,17 +20,39 @@ import java.util.List;
 public class TesteGeneroDAO {
 
     public static void main(String[] args) throws ParseException, ClassNotFoundException, SQLException {
+        //Cadastrar
+
 //        Genero genero = new Genero();
 //        genero.setNome("Aventura");
 //        
 //        GeneroDAO generoDAO = new GeneroDAO();
 //        generoDAO.cadastrarGenero(genero);
         
-        List<Genero> listaGeneros = new ArrayList();
+        
+        //Listar
+//        List<Genero> listaGeneros = new ArrayList();
+//        GeneroDAO generoDAO = new GeneroDAO();
+//        listaGeneros = generoDAO.listarGeneros();
+//        for(Genero teste : listaGeneros){
+//            System.out.println(teste.getNome());
+//        }
+        
+        
+        
+        //Alterar
+//        Genero genero = new Genero();
+//        genero.setIdGenero(2);
+//        genero.setNome("NovoGen");
+//        GeneroDAO generoDAO = new GeneroDAO();
+//        generoDAO.atualizarGenero(genero);
+        
+        
+        
+//        Remover
+        Genero genero = new Genero();
+        genero.setIdGenero(4);
         GeneroDAO generoDAO = new GeneroDAO();
-        listaGeneros = generoDAO.listaGeneros();
-        for(Genero teste : listaGeneros){
-            System.out.println(teste.getNome());
-        }
+        generoDAO.removerGenero(genero);
+
     }
 }

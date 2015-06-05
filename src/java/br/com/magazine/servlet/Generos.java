@@ -48,11 +48,18 @@ public class Generos extends HttpServlet {
                 GeneroDAO gdao = new GeneroDAO();
                 gdao.cadastrarGenero(genero);
             }
+            if ("remover".equals(request.getParameter("action"))) {
+                Genero genero = new Genero();
+                genero.setIdGenero(Integer.parseInt(request.getParameter("id")));
+                GeneroDAO generoDAO = new GeneroDAO();
+                generoDAO.removerGenero(genero);
+                response.sendRedirect("./Generos");
+            }
             else{
                 
                 List<Genero> listaGeneros = new ArrayList();
                 GeneroDAO generoDAO = new GeneroDAO();
-                listaGeneros = generoDAO.listaGeneros();
+                listaGeneros = generoDAO.listarGeneros();
                 
                 request.setAttribute("generoLista", listaGeneros);
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/administrador/cadastrarGenero.jsp");

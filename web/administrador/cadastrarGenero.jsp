@@ -37,7 +37,7 @@
                 </div>
                 <div class=" col-sm-6">
                     <h1>Cadastro de Gêneros</h1>
-                    <form class="form-horizontal" id="form" method="POST" action="../Generos?action=cadastrar" >
+                    <form class="form-horizontal" id="form" method="POST" action="../administrador/Generos?action=cadastrar" >
                         <div class="form-group">
                             <label for="" class="col-sm-4 control-label">Título</label>
                             <div class="col-sm-8">
@@ -65,7 +65,7 @@
                                 <td>${genero.idGenero}</td>
                                 <td>${genero.nome}</td>
                                 <td><span class="glyphicon glyphicon-pencil"></span></td>
-                                <td><span class="glyphicon glyphicon-trash"></span></td>
+                                <td><a href="Generos?action=remover&id=${genero.idGenero}"><span class="glyphicon glyphicon-trash"></span></a></td>
 
                             </tr>
                         </c:forEach>

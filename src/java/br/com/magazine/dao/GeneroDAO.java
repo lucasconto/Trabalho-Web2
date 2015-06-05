@@ -24,7 +24,8 @@ public class GeneroDAO {
 
     private final String stmtCadastraGenero = "insert into genero (nome) values (?)";
     private final String stmtListaGenero = "select * from genero";
-    private final String stmtAtualizaGenero = "update genero set nome = ? where idEditora = ?";
+    private final String stmtAtualizaGenero = "update genero set nome = ? where idgenero = ?";
+    private final String stmtRemoveGenero = "delete from genero where idGenero= ?";
 
     public void cadastrarGenero(Genero genero) throws ClassNotFoundException {
         Connection con = null;
@@ -52,7 +53,7 @@ public class GeneroDAO {
         }
     }
 
-    public List<Genero> listaGeneros() throws SQLException, ClassNotFoundException {
+    public List<Genero> listarGeneros() throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -65,7 +66,7 @@ public class GeneroDAO {
             while (rs.next()) {
                 Genero genero = new Genero();
                 genero.setIdGenero(rs.getInt("idgenero"));
-                genero.setNome(rs.getString("genero"));
+                genero.setNome(rs.getString("nome"));
                 listaGeneros.add(genero);
             }
             return listaGeneros;
@@ -102,6 +103,7 @@ public class GeneroDAO {
             stmt.setString(1, genero.getNome());
             stmt.setInt(2, genero.getIdGenero());
             stmt.executeUpdate();
+            con.commit();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -114,6 +116,30 @@ public class GeneroDAO {
                 con.close();
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar a conexao. Ex = " + ex.getMessage());
+            }
+        }
+    }
+        
+        public void removerGenero(Genero genero) throws ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try {
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(stmtRemoveGenero);
+            stmt.setLong(1, genero.getIdGenero());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                stmt.close();
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar stmt. Ex=" + ex.getMessage());
+            }
+            try {
+                con.close();
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar conexao. Ex = " + ex.getMessage());
             }
         }
     }

@@ -5,10 +5,14 @@
  */
 package br.com.magazine.dao;
 import br.com.magazine.entidade.Editora;
+import br.com.magazine.entidade.Genero;
 import br.com.magazine.util.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -18,6 +22,8 @@ public class EditoraDAO {
     //sem imagem
     private final String stmtCadastraEditora = "insert into editora (nome) values (?)";
     private final String stmtAtualizaEditora = "update editora set nome = ? where idEditora = ?";
+    private final String stmtListaEditora = "select * from editora";
+    private final String stmtRemoveEditora = "delete from editora where idEditora= ?";
 
 
     public void cadastrarEditora (Editora editora) throws ClassNotFoundException{ 
@@ -46,7 +52,47 @@ public class EditoraDAO {
         }
     }
     
-            public void atualizarEditora(Editora ed) throws ClassNotFoundException {
+    public List<Editora> listarEditoras() throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(stmtListaEditora);
+            rs = stmt.executeQuery();
+            List<Editora> listaEditoras = new ArrayList();
+            while (rs.next()) {
+                Editora editora = new Editora();
+                editora.setIdEditora(rs.getInt("ideditora"));
+                editora.setNome(rs.getString("nome"));
+                listaEditoras.add(editora);
+            }
+            return listaEditoras;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                rs.close();
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar result set.Erro: " + ex.getMessage());
+            }
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar statement. Ex = " + ex.getMessage());
+            }
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar a conexao. Ex = " + ex.getMessage());
+            }
+        }
+
+    }
+    
+        public void atualizarEditora(Editora ed) throws ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
         try {
@@ -68,6 +114,30 @@ public class EditoraDAO {
                 con.close();
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar a conexao. Ex = " + ex.getMessage());
+            }
+        }
+    }
+        
+        public void removerEditora(Editora editora) throws ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try {
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(stmtRemoveEditora);
+            stmt.setLong(1, editora.getIdEditora());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                stmt.close();
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar stmt. Ex=" + ex.getMessage());
+            }
+            try {
+                con.close();
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar conexao. Ex = " + ex.getMessage());
             }
         }
     }

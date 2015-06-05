@@ -9,9 +9,12 @@ package br.com.magazine.teste;
 import br.com.magazine.dao.ClienteDAO;
 import br.com.magazine.dao.EditoraDAO;
 import br.com.magazine.entidade.Editora;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -19,12 +22,21 @@ import java.text.SimpleDateFormat;
  */
 public class TesteEditoraDAO {
 
-    public static void main(String[] args) throws ParseException, ClassNotFoundException {
-        Editora editora = new Editora();
-        editora.setNome("Alamo");
+    public static void main(String[] args) throws ParseException, ClassNotFoundException, SQLException {
+        //Cadastro
         
+//        Editora editora = new Editora();
+//        editora.setNome("Alamo");
+//        EditoraDAO editoraDAO = new EditoraDAO();
+//        editoraDAO.cadastrarEditora(editora);
+        
+        
+        //Listar
+        List<Editora> listaEditoras = new ArrayList();
         EditoraDAO editoraDAO = new EditoraDAO();
-        editoraDAO.cadastrarEditora(editora);
-        
+        listaEditoras = editoraDAO.listarEditoras();
+        for(Editora teste : listaEditoras){
+            System.out.println(teste.getNome());
+        }
     }
 }

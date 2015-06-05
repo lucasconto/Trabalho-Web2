@@ -113,29 +113,28 @@ public class ClienteDAO {
 
     
     
-        public void removerCliente(Cliente cliente) throws ClassNotFoundException{
+    public void removerCliente(Cliente cliente) throws ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
-        try{
+        try {
             con = ConnectionFactory.getConnection();
             stmt = con.prepareStatement(stmtRemoveCliente);
-            stmt.setLong(1,cliente.getId());
+            stmt.setLong(1, cliente.getId());
             stmt.executeUpdate();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally{
-            try{
+        } finally {
+            try {
                 stmt.close();
-            }catch (Exception ex){
-                System.out.println("Erro ao fechar stmt. Ex="+ex.getMessage());
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar stmt. Ex=" + ex.getMessage());
             }
-            try{
+            try {
                 con.close();
-            }catch(Exception ex){
-                System.out.println("Erro ao fechar conexao. Ex = "+ex.getMessage());
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar conexao. Ex = " + ex.getMessage());
             }
         }
-    
     }
     
     

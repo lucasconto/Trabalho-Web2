@@ -14,7 +14,7 @@
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Site desenvolvido por Bruno R. Sella, Evandro Luís Machado e Yuri Jungles para aprovação nas matérias de Web 2 e DAC.</p>
+                    <p>Site desenvolvido por Bruno R. Sella, Evandro Luís Machado, Felipe Linhares e Yuri Jungles para aprovação nas matérias de Web 2 e DAC.</p>
                 </div>
             </div>
         </footer>

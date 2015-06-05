@@ -34,8 +34,8 @@
                     </div>
                 </div>
                 <div class="col-md-9 ">
-                    <h1>Cadastro de Editora</h1>
-                    <form class="form-horizontal" method="POST" action="../Editoras?action=cadastrar">
+                    <h1>Cadastro de Editoras</h1>
+                    <form class="form-horizontal" method="POST" action="./Editoras?action=cadastrar">
                         <div class="form-group">
                             <label for="" class="col-sm-2 control-label">Nome</label>
                             <div class="col-sm-6">
@@ -43,24 +43,30 @@
                             </div>
                         </div>   
                         <div class="form-group">
-                            <label for="" class="col-sm-2 control-label">Ativo</label>  
-                            <div class="radio col-sm-6 ">
-                                <label class="radio-inline">
-                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-                                    Ativo
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" />
-                                    Inativo
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-6">
                                 <button type="submit" class="btn btn-success btn-lg btn-block ">Cadastrar</button>
                             </div>
                         </div>
                     </form>
+                     <hr />
+                    <table class="table">
+                        <tr>
+                            <th>#</th>
+                            <th>Título</th>
+                            <th>Editar</th>
+                            <th>Remover</th>
+                        </tr>
+                        <!-- inserir via banco de dados -->
+                        <c:forEach items="${editoraLista}" var="editora">
+                            <tr>
+                                <td>${editora.idEditora}</td>
+                                <td>${editora.nome}</td>
+                                <td><span class="glyphicon glyphicon-pencil"></span></td>
+                                <td><a href="Editoras?action=remover&id=${editora.idEditora}"><span class="glyphicon glyphicon-trash"></span></a></td>
+
+                            </tr>
+                        </c:forEach>
+                    </table>
                 </div>
             </div>
         </div>
