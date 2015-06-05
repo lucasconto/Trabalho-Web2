@@ -30,12 +30,12 @@ public class TesteGeneroDAO {
         
         
         //Listar
-//        List<Genero> listaGeneros = new ArrayList();
-//        GeneroDAO generoDAO = new GeneroDAO();
-//        listaGeneros = generoDAO.listarGeneros();
-//        for(Genero teste : listaGeneros){
-//            System.out.println(teste.getNome());
-//        }
+        List<Genero> listaGeneros = new ArrayList();
+        GeneroDAO generoDAO = new GeneroDAO();
+        listaGeneros = generoDAO.listarGeneros();
+        for(Genero teste : listaGeneros){
+            System.out.println(teste.getNome());
+        }
         
         
         
@@ -49,10 +49,10 @@ public class TesteGeneroDAO {
         
         
 //        Remover
-        Genero genero = new Genero();
-        genero.setIdGenero(4);
-        GeneroDAO generoDAO = new GeneroDAO();
-        generoDAO.removerGenero(genero);
-
+//        Genero genero = new Genero();
+//        genero.setIdGenero(4);
+//        GeneroDAO generoDAO = new GeneroDAO();
+//        generoDAO.removerGenero(genero);
+//
     }
 }

@@ -46,6 +46,8 @@ public class Editoras extends HttpServlet {
                 editora.setNome(request.getParameter("editora"));
                 EditoraDAO editoraDAO = new EditoraDAO();
                 editoraDAO.cadastrarEditora(editora);
+                response.sendRedirect("./Editoras");
+                return;
             }
             if ("remover".equals(request.getParameter("action"))) {
                 Editora editora = new Editora();
@@ -53,6 +55,7 @@ public class Editoras extends HttpServlet {
                 EditoraDAO editoraDAO = new EditoraDAO();
                 editoraDAO.removerEditora(editora);
                 response.sendRedirect("./Editoras");
+                return;
             }
             else{
                 
