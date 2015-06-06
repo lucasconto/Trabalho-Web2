@@ -63,7 +63,7 @@
                             <tr>
                                 <td>${editora.idEditora}</td>
                                 <td>${editora.nome}</td>
-                                <td><span class="glyphicon glyphicon-pencil"></span></td>
+                                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-ideditora="${editora.idEditora}" data-editora="${editora.nome}">Editar</button></td>
                                 <td><a href="Editoras?action=remover&id=${editora.idEditora}"><span class="glyphicon glyphicon-trash"></span></a></td>
 
                             </tr>
@@ -72,6 +72,34 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Editar Editora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="Editoras?action=editar">
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" id="genero-id" name="editora-id"></textarea>
+                            </div>                            
+                            <div class="form-group">
+                                <label for="genero-nome" class="control-label">Editora:</label>
+                                <input type="text" class="form-control" id="genero-nome" name="editora-nome">
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-primary">Editar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
         <!--Inclui Rodapé-->
         <jsp:include page="../comum/rodape.jsp"/>
 
@@ -79,5 +107,23 @@
         <script src="../js/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="../js/bootstrap.min.js"></script>
+        
+        <script>
+            $(function () {
+
+                $('#exampleModal').on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget); // Button that triggered the modal
+                    var idgenero = button.data('ideditora'); // Extract info from data-* attributes
+                    var genero = button.data('editora');
+                    var modal = $(this);
+                    modal.find('#editora-id').val(idgenero);
+                    modal.find('#editora-nome').val(genero);
+                })
+            });
+
+        </script>        
+        
+        
+        
     </body>
 </html>

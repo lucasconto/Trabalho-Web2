@@ -50,6 +50,15 @@ public class Editoras extends HttpServlet {
                 response.sendRedirect("./Editoras");
                 return;
             }
+           if ("editar".equals(request.getParameter("action"))) {
+                Editora editora = new Editora();
+                editora.setNome(request.getParameter("editora-nome"));
+                editora.setIdEditora(Integer.parseInt(request.getParameter("editora-id")));
+                EditoraDAO editoraDAO = new EditoraDAO();
+                editoraDAO.atualizarEditora(editora);
+                response.sendRedirect("./Editoras");
+                return;
+            }           
             if ("remover".equals(request.getParameter("action"))) {
                 Editora editora = new Editora();
                 editora.setIdEditora(Integer.parseInt(request.getParameter("id")));
