@@ -129,11 +129,12 @@
         <div class="container">
             <div class=" col-sm-offset-3 col-sm-6">
         <h1>Dados Cadastrais</h1>
-        <form class="form-horizontal" id="form" onsubmit="return valida(this);">
+        <form class="form-horizontal" id="form" method="POST" action="../Clientes?action=alterar" onsubmit="return valida(this);">
+            <input type="hidden" id="idCliente" value ="">
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Nome Completo</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="" placeholder="" value="José da Silva Sauro" required>
+                    <input type="text" class="form-control" id="nome" placeholder="" value="José da Silva Sauro" required>
                 </div>
             </div>
             <div class="form-group">
@@ -155,25 +156,25 @@
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Data de Nascimento</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" maxlength="10" value="31/12/2004" id="datepicker" placeholder="dd/mm/aaa" OnKeyPress="formatar(this,'##/##/####')" required/>
+                    <input type="text" class="form-control" maxlength="10" value="31/12/2004" id="nascimento" placeholder="dd/mm/aaa" OnKeyPress="formatar(this,'##/##/####')" required/>
                 </div>
             </div>      
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Telefone</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" maxlength="14" id="" value="041-3456-3423" placeholder="DDD-0000-00000" OnKeyPress="formatar(this,'###-####-#####')" required/>
+                    <input type="text" class="form-control" maxlength="14" id="telefone" value="041-3456-3423" placeholder="DDD-0000-00000" OnKeyPress="formatar(this,'###-####-#####')" required/>
                 </div>
             </div>  
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Email</label>
                 <div class="col-sm-8">
-                    <input type="email" class="form-control"  id="" placeholder="seuemail@dominio.com" value="silva@sauro.cao" required/>
+                    <input type="email" class="form-control"  id="email" placeholder="seuemail@dominio.com" value="silva@sauro.cao" required/>
                 </div>
             </div>             
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Senha</label>
                 <div class="col-sm-8">
-                    <input type="password" class="form-control" value="123456" id="" placeholder="" required/>
+                    <input type="password" class="form-control" value="123456" id="senha" placeholder="" required/>
                 </div>
             </div> 
             <div class="form-group">
@@ -187,43 +188,43 @@
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">CEP</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" value="87654-987" maxlength="9" id="" placeholder="00000-000" OnKeyPress="formatar(this,'#####-###')" required />
+                    <input type="text" class="form-control" value="87654-987" maxlength="9" id="cep" placeholder="00000-000" OnKeyPress="formatar(this,'#####-###')" required />
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Endereço</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" value="Rua dos Alfeneiros" id="" placeholder="" required />
+                    <input type="text" class="form-control" value="Rua dos Alfeneiros" id="endereco" placeholder="" required />
                 </div>
             </div>            
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Número</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" value="12345" id="" placeholder="" required />
+                    <input type="text" class="form-control" value="12345" id="numero" placeholder="" required />
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Complemento</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" value="Casa" id="" placeholder="" required />
+                    <input type="text" class="form-control" value="Casa" id="complemento" placeholder="" required />
                 </div>
             </div>            
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Bairro</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" value="Boas Novas" id="" placeholder="" required />
+                    <input type="text" class="form-control" value="Boas Novas" id="bairro" placeholder="" required />
                 </div>
             </div>  
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Cidade</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" value="Seattle" id="" placeholder="" required />
+                    <input type="text" class="form-control" value="Seattle" id="cidade" placeholder="" required />
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Estado</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" value="PA" id="" placeholder="" required />
+                    <input type="text" class="form-control" value="PA" id="estado" placeholder="" required />
                 </div>
             </div> 
             <div class="form-group">

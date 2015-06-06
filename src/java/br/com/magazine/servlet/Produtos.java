@@ -1,6 +1,8 @@
 package br.com.magazine.servlet;
 
+import br.com.magazine.dao.EditoraDAO;
 import br.com.magazine.dao.ProdutoDAO;
+import br.com.magazine.entidade.Editora;
 import br.com.magazine.entidade.Genero;
 import br.com.magazine.entidade.Produto;
 import java.io.IOException;
@@ -43,12 +45,17 @@ public class Produtos extends HttpServlet{
                 out.println("</html>");
                 Produto produto = new Produto();
                 Genero genero = new Genero();
-                genero.setNome(request.getParameter("nome"));
+                Editora editora = new Editora();
+                EditoraDAO editoraDAO = new EditoraDAO();
+                editora = editoraDAO.buscarIdEditora(editora);
+                
+                editora.setNome(request.getParameter("editora"));
+                genero.setNome(request.getParameter("categoria"));
                 
 
                 produto.setTitulo(request.getParameter("titulo"));
                 produto.setAutor(request.getParameter("autor"));
-                produto.setEditora(request.getParameter("editora"));
+                produto.setEditora(editora);
                 produto.setGenero(genero);
                 produto.setPreco(Double.parseDouble(request.getParameter("preco")));
                 

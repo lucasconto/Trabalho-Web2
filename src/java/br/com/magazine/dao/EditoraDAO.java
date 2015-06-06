@@ -24,6 +24,7 @@ public class EditoraDAO {
     private final String stmtAtualizaEditora = "update editora set nome = ? where idEditora = ?";
     private final String stmtListaEditora = "select * from editora";
     private final String stmtRemoveEditora = "delete from editora where idEditora= ?";
+    private final String stmtBuscaIdEditora = "select idEditora from editore where nome = ?";
 
 
     public void cadastrarEditora (Editora editora) throws ClassNotFoundException{ 
@@ -64,7 +65,7 @@ public class EditoraDAO {
             List<Editora> listaEditoras = new ArrayList();
             while (rs.next()) {
                 Editora editora = new Editora();
-                editora.setIdEditora(rs.getInt("ideditora"));
+                editora.setIdEditora(rs.getInt("idEditora"));
                 editora.setNome(rs.getString("nome"));
                 listaEditoras.add(editora);
             }
@@ -141,6 +142,35 @@ public class EditoraDAO {
             }
         }
     }
+        
+        public Editora buscarIdEditora(Editora editora) throws ClassNotFoundException{
+            Connection con = null;
+            PreparedStatement stmt = null;
+            ResultSet rs = null;
+            try {
+                con = ConnectionFactory.getConnection();
+                con.setAutoCommit(false);
+                stmt = con.prepareStatement(stmtBuscaIdEditora);
+                stmt.setString(1, editora.getNome());
+                rs = stmt.executeQuery();
+                rs.next();
+                editora.setIdEditora(rs.getInt("idEditora"));
+                return editora;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } finally {
+                try {
+                    stmt.close();
+                } catch (SQLException ex) {
+                    System.out.println("Erro ao fechar statement. Ex = " + ex.getMessage());
+                }
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    System.out.println("Erro ao fechar a conexao. Ex = " + ex.getMessage());
+            }
+        }
+        }
     
     
 }

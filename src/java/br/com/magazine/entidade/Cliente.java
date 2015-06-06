@@ -37,6 +37,10 @@ public class Cliente {
         return idCliente;
     }
     
+    public void setId(int idCliente){
+        this.idCliente = idCliente;
+    }
+    
     public String getNome() {
         return nome;
     }

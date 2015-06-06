@@ -77,6 +77,42 @@ public class Clientes extends HttpServlet {
                 
                 ClienteDAO clienteDAO = new ClienteDAO();
                 clienteDAO.cadastrarCliente(cliente);
+            } else if ("alterar".equals(request.getParameter("action"))) {
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Servlet Clientes</title>");
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<h1>Servlet Clientes at " + request.getContextPath() + "</h1>");
+                out.println("</body>");
+                out.println("</html>");
+                Cliente cliente = new Cliente();
+                
+                cliente.setId(Integer.parseInt(request.getParameter("idCliente")));
+                cliente.setNome(request.getParameter("nome"));
+                cliente.setSexo(request.getParameter("sexo"));
+                cliente.setCpf(request.getParameter("cpf"));
+                
+                String nascimentoStr = request.getParameter("nascimento");
+                DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                java.util.Date nascimentoUtil = format.parse(nascimentoStr);
+                java.sql.Date nascimentoSql = new java.sql.Date(nascimentoUtil.getTime());
+                cliente.setNascimento(nascimentoSql);
+                
+                cliente.setTelefone(request.getParameter("telefone"));
+                cliente.setEmail(request.getParameter("email"));
+                cliente.setSenha(request.getParameter("senha"));
+                cliente.setCep(request.getParameter("cep"));
+                cliente.setEndereco(request.getParameter("endereco"));
+                cliente.setEndNumero(request.getParameter("numero"));
+                cliente.setEndComplemento(request.getParameter("complemento"));
+                cliente.setBairro(request.getParameter("bairro"));
+                cliente.setCidade(request.getParameter("cidade"));
+                cliente.setEstado(request.getParameter("estado"));
+                
+                ClienteDAO clienteDAO = new ClienteDAO();
+                clienteDAO.atualizarCliente(cliente);
             }
         }
     }

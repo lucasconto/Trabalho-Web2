@@ -13,7 +13,7 @@ public class Produto {
     private int idProduto;
     private String titulo;
     private String autor;
-    private String editora;
+    private Editora editora;
     private double preco;
     private Genero genero;
     private int idImg;
@@ -42,11 +42,11 @@ public class Produto {
         this.autor = autor;
     }
 
-    public String getEditora() {
+    public Editora getEditora() {
         return editora;
     }
 
-    public void setEditora(String editora) {
+    public void setEditora(Editora editora) {
         this.editora = editora;
     }
 

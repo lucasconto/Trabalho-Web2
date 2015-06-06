@@ -25,7 +25,7 @@ Create table Produto(
     idProduto serial,
     titulo varchar(100),
     autor varchar(50),
-    editora varchar(30),
+    idEditora int,
     categoria varchar(30),
     preco real,
     idImg int
