@@ -83,20 +83,19 @@
                         <h4 class="modal-title" id="exampleModalLabel">Editar Gênero</h4>
                     </div>
                     <div class="modal-body">
-                        <form action="Generos?action=editar">
+                        <form method="post" action="Generos?action=editar">
                             <div class="form-group">
-                                <input type="hidden" class="form-control" id="genero-id" name="genero-id"></textarea>
+                                <input type="hidden" class="form-control" id="genero-id" name="idgenero" value="${genero.idGenero}">
                             </div>                            
                             <div class="form-group">
                                 <label for="genero-nome" class="control-label">Gênero:</label>
-                                <input type="text" class="form-control" id="genero-nome" name="genero-nome">
+                                <input type="text" class="form-control" id="genero-nome" name="genero" value="${genero.nome}">
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                    <button type="submit" class="btn btn-primary">Editar</button>
+                                </div>
                             </div>
-
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-primary">Editar</button>
                     </div>
                 </div>
             </div>
@@ -121,7 +120,7 @@
                     var modal = $(this);
                     modal.find('#genero-id').val(idgenero);
                     modal.find('#genero-nome').val(genero);
-                })
+                });
             });
 
         </script>

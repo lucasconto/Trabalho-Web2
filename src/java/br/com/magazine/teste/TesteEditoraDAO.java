@@ -8,7 +8,9 @@ package br.com.magazine.teste;
 
 import br.com.magazine.dao.ClienteDAO;
 import br.com.magazine.dao.EditoraDAO;
+import br.com.magazine.dao.GeneroDAO;
 import br.com.magazine.entidade.Editora;
+import br.com.magazine.entidade.Genero;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -32,11 +34,21 @@ public class TesteEditoraDAO {
         
         
         //Listar
-        List<Editora> listaEditoras = new ArrayList();
-        EditoraDAO editoraDAO = new EditoraDAO();
-        listaEditoras = editoraDAO.listarEditoras();
-        for(Editora teste : listaEditoras){
-            System.out.println(teste.getNome());
-        }
+//        List<Editora> listaEditoras = new ArrayList();
+//        EditoraDAO editoraDAO = new EditoraDAO();
+//        listaEditoras = editoraDAO.listarEditoras();
+//        for(Editora teste : listaEditoras){
+//            System.out.println(teste.getNome());
+//        }
+        
+        //Alterar
+//        Genero genero = new Genero();
+//        genero.setIdGenero(1);
+//        genero.setNome("NovaEdit");
+//        GeneroDAO generoDAO = new GeneroDAO();
+//        generoDAO.atualizarGenero(genero);
+        
+        
+        
     }
 }

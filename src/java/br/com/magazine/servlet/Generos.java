@@ -52,11 +52,12 @@ public class Generos extends HttpServlet {
             }
             if ("editar".equals(request.getParameter("action"))) {
                 Genero genero = new Genero();
-                genero.setIdGenero(Integer.parseInt(request.getParameter("genero-id")));
-                genero.setNome(request.getParameter("genero-nome"));
+                genero.setIdGenero(Integer.parseInt(request.getParameter("idgenero")));
+                genero.setNome(request.getParameter("genero"));
                 GeneroDAO gdao = new GeneroDAO();
                 gdao.atualizarGenero(genero);
                 response.sendRedirect("./Generos");
+                return;
             }            
             if ("remover".equals(request.getParameter("action"))) {
                 Genero genero = new Genero();

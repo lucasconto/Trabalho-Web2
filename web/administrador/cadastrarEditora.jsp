@@ -80,20 +80,20 @@
                         <h4 class="modal-title" id="exampleModalLabel">Editar Editora</h4>
                     </div>
                     <div class="modal-body">
-                        <form action="Editoras?action=editar">
+                        <form action="Editoras?action=editar" method="post">
                             <div class="form-group">
-                                <input type="hidden" class="form-control" id="genero-id" name="editora-id"></textarea>
+                                <input type="hidden" class="form-control" id="editora-id" name="editora-id"></textarea>
                             </div>                            
                             <div class="form-group">
                                 <label for="genero-nome" class="control-label">Editora:</label>
-                                <input type="text" class="form-control" id="genero-nome" name="editora-nome">
+                                <input type="text" class="form-control" id="editora-nome" name="editora-nome">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                <button type="submit" class="btn btn-primary">Editar</button>
                             </div>
 
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-primary">Editar</button>
                     </div>
                 </div>
             </div>
@@ -113,11 +113,11 @@
 
                 $('#exampleModal').on('show.bs.modal', function (event) {
                     var button = $(event.relatedTarget); // Button that triggered the modal
-                    var idgenero = button.data('ideditora'); // Extract info from data-* attributes
-                    var genero = button.data('editora');
+                    var ideditora = button.data('ideditora'); // Extract info from data-* attributes
+                    var editora = button.data('editora');
                     var modal = $(this);
-                    modal.find('#editora-id').val(idgenero);
-                    modal.find('#editora-nome').val(genero);
+                    modal.find('#editora-id').val(ideditora);
+                    modal.find('#editora-nome').val(editora);
                 })
             });
 

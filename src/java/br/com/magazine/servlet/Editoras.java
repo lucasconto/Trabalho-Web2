@@ -51,6 +51,7 @@ public class Editoras extends HttpServlet {
                 return;
             }
            if ("editar".equals(request.getParameter("action"))) {
+               System.out.println("oi");
                 Editora editora = new Editora();
                 editora.setNome(request.getParameter("editora-nome"));
                 editora.setIdEditora(Integer.parseInt(request.getParameter("editora-id")));

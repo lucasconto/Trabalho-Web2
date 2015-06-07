@@ -22,7 +22,7 @@ public class EditoraDAO {
     //sem imagem
     private final String stmtCadastraEditora = "insert into editora (nome) values (?)";
     private final String stmtAtualizaEditora = "update editora set nome = ? where idEditora = ?";
-    private final String stmtListaEditora = "select * from editora";
+    private final String stmtListaEditora = "select * from editora order by nome";
     private final String stmtRemoveEditora = "delete from editora where idEditora= ?";
     private final String stmtBuscaIdEditora = "select idEditora from editore where nome = ?";
 
@@ -103,6 +103,7 @@ public class EditoraDAO {
             stmt.setString(1, ed.getNome());
             stmt.setInt(2, ed.getIdEditora());
             stmt.executeUpdate();
+            con.commit();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {

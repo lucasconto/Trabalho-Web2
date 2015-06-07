@@ -23,7 +23,7 @@ public class GeneroDAO {
     //sem imagem
 
     private final String stmtCadastraGenero = "insert into genero (nome) values (?)";
-    private final String stmtListaGenero = "select * from genero";
+    private final String stmtListaGenero = "select * from genero order by nome";
     private final String stmtAtualizaGenero = "update genero set nome = ? where idgenero = ?";
     private final String stmtRemoveGenero = "delete from genero where idGenero= ?";
 
