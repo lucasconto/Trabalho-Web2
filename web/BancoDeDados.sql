@@ -1,4 +1,4 @@
---Nome da tabela 
+--Nome do banco: Web2
 
 -- Criação da tabela Cliente
 
@@ -25,10 +25,10 @@ Create table Produto(
     idProduto serial,
     titulo varchar(100),
     autor varchar(50),
-    idEditora int,
-    categoria varchar(30),
+    fkEditora int,
+    fkgenero varchar(30),
     preco real,
-    idImg int,
+    idImg serial,
     inativo int
 );
 

@@ -55,7 +55,7 @@
             </div>
             <div class=" col-sm-6">
                 <h1>Cadastro de Produto</h1>
-                <form class="form-horizontal" id="form" method="POST" action="../Produtos?action=cadastrar" onsubmit="//return valida(this);">
+                <form class="form-horizontal" id="form" method="POST" action="../Produtos?action=cadastrar" onsubmit="//return valida(this);"  enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="" class="col-sm-4 control-label">Título</label>
                         <div class="col-sm-8">
@@ -100,7 +100,7 @@
                     <div class="form-group">
                         <label for="" class="col-sm-4 control-label">Imagem</label>
                         <div class="col-sm-8">
-                            <input name="idImg" id="idImg"  type="file" class="" id="">
+                            <input name="idImg" id="idImg"  type="file" class="" id=""  accept="image/jpeg">
                             
                         </div>
                     </div>  
@@ -122,5 +122,6 @@
         <script src="../js/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="../js/bootstrap.min.js"></script>
+        
     </body>
 </html>

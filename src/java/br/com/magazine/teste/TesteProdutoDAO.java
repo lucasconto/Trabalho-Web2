@@ -26,16 +26,18 @@ import java.util.List;
         //Cadastro
        Genero genero = new Genero();
        genero.setNome("Linhares");
-            
+       genero.setIdGenero(2);
             
         Produto produto = new Produto();
         produto.setTitulo("Evandro iz");
         produto.setAutor("Bruno Sella");
-        produto.setEditora("Jungles");
-        produto.setPreco(20);
+        produto.setEditora("1");
+        produto.setPreco(20.89);
         produto.setGenero(genero);
         ProdutoDAO produtoDAO = new ProdutoDAO();
-        produtoDAO.cadastrarProduto(produto);
+      int oi =  produtoDAO.cadastrarProduto(produto);
+        System.out.println(oi);
+        
             
             
 

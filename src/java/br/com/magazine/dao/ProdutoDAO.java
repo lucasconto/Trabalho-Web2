@@ -20,14 +20,14 @@ import java.util.List;
  */
 public class ProdutoDAO {
     //sem imagem
-    private final String stmtCadastraProduto = "insert into produto (titulo, autor, editora, preco, genero) values (?,?,?,?,?)";
+    private final String stmtCadastraProduto = "insert into produto (titulo, autor, fkeditora, preco, fkgenero) values (?,?,?,?,?)";
     //private final String stmtCadastraProduto = "insert into produto (titulo, autor, editora, categoria, preco, genero, idImg) values (?,?,?,?,?,?)";
     private final String stmtAtualizaProduto = "update produto set titulo = ?, autor = ?, editora = ?, preco = ?, genero = ? where idProduto = ?";
     private final String stmtRemoveProduto = "update produto set inativo = 1 where idProduto = ?";
     private final String stmtListaProduto = "select * from produto";
 
     
-    public void cadastrarProduto (Produto p) throws ClassNotFoundException{ 
+    public int cadastrarProduto (Produto p) throws ClassNotFoundException{ 
         Connection con = null;
         PreparedStatement stmt = null;
         try {
@@ -36,13 +36,22 @@ public class ProdutoDAO {
             stmt = con.prepareStatement(stmtCadastraProduto, PreparedStatement.RETURN_GENERATED_KEYS);
             stmt.setString(1, p.getTitulo());
             stmt.setString(2, p.getAutor());
-            stmt.setString(3, p.getEditora());
+            stmt.setInt(3, Integer.parseInt(p.getEditora()));
             stmt.setDouble(4, p.getPreco());
             stmt.setString(5, p.getGenero().getNome());
             //sem imagem
             //stmt.setInt(6, p.getidImg());
             stmt.executeUpdate();
             con.commit();
+            
+             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                return generatedKeys.getInt("idimg");
+            }
+            else {
+                throw new SQLException("Creating user failed, no ID obtained.");
+            }
+        }
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao inserir um produto no banco de dados. Origem: " + e.getMessage());
         } finally {

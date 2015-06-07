@@ -24,7 +24,7 @@ public class EditoraDAO {
     private final String stmtAtualizaEditora = "update editora set nome = ? where idEditora = ?";
     private final String stmtListaEditora = "select * from editora order by nome";
     private final String stmtRemoveEditora = "delete from editora where idEditora= ?";
-    private final String stmtBuscaIdEditora = "select idEditora from editore where nome = ?";
+    private final String stmtBuscaIdEditora = "select idEditora from editora where nome = ?";
 
 
     public void cadastrarEditora (Editora editora) throws ClassNotFoundException{ 
