@@ -28,16 +28,19 @@ Create table Produto(
     idEditora int,
     categoria varchar(30),
     preco real,
-    idImg int
+    idImg int,
+    inativo int
 );
 
 
 Create table Editora(
     idEditora serial,
     nome varchar(100)
+    inativo int
 );
 
 Create table Genero(
     idGenero serial,
     nome varchar(100)
+    inativo int
 );

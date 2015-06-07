@@ -13,10 +13,19 @@ public class Produto {
     private int idProduto;
     private String titulo;
     private String autor;
-    private Editora editora;
+    private String editora;
     private double preco;
     private Genero genero;
     private int idImg;
+    private int inativo;
+    
+    public int getInativo() {
+    return inativo;
+    }
+
+    public void setInativo(int inativo) {
+        this.inativo = inativo;
+    }
 
     public int getIdProduto() {
         return idProduto;
@@ -42,11 +51,11 @@ public class Produto {
         this.autor = autor;
     }
 
-    public Editora getEditora() {
+    public String getEditora() {
         return editora;
     }
 
-    public void setEditora(Editora editora) {
+    public void setEditora(String editora) {
         this.editora = editora;
     }
 
