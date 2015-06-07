@@ -9,11 +9,13 @@ import br.com.magazine.dao.ClienteDAO;
 import br.com.magazine.entidade.Cliente;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Evandro-PC
  */
-@WebServlet(name = "Clientes", urlPatterns = {"/Clientes"})
+@WebServlet(name = "Clientes", urlPatterns = {"/cliente/Clientes"})
 public class Clientes extends HttpServlet {
 
     /**
@@ -37,21 +39,12 @@ public class Clientes extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ParseException, ClassNotFoundException {
+            throws ServletException, IOException, ParseException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             if ("cadastrar".equals(request.getParameter("action"))) {
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet Clientes</title>");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h1>Servlet Clientes at " + request.getContextPath() + "</h1>");
-                out.println("</body>");
-                out.println("</html>");
                 Cliente cliente = new Cliente();
                 
                 cliente.setNome(request.getParameter("nome"));
@@ -77,16 +70,20 @@ public class Clientes extends HttpServlet {
                 
                 ClienteDAO clienteDAO = new ClienteDAO();
                 clienteDAO.cadastrarCliente(cliente);
-            } else if ("alterar".equals(request.getParameter("action"))) {
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet Clientes</title>");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h1>Servlet Clientes at " + request.getContextPath() + "</h1>");
-                out.println("</body>");
-                out.println("</html>");
+            } 
+            if ("alterarPerfil".equals(request.getParameter("action"))) {
+                ClienteDAO clienteDAO = new ClienteDAO();
+                Cliente clienteSessao = new Cliente();
+                clienteSessao.setId(3);
+                Cliente cliente = clienteDAO.buscarClienteId(clienteSessao);
+                System.out.println(cliente.getId());
+                request.setAttribute("cliente", cliente);
+//                response.sendRedirect("./alterarCliente.jsp");
+//                return;
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/alterarCliente.jsp");
+                rd.forward(request,response);
+            }
+            if ("alterar".equals(request.getParameter("action"))) {
                 Cliente cliente = new Cliente();
                 
                 cliente.setId(Integer.parseInt(request.getParameter("idCliente")));
@@ -95,6 +92,7 @@ public class Clientes extends HttpServlet {
                 cliente.setCpf(request.getParameter("cpf"));
                 
                 String nascimentoStr = request.getParameter("nascimento");
+                System.out.println(nascimentoStr);
                 DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                 java.util.Date nascimentoUtil = format.parse(nascimentoStr);
                 java.sql.Date nascimentoSql = new java.sql.Date(nascimentoUtil.getTime());
@@ -135,6 +133,8 @@ public class Clientes extends HttpServlet {
             Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -154,6 +154,8 @@ public class Clientes extends HttpServlet {
         } catch (ParseException ex) {
             Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
             Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

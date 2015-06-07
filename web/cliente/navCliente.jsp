@@ -37,10 +37,10 @@
                               <a href="visualizarCompra.jsp">
                               <li>Minhas Compras</li>
                               </a>
-                              <a href="../comum/alterarCliente.jsp">
+                              <a href="../cliente/Clientes?action=alterarPerfil">
                               <li>Alterar Perfil</li>
                               </a>
-                              <a href="../comum/index.jsp">
+                              <a href="../cliente/index.jsp">
                               <li>Logout</li>
                               </a>
                           </ul>

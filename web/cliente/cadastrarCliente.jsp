@@ -33,7 +33,7 @@
             function formatar(src, mask){
             var i = src.value.length;
             var saida = mask.substring(0,1);
-            var texto = mask.substring(i)
+            var texto = mask.substring(i);
           if (texto.substring(0,1) != saida)
             {
               src.value += texto.substring(0,1);
@@ -60,7 +60,7 @@
                 changeYear: true,
                 minDate: start,
                 maxDate: end,
-                yearRange: -100 + ':' + end.getFullYear(),
+                yearRange: -100 + ':' + end.getFullYear()
     });
            });
            
@@ -124,12 +124,12 @@
     </head>
     <body>
             <!--Inclui cabeçalho-->
-            <jsp:include page="navAnonimo.jsp"/>
+            <jsp:include page="../comum/navAnonimo.jsp"/>
         
         <div class="container">
             <div class=" col-sm-offset-3 col-sm-6">
         <h1>Dados Cadastrais</h1>
-        <form class="form-horizontal" id="form" method="POST" action="../Clientes?action=cadastrar" onsubmit="//return valida(this);">
+        <form class="form-horizontal" id="form" method="POST" action="Clientes?action=cadastrar" onsubmit="//return valida(this);">
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Nome Completo</label>
                 <div class="col-sm-8">
@@ -236,7 +236,7 @@
 </div>
         
         <!--Inclui Rodapé-->
-        <jsp:include page="rodape.jsp"/>    
+        <jsp:include page="../comum/rodape.jsp"/>    
 
 
         <!-- Include all compiled plugins (below), or include individual files as needed -->

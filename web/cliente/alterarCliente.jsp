@@ -1,3 +1,5 @@
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -33,7 +35,7 @@
             function formatar(src, mask){
             var i = src.value.length;
             var saida = mask.substring(0,1);
-            var texto = mask.substring(i)
+            var texto = mask.substring(i);
           if (texto.substring(0,1) != saida)
             {
               src.value += texto.substring(0,1);
@@ -60,7 +62,7 @@
                 changeYear: true,
                 minDate: start,
                 maxDate: end,
-                yearRange: -100 + ':' + end.getFullYear(),
+                yearRange: -100 + ':' + end.getFullYear()
     });
            });
            
@@ -124,17 +126,17 @@
     </head>
     <body>
             <!--Inclui cabeçalho-->
-            <jsp:include page="../administrador/navAdministrador.jsp"/>
+            <jsp:include page="../cliente/navCliente.jsp"/>
         
         <div class="container">
             <div class=" col-sm-offset-3 col-sm-6">
         <h1>Dados Cadastrais</h1>
-        <form class="form-horizontal" id="form" method="POST" action="../Clientes?action=alterar" onsubmit="return valida(this);">
+        <form class="form-horizontal" id="form" method="POST" action="../cliente/Clientes?action=alterar" onsubmit="//return valida(this);">
             <input type="hidden" id="idCliente" value ="">
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Nome Completo</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="nome" placeholder="" value="José da Silva Sauro" required>
+                    <input type="text" name="nome" class="form-control" id="nome" placeholder="" value="${cliente.nome}" required>
                 </div>
             </div>
             <div class="form-group">
@@ -142,45 +144,45 @@
                 <div class="col-sm-8">
                     <select name="sexo" id="sexo" class="form-control">
                         <option >Selecione</option>
-                        <option value="m" selected="selected" required>Masculino</option>
-                        <option value="f" required>Feminino</option>
+                        <option value="m" ${cliente.sexo == 'm' ? 'selected' : ''} required>Masculino</option>
+                        <option value="f" ${cliente.sexo == 'f' ? 'selected' : ''} required>Feminino</option>
                     </select>
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">CPF</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" maxlength="14" id="cpf" value="123.432.324-66" placeholder="000.000.000-00" OnKeyPress="formatar(this,'###.###.###-##')"  required/>
+                    <input type="text" name="cpf" class="form-control" maxlength="14" id="cpf" value="${cliente.cpf}" placeholder="000.000.000-00" OnKeyPress="formatar(this,'###.###.###-##')"  required/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Data de Nascimento</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" maxlength="10" value="31/12/2004" id="nascimento" placeholder="dd/mm/aaa" OnKeyPress="formatar(this,'##/##/####')" required/>
+                    <input type="text" name="nascimento" class="form-control" maxlength="10" value="<fmt:formatDate value="${cliente.nascimento}" pattern="dd/MM/yyyy" />" id="datepicker" placeholder="dd/mm/aaa" OnKeyPress="formatar(this,'##/##/####')" required/>
                 </div>
             </div>      
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Telefone</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" maxlength="14" id="telefone" value="041-3456-3423" placeholder="DDD-0000-00000" OnKeyPress="formatar(this,'###-####-#####')" required/>
+                    <input type="text" name="telefone" class="form-control" maxlength="14" id="telefone" value="${cliente.telefone}" placeholder="DDD-0000-00000" OnKeyPress="formatar(this,'###-####-#####')" required/>
                 </div>
             </div>  
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Email</label>
                 <div class="col-sm-8">
-                    <input type="email" class="form-control"  id="email" placeholder="seuemail@dominio.com" value="silva@sauro.cao" required/>
+                    <input type="email" name="email" class="form-control"  id="email" placeholder="seuemail@dominio.com" value="${cliente.email}" required/>
                 </div>
             </div>             
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Senha</label>
                 <div class="col-sm-8">
-                    <input type="password" class="form-control" value="123456" id="senha" placeholder="" required/>
+                    <input type="password" name="senha" class="form-control" value="" id="senha" placeholder="" required/>
                 </div>
             </div> 
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Confirme sua Senha</label>
                 <div class="col-sm-8">
-                    <input type="password" class="form-control" id="" value="123456" placeholder="" required/>
+                    <input type="password" name="confirmaSenha" class="form-control" id="" value="" placeholder="" required/>
                 </div>
             </div>       
             
@@ -188,43 +190,44 @@
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">CEP</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" value="87654-987" maxlength="9" id="cep" placeholder="00000-000" OnKeyPress="formatar(this,'#####-###')" required />
+                    <input type="text" name="cep" class="form-control" value="${cliente.cep}" maxlength="9" id="cep" placeholder="00000-000" OnKeyPress="formatar(this,'#####-###')" required />
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Endereço</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" value="Rua dos Alfeneiros" id="endereco" placeholder="" required />
+                    <input type="text" name="endereco" class="form-control" value="${cliente.endereco}" id="endereco" placeholder="" required />
                 </div>
             </div>            
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Número</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" value="12345" id="numero" placeholder="" required />
+                    <input type="text" name="numero" class="form-control" value="${cliente.endNumero}" id="numero" placeholder="" required />
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Complemento</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" value="Casa" id="complemento" placeholder="" required />
+                    <input type="text" name="complemento" class="form-control" value="${cliente.endComplemento}" id="complemento" placeholder="" required />
                 </div>
             </div>            
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Bairro</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" value="Boas Novas" id="bairro" placeholder="" required />
+                    <input type="text" name="bairro" class="form-control" value="${cliente.bairro}" id="bairro" placeholder="" required />
                 </div>
             </div>  
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Cidade</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" value="Seattle" id="cidade" placeholder="" required />
+                    <input type="text" name="cidade" class="form-control" value="${cliente.cidade}" id="cidade" placeholder="" required />
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Estado</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" value="PA" id="estado" placeholder="" required />
+                    <input type="text" name="estado" class="form-control" value="${cliente.estado}" id="estado" placeholder="" required />
+                    <input type="hidden" value="${cliente.id}" name="idCliente"/>
                 </div>
             </div> 
             <div class="form-group">

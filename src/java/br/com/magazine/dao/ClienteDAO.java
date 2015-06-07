@@ -6,11 +6,16 @@
 package br.com.magazine.dao;
 
 import br.com.magazine.entidade.Cliente;
+import br.com.magazine.entidade.Editora;
 import br.com.magazine.util.ConnectionFactory;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +27,7 @@ public class ClienteDAO {
 
     private final String stmtCadastraCliente = "insert into Cliente (nome, sexo, cpf, nascimento, telefone, email, senha, cep, endereco, endnumero, endcomplemento, bairro, cidade, estado) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private final String stmtAtualizaCliente = "update Cliente set nome = ?, sexo = ?, cpf = ?, nascimento = ?, telefone = ?, email = ?, senha = ?, cep = ?, endereco = ?, endnumero = ?, endcomplemento = ?, bairro = ?, cidade = ?, estado = ? where idCliente = ?";
+    private final String stmtBuscarClienteId = "select * from Cliente where idcliente = ?";
 //    private final String stmtListaCliente = "select * from Cliente";
     private final String stmtRemoveCliente = "update Cliente set inativo = 1 where idCliente = ?";
 //    private final String stmtRemoveItemPedidoCliente = "delete from itempedido where idpedido = (select idpedido from pedido where idcliente = ?)";
@@ -95,6 +101,7 @@ public class ClienteDAO {
             stmt.setString(14, cliente.getEstado());
             stmt.setInt(15, cliente.getId());
             stmt.executeUpdate();
+            con.commit();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -135,6 +142,58 @@ public class ClienteDAO {
                 System.out.println("Erro ao fechar conexao. Ex = " + ex.getMessage());
             }
         }
+    }
+    
+    public Cliente buscarClienteId(Cliente cliente) throws SQLException, ClassNotFoundException, ParseException {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(stmtBuscarClienteId);
+            stmt.setInt(1, cliente.getId());
+            rs = stmt.executeQuery();
+            rs.next();
+            Cliente clienteRetorno = new Cliente();
+            clienteRetorno.setId(cliente.getId());
+            clienteRetorno.setNome(rs.getString("nome"));
+            clienteRetorno.setSexo(rs.getString("sexo"));
+            clienteRetorno.setCpf(rs.getString("cpf"));
+            Date nascimento = rs.getDate("nascimento");
+            clienteRetorno.setNascimento(nascimento);
+            clienteRetorno.setTelefone(rs.getString("telefone"));
+            clienteRetorno.setEmail(rs.getString("email"));
+            clienteRetorno.setSenha(rs.getString("senha"));
+            clienteRetorno.setCep(rs.getString("cep"));
+            clienteRetorno.setEndereco(rs.getString("endereco"));
+            clienteRetorno.setEndNumero(rs.getString("endnumero"));
+            clienteRetorno.setEndComplemento(rs.getString("endcomplemento"));
+            clienteRetorno.setBairro(rs.getString("bairro"));
+            clienteRetorno.setCidade(rs.getString("cidade"));
+            clienteRetorno.setEstado(rs.getString("estado"));
+
+            return clienteRetorno;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                rs.close();
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar result set.Erro: " + ex.getMessage());
+            }
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar statement. Ex = " + ex.getMessage());
+            }
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar a conexao. Ex = " + ex.getMessage());
+            }
+        }
+
     }
     
     
