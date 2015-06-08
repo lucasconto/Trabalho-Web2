@@ -60,7 +60,7 @@ public class TesteClienteDAO {
         ClienteDAO clienteDAO = new ClienteDAO();
 //        listaClientes = clienteDAO.buscarClienteNome("r");
 //        listaClientes = clienteDAO.buscarClienteCPF("8");
-        listaClientes = clienteDAO.buscarClienteEmail("5");
+        listaClientes = clienteDAO.buscarFuncionarioEmail("5");
          for(Cliente teste : listaClientes){
             System.out.println(teste.getNome());
         }

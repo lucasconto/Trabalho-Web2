@@ -76,7 +76,6 @@ public class Clientes extends HttpServlet {
                 Cliente clienteSessao = new Cliente();
                 clienteSessao.setId(3);
                 Cliente cliente = clienteDAO.buscarClienteId(clienteSessao);
-                System.out.println(cliente.getId());
                 request.setAttribute("cliente", cliente);
 //                response.sendRedirect("./alterarCliente.jsp");
 //                return;
@@ -92,7 +91,6 @@ public class Clientes extends HttpServlet {
                 cliente.setCpf(request.getParameter("cpf"));
                 
                 String nascimentoStr = request.getParameter("nascimento");
-                System.out.println(nascimentoStr);
                 DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                 java.util.Date nascimentoUtil = format.parse(nascimentoStr);
                 java.sql.Date nascimentoSql = new java.sql.Date(nascimentoUtil.getTime());

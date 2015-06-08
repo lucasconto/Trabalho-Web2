@@ -38,7 +38,7 @@
             </div>
             <div class="col-md-9 ">
                 <h1>Buscar Funcionário</h1>
-                <form action="./Gerentes?action=buscar" method="post" class="form-horizontal">
+                <form action="./Gerentes?action=buscarf" method="post" class="form-horizontal">
                         <div class="form-group">
                         <div class="row">
                             <label class="col-md-2 control-label pull-left clearfix" for="">Buscar por:</label>

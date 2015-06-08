@@ -30,6 +30,8 @@ public class ClienteDAO {
     private final String stmtBuscarClienteId = "select * from Cliente where idcliente = ?";
 //    private final String stmtListaCliente = "select * from Cliente";
     private final String stmtRemoveCliente = "update Cliente set inativo = 0 where idCliente = ?";
+    private final String stmtRemoveAdministrador = "update Cliente set inativo = 2 where idCliente = ?";
+    private final String stmtRemoveGerente = "update Cliente set inativo = 4 where idCliente = ?";
 //    private final String stmtRemoveItemPedidoCliente = "delete from itempedido where idpedido = (select idpedido from pedido where idcliente = ?)";
 //    private final String stmtRemovePedidoCliente = "delete from pedido where idpedido = (select idpedido from pedido where idcliente= ? )";
     private final String stmtBuscarNome = "select * from Cliente where nome like ";
@@ -146,6 +148,52 @@ public class ClienteDAO {
             }
         }
     }
+    public void removerAdministrador(Cliente cliente) throws ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try {
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(stmtRemoveAdministrador);
+            stmt.setLong(1, cliente.getId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                stmt.close();
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar stmt. Ex=" + ex.getMessage());
+            }
+            try {
+                con.close();
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar conexao. Ex = " + ex.getMessage());
+            }
+        }
+    }
+    public void removerGerente(Cliente cliente) throws ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try {
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(stmtRemoveGerente);
+            stmt.setLong(1, cliente.getId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                stmt.close();
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar stmt. Ex=" + ex.getMessage());
+            }
+            try {
+                con.close();
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar conexao. Ex = " + ex.getMessage());
+            }
+        }
+    }
     
     public Cliente buscarClienteId(Cliente cliente) throws SQLException, ClassNotFoundException, ParseException {
         Connection con = null;
@@ -175,6 +223,7 @@ public class ClienteDAO {
             clienteRetorno.setBairro(rs.getString("bairro"));
             clienteRetorno.setCidade(rs.getString("cidade"));
             clienteRetorno.setEstado(rs.getString("estado"));
+            clienteRetorno.setStatus(Integer.parseInt(rs.getString("inativo")));
 
             return clienteRetorno;
         } catch (SQLException e) {
@@ -239,7 +288,7 @@ public class ClienteDAO {
 //
 //    }
 //    
-    public List<Cliente> buscarClienteNome(String nome) throws SQLException, ClassNotFoundException {
+    public List<Cliente> buscarFuncionarioNome(String nome) throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -252,7 +301,7 @@ public class ClienteDAO {
           
             while (rs.next()) {
                 Cliente cliente = new Cliente();
-                cliente.setId(cliente.getId());
+                cliente.setId(rs.getInt("idcliente"));
                 cliente.setNome(rs.getString("nome"));
                 cliente.setSexo(rs.getString("sexo"));
                 cliente.setCpf(rs.getString("cpf"));
@@ -293,7 +342,7 @@ public class ClienteDAO {
             }
         }
     }
-    public List<Cliente> buscarClienteCPF(String cpf) throws SQLException, ClassNotFoundException {
+    public List<Cliente> buscarFuncionarioCPF(String cpf) throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -306,7 +355,7 @@ public class ClienteDAO {
           
             while (rs.next()) {
                 Cliente cliente = new Cliente();
-                cliente.setId(cliente.getId());
+                cliente.setId(rs.getInt("idcliente"));
                 cliente.setNome(rs.getString("nome"));
                 cliente.setSexo(rs.getString("sexo"));
                 cliente.setCpf(rs.getString("cpf"));
@@ -347,7 +396,7 @@ public class ClienteDAO {
             }
         }
     }
-    public List<Cliente> buscarClienteEmail(String email) throws SQLException, ClassNotFoundException {
+    public List<Cliente> buscarFuncionarioEmail(String email) throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -360,7 +409,7 @@ public class ClienteDAO {
           
             while (rs.next()) {
                 Cliente cliente = new Cliente();
-                cliente.setId(cliente.getId());
+                cliente.setId(rs.getInt("idcliente"));
                 cliente.setNome(rs.getString("nome"));
                 cliente.setSexo(rs.getString("sexo"));
                 cliente.setCpf(rs.getString("cpf"));

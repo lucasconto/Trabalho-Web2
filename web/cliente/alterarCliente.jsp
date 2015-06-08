@@ -158,7 +158,7 @@
             <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Data de Nascimento</label>
                 <div class="col-sm-8">
-                    <input type="text" name="nascimento" class="form-control" maxlength="10" value="<fmt:formatDate value="${cliente.nascimento}" pattern="dd/MM/yyyy" />" id="datepicker" placeholder="dd/mm/aaa" OnKeyPress="formatar(this,'##/##/####')" required/>
+                    <input type="text" name="nascimento" class="form-control" maxlength="10" value='<fmt:formatDate value="${cliente.nascimento}" pattern="dd/MM/yyyy"/>' id="datepicker" placeholder="dd/mm/aaa" OnKeyPress="formatar(this,'##/##/####')" required/>
                 </div>
             </div>      
             <div class="form-group">

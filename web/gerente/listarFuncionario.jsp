@@ -75,6 +75,26 @@
                 </div>
                 <div class="col-md-9 ">   
                     <h1>Funcionários</h1>
+                <form action="./Gerentes?action=buscarf" method="post" class="form-horizontal">
+                        <div class="form-group">
+                        <div class="row">
+                            <label class="col-md-2 control-label pull-left clearfix" for="">Buscar por:</label>
+                        </div>
+                           <div class="col-md-2">
+                            <select name="escolha" class="form-control">
+                                <option value="nome" ${escolha == 'nome' ? 'selected' : ''}>Nome</option>
+                                <option value="cpf" ${escolha == 'cpf' ? 'selected' : ''}>CPF</option>
+                                <option value="email" ${escolha == 'email' ? 'selected' : ''}>Email</option>
+                            </select>
+                        </div>
+                            <div class="col-md-7">
+                                <input type="text" name="str" id="" class="form-control" placeholder="1234" value="${str}">
+                            </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-success  btn-block ">Buscar</button>
+                        </div>
+                    </div>
+                </form>
                     <table class="table table-striped table-bordered">
                         <tr>
                             <th>Nome</th>
@@ -92,17 +112,32 @@
                             <c:if test="${usuario.status == 5}">
                                 <td>Gerente</td>
                             </c:if>
-                            <td><div class="text-center">
-                                    <a href="./Gerentes?action=visualizar&id=${usuario.id}">
-                                        <span class="glyphicon glyphicon-eye-open" style="font-size: 20px"></span>
-                                    </a>
-                                    <a href="./Gerentes?action=alterar&id=${usuario.id}">
-                                        <span class="glyphicon glyphicon-pencil" style="font-size: 20px"></span>
-                                    </a>
-                                    <a href="./Gerentes?action=excluir&id=${usuario.id}">
+                            <td>
+                                <div class="text-center">
+                                    <form action="./Gerentes?action=visualizarf&id=${usuario.id}" method="post" style="display: inline">
+                                        <a href="#" onclick="this.parentNode.submit();">
+                                            <span class="glyphicon glyphicon-eye-open" style="font-size: 20px"></span>
+                                        <input type="hidden" value="${escolha}" name="escolha"/>
+                                        <input type="hidden" value="${str}" name="str"/>
+                                        </a>
+                                    </form>
+                                    <form action="./Gerentes?action=valterarf&id=${usuario.id}" method="post" style="display: inline">
+                                        <a href="#" onclick="this.parentNode.submit();">
+                                            <span class="glyphicon glyphicon-pencil" style="font-size: 20px"></span>
+                                        <input type="hidden" value="${escolha}" name="escolha"/>
+                                        <input type="hidden" value="${str}" name="str"/>
+                                        </a>
+                                    </form>
+                                    <form action="./Gerentes?action=excluirf&id=${usuario.id}" method="post" style="display: inline">
+                                    <a href="#" onclick="this.parentNode.submit();">
                                         <span class="glyphicon glyphicon-trash" style="font-size: 20px"></span>
+                                    <input type="hidden" value="${escolha}" name="escolha"/>
+                                    <input type="hidden" value="${usuario.status}" name="perfil"/>
+                                    <input type="hidden" value="${str}" name="str"/>
                                     </a>
-                                </div></td>
+                                    </form>
+                                </div>
+                            </td>
                             </tr>
                         </c:forEach>
                     </table>
