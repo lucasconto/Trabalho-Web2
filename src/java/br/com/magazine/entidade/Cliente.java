@@ -31,9 +31,14 @@ public class Cliente {
     private String estado;
     private int status;
 
-    /**
-     * @return the nome
-     */
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
+    
     public int getId(){
         return idCliente;
     }

@@ -30,24 +30,25 @@
 <body>
 
    <!--Inclui cabeçalho-->
-    <jsp:include page="navAnonimo.jsp"/>
+   <jsp:include page="navAnonimo.jsp"/>
 
     <!-- Page Content -->
     <div class="container">
 
         <div class="row">
             <h1>Login</h1>
+            <p>${mensagem}</p>
             <form id="signupform" action="" method="POST" role="form">
                 <div class="row">
                 <div class="form-group col-lg-4"> 
                     <label for="email">Email: </label>
-                    <input type="email" class="form-control " id="email" placeholder="Insira seu email" required/>
+                    <input type="email" class="form-control " id="email" name="email" placeholder="Insira seu email" required/>
                 </div>
                 </div>
                 <div class="row">
                 <div class="form-group col-lg-2">
                     <label for="senha">Senha: </label>
-                    <input type="password" class="form-control" id="senha" placeholder="Insira sua senha" required/>
+                    <input type="password" class="form-control" id="senha" name="senha" placeholder="Insira sua senha" required/>
                 </div>
                 </div>
                 <button type="submit" class="btn btn-default">Enviar</button>

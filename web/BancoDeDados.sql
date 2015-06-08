@@ -35,12 +35,12 @@ Create table Produto(
 
 Create table Editora(
     idEditora serial,
-    nome varchar(100)
+    nome varchar(100),
     inativo int
 );
 
 Create table Genero(
     idGenero serial,
-    nome varchar(100)
+    nome varchar(100),
     inativo int
 );

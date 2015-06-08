@@ -40,8 +40,6 @@ public class ClienteDAO {
 //    private final String stmtProcuraSobreNome = "select * from Cliente where sobrenome like ";
 //    private final String stmtProcuraCPF = "select * from Cliente where cpf like ";
 
-    
-
     public void cadastrarCliente(Cliente cliente) throws ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
@@ -123,8 +121,6 @@ public class ClienteDAO {
         }
     }
 
-    
-    
     public void removerCliente(Cliente cliente) throws ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
@@ -148,6 +144,7 @@ public class ClienteDAO {
             }
         }
     }
+
     public void removerAdministrador(Cliente cliente) throws ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
@@ -171,6 +168,7 @@ public class ClienteDAO {
             }
         }
     }
+
     public void removerGerente(Cliente cliente) throws ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
@@ -194,7 +192,7 @@ public class ClienteDAO {
             }
         }
     }
-    
+
     public Cliente buscarClienteId(Cliente cliente) throws SQLException, ClassNotFoundException, ParseException {
         Connection con = null;
         PreparedStatement stmt = null;
@@ -247,8 +245,7 @@ public class ClienteDAO {
         }
 
     }
-    
-    
+
 //    public List<Cliente> listaClientes() throws SQLException {
 //        Connection con = null;
 //        PreparedStatement stmt = null;
@@ -295,10 +292,10 @@ public class ClienteDAO {
 
         try {
             con = ConnectionFactory.getConnection();
-            stmt = con.prepareStatement(stmtBuscarNome+"'%"+nome+"%' and (inativo = 5 or inativo = 3)");
+            stmt = con.prepareStatement(stmtBuscarNome + "'%" + nome + "%' and (inativo = 5 or inativo = 3)");
             rs = stmt.executeQuery();
             List<Cliente> listaClientes = new ArrayList();
-          
+
             while (rs.next()) {
                 Cliente cliente = new Cliente();
                 cliente.setId(rs.getInt("idcliente"));
@@ -318,7 +315,7 @@ public class ClienteDAO {
                 cliente.setCidade(rs.getString("cidade"));
                 cliente.setEstado(rs.getString("estado"));
                 cliente.setStatus(Integer.parseInt(rs.getString("inativo")));
-                    listaClientes.add(cliente);
+                listaClientes.add(cliente);
             }
             return listaClientes;
 
@@ -342,6 +339,7 @@ public class ClienteDAO {
             }
         }
     }
+
     public List<Cliente> buscarFuncionarioCPF(String cpf) throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
@@ -349,10 +347,10 @@ public class ClienteDAO {
 
         try {
             con = ConnectionFactory.getConnection();
-            stmt = con.prepareStatement(stmtBuscarCPF+"'%"+cpf+"%' and (inativo = 5 or inativo = 3)");
+            stmt = con.prepareStatement(stmtBuscarCPF + "'%" + cpf + "%' and (inativo = 5 or inativo = 3)");
             rs = stmt.executeQuery();
             List<Cliente> listaClientes = new ArrayList();
-          
+
             while (rs.next()) {
                 Cliente cliente = new Cliente();
                 cliente.setId(rs.getInt("idcliente"));
@@ -372,7 +370,7 @@ public class ClienteDAO {
                 cliente.setCidade(rs.getString("cidade"));
                 cliente.setEstado(rs.getString("estado"));
                 cliente.setStatus(Integer.parseInt(rs.getString("inativo")));
-                    listaClientes.add(cliente);
+                listaClientes.add(cliente);
             }
             return listaClientes;
 
@@ -396,6 +394,7 @@ public class ClienteDAO {
             }
         }
     }
+
     public List<Cliente> buscarFuncionarioEmail(String email) throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
@@ -403,10 +402,10 @@ public class ClienteDAO {
 
         try {
             con = ConnectionFactory.getConnection();
-            stmt = con.prepareStatement(stmtBuscarEmail+"'%"+email+"%' and (inativo = 5 or inativo = 3)");
+            stmt = con.prepareStatement(stmtBuscarEmail + "'%" + email + "%' and (inativo = 5 or inativo = 3)");
             rs = stmt.executeQuery();
             List<Cliente> listaClientes = new ArrayList();
-          
+
             while (rs.next()) {
                 Cliente cliente = new Cliente();
                 cliente.setId(rs.getInt("idcliente"));
@@ -426,7 +425,7 @@ public class ClienteDAO {
                 cliente.setCidade(rs.getString("cidade"));
                 cliente.setEstado(rs.getString("estado"));
                 cliente.setStatus(Integer.parseInt(rs.getString("inativo")));
-                    listaClientes.add(cliente);
+                listaClientes.add(cliente);
             }
             return listaClientes;
 
@@ -450,6 +449,63 @@ public class ClienteDAO {
             }
         }
     }
+
+    public Cliente buscarClientePorEmail(String email) throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(stmtBuscarEmail);
+            rs = stmt.executeQuery();
+            // query vazia
+            if (!rs.next()) {
+                return null;
+            } else {
+                rs.next();
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("idcliente"));
+                cliente.setNome(rs.getString("nome"));
+                cliente.setSexo(rs.getString("sexo"));
+                cliente.setCpf(rs.getString("cpf"));
+                Date nascimento = rs.getDate("nascimento");
+                cliente.setNascimento(nascimento);
+                cliente.setTelefone(rs.getString("telefone"));
+                cliente.setEmail(rs.getString("email"));
+                cliente.setSenha(rs.getString("senha"));
+                cliente.setCep(rs.getString("cep"));
+                cliente.setEndereco(rs.getString("endereco"));
+                cliente.setEndNumero(rs.getString("endnumero"));
+                cliente.setEndComplemento(rs.getString("endcomplemento"));
+                cliente.setBairro(rs.getString("bairro"));
+                cliente.setCidade(rs.getString("cidade"));
+                cliente.setEstado(rs.getString("estado"));
+                cliente.setStatus(Integer.parseInt(rs.getString("inativo")));
+
+                return cliente;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                rs.close();
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar result set.Erro: " + ex.getMessage());
+            }
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar statement. Ex = " + ex.getMessage());
+            }
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar a conexao. Ex = " + ex.getMessage());
+            }
+        }
+    }
+
 //    
 //    
 //    public List<Cliente> procuraSobreNome(String sobrenome) throws SQLException {
@@ -533,5 +589,4 @@ public class ClienteDAO {
 //    }
 //    
 //    
-
 }

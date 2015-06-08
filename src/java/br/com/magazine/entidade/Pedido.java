@@ -7,9 +7,7 @@ public class Pedido {
 
     int idPedido;
     int idCliente;
-    /* talvez mudar para lista de itens pedido */
     List<Itempedido> itens;
-    //List<Produto> produtos;
     int status;
     Date data;
     double valorTotal;
