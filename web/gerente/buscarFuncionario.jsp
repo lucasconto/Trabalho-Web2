@@ -31,34 +31,36 @@
                     <a href="../administrador/cadastrarProduto.jsp" class="list-group-item">Cadastrar Produto</a>
                     <a href="../administrador/cadastrarCategoria.jsp" class="list-group-item">Cadastrar Categoria</a>
                     <a href="../administrador/cadastrarEditora.jsp" class="list-group-item">Cadastrar Editora</a>
+                    <a href="../administrador/cadastrarEditora.jsp" class="list-group-item">Cadastrar Editora</a>
+                    
+                    <a href="./cadastrarUsuario.jsp" class="list-group-item">Cadastrar Usuário</a>
                 </div>
             </div>
             <div class="col-md-9 ">
                 <h1>Buscar Funcionário</h1>
-                <form action="listarCliente.jsp" class="form-horizontal">
+                <form action="./Gerentes?action=buscar" method="post" class="form-horizontal">
                         <div class="form-group">
                         <div class="row">
                             <label class="col-md-2 control-label pull-left clearfix" for="">Buscar por:</label>
                         </div>
                            <div class="col-md-2">
-                            <select class="form-control">
-                                <option>Nome</option>
-                                <option>CPF</option>
-                                <option>Email</option>
+                            <select name="escolha" class="form-control">
+                                <option value="nome">Nome</option>
+                                <option value="cpf">CPF</option>
+                                <option value="email">Email</option>
                             </select>
                         </div>
                             <div class="col-md-7">
-                                <input type="text" id="" class="form-control" placeholder="1234">
+                                <input type="text" name="str" id="" class="form-control" placeholder="1234">
                             </div>
                         <div class="col-md-2">
                             <button type="submit" class="btn btn-success  btn-block ">Buscar</button>
                         </div>
                     </div>
 
-                    </div>
                 </form>
+                    </div>
             </div>
-        </div>
         </div>
         <!--Inclui Rodapé-->
         <jsp:include page="../comum/rodape.jsp"/>

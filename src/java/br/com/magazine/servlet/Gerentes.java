@@ -6,13 +6,17 @@
 package br.com.magazine.servlet;
 
 import br.com.magazine.dao.ClienteDAO;
+import br.com.magazine.dao.GeneroDAO;
 import br.com.magazine.entidade.Cliente;
+import br.com.magazine.entidade.Genero;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -26,8 +30,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Evandro-PC
  */
-@WebServlet(name = "Clientes", urlPatterns = {"/cliente/Clientes"})
-public class Clientes extends HttpServlet {
+@WebServlet(name = "Gerentes", urlPatterns = {"/gerente/Gerentes"})
+public class Gerentes extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -67,10 +71,35 @@ public class Clientes extends HttpServlet {
                 cliente.setBairro(request.getParameter("bairro"));
                 cliente.setCidade(request.getParameter("cidade"));
                 cliente.setEstado(request.getParameter("estado"));
+                cliente.setStatus(Integer.parseInt(request.getParameter("perfil")));
                 
                 ClienteDAO clienteDAO = new ClienteDAO();
                 clienteDAO.cadastrarCliente(cliente);
+                response.sendRedirect("./buscarFuncionario.jsp");
+                return;
             } 
+            if ("buscar".equals(request.getParameter("action"))) {
+                List<Cliente> listaClientes = new ArrayList();
+                ClienteDAO clienteDAO = new ClienteDAO();
+                String escolha = request.getParameter("escolha");
+                String str = request.getParameter("str");
+                System.out.println(escolha);
+                System.out.println(str);
+                if("nome".equals(escolha)){
+                    listaClientes = clienteDAO.buscarClienteNome(str);
+                } else if("cpf".equals(escolha)){
+                    listaClientes = clienteDAO.buscarClienteCPF(str);
+                } else if("email".equals(escolha)){
+                    listaClientes = clienteDAO.buscarClienteEmail(str);
+                }
+                
+                request.setAttribute("listaClientes", listaClientes);
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/listarFuncionario.jsp");
+                rd.forward(request,response);
+                
+                
+                
+            }
             if ("alterarPerfil".equals(request.getParameter("action"))) {
                 ClienteDAO clienteDAO = new ClienteDAO();
                 Cliente clienteSessao = new Cliente();
@@ -108,7 +137,7 @@ public class Clientes extends HttpServlet {
                 cliente.setBairro(request.getParameter("bairro"));
                 cliente.setCidade(request.getParameter("cidade"));
                 cliente.setEstado(request.getParameter("estado"));
-                cliente.setStatus(1);
+                
                 ClienteDAO clienteDAO = new ClienteDAO();
                 clienteDAO.atualizarCliente(cliente);
             }
@@ -130,11 +159,11 @@ public class Clientes extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ParseException ex) {
-            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Gerentes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Gerentes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Gerentes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -152,11 +181,11 @@ public class Clientes extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ParseException ex) {
-            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Gerentes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Gerentes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Gerentes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

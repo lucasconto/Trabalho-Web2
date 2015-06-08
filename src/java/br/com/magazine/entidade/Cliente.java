@@ -29,6 +29,7 @@ public class Cliente {
     private String bairro;
     private String cidade;
     private String estado;
+    private int status;
 
     /**
      * @return the nome
@@ -232,6 +233,20 @@ public class Cliente {
      */
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    /**
+     * @return the status
+     */
+    public int getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(int status) {
+        this.status = status;
     }
     
     

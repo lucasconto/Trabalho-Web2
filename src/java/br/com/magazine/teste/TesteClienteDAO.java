@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 /**
  *
  * @author Evandro-PC
@@ -43,13 +45,25 @@ public class TesteClienteDAO {
 //    ClienteDAO clienteDAO = new ClienteDAO();
 //    clienteDAO.cadastrarCliente(evandro);
         
-        Cliente cliente = new Cliente();
-        cliente.setId(1);
-        ClienteDAO clienteDAO = new ClienteDAO();
-        cliente = clienteDAO.buscarClienteId(cliente);
-        System.out.println(cliente.getBairro());
-        System.out.println(cliente.getNascimento());
         
+        //Buscar Por ID
+//        Cliente cliente = new Cliente();
+//        cliente.setId(1);
+//        ClienteDAO clienteDAO = new ClienteDAO();
+//        cliente = clienteDAO.buscarClienteId(cliente);
+//        System.out.println(cliente.getBairro());
+//        System.out.println(cliente.getNascimento());
+        
+        
+//        Listar por nome
+        List<Cliente> listaClientes = new ArrayList();
+        ClienteDAO clienteDAO = new ClienteDAO();
+//        listaClientes = clienteDAO.buscarClienteNome("r");
+//        listaClientes = clienteDAO.buscarClienteCPF("8");
+        listaClientes = clienteDAO.buscarClienteEmail("5");
+         for(Cliente teste : listaClientes){
+            System.out.println(teste.getNome());
+        }
         
     }
 }
