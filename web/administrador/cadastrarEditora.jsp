@@ -63,7 +63,7 @@
                             <tr>
                                 <td>${editora.idEditora}</td>
                                 <td>${editora.nome}</td>
-                                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-ideditora="${editora.idEditora}" data-editora="${editora.nome}">Editar</button></td>
+                                <td><a href="" data-toggle="modal" data-target="#exampleModal" data-ideditora="${editora.idEditora}" data-editora="${editora.nome}"><span class="glyphicon glyphicon-pencil"></span></a></td>
                                 <td><a href="Editoras?action=remover&id=${editora.idEditora}"><span class="glyphicon glyphicon-trash"></span></a></td>
 
                             </tr>
