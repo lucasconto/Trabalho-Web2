@@ -143,8 +143,8 @@
                         <div class="col-sm-8">
                             <select name="perfil" id="sexo" class="form-control">
                                 <option >Selecione</option>
-                                <option value="3" required>Administrador</option>
-                                <option value="5" required>Gerente</option>
+                                <option value="2" required>Administrador</option>
+                                <option value="3" required>Gerente</option>
                             </select>
                         </div>
                     </div>

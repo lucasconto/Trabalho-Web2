@@ -29,21 +29,14 @@ public class Cliente {
     private String bairro;
     private String cidade;
     private String estado;
-    private int status;
+    private boolean inativo;
+    private int perfil;
 
     public int getIdCliente() {
         return idCliente;
     }
 
     public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
-    }
-    
-    public int getId(){
-        return idCliente;
-    }
-    
-    public void setId(int idCliente){
         this.idCliente = idCliente;
     }
     
@@ -241,18 +234,32 @@ public class Cliente {
     }
 
     /**
-     * @return the status
+     * @return the inativo
      */
-    public int getStatus() {
-        return status;
+    public boolean isInativo() {
+        return inativo;
     }
 
     /**
-     * @param status the status to set
+     * @param inativo the inativo to set
      */
-    public void setStatus(int status) {
-        this.status = status;
+    public void setInativo(boolean inativo) {
+        this.inativo = inativo;
     }
-    
-    
+
+    /**
+     * @return the perfil
+     */
+    public int getPerfil() {
+        return perfil;
+    }
+
+    /**
+     * @param perfil the perfil to set
+     */
+    public void setPerfil(int perfil) {
+        this.perfil = perfil;
+    }
+
+
 }

@@ -73,7 +73,7 @@ public class Gerentes extends HttpServlet {
                 cliente.setBairro(request.getParameter("bairro"));
                 cliente.setCidade(request.getParameter("cidade"));
                 cliente.setEstado(request.getParameter("estado"));
-                cliente.setStatus(Integer.parseInt(request.getParameter("perfil")));
+                cliente.setInativo(Boolean.parseBoolean(request.getParameter("perfil")));
                 
                 ClienteDAO clienteDAO = new ClienteDAO();
                 clienteDAO.cadastrarCliente(cliente);
@@ -103,7 +103,7 @@ public class Gerentes extends HttpServlet {
                 String str = request.getParameter("str");
                 ClienteDAO clienteDAO = new ClienteDAO();
                 Cliente clienteSessao = new Cliente();
-                clienteSessao.setId(Integer.parseInt(request.getParameter("id")));
+                clienteSessao.setIdCliente(Integer.parseInt(request.getParameter("id")));
                 Cliente cliente = clienteDAO.buscarClienteId(clienteSessao);
                 request.setAttribute("cliente", cliente);
                 request.setAttribute("escolha", escolha);
@@ -116,7 +116,7 @@ public class Gerentes extends HttpServlet {
                 String str = request.getParameter("str");
                 ClienteDAO clienteDAO = new ClienteDAO();
                 Cliente clienteSessao = new Cliente();
-                clienteSessao.setId(Integer.parseInt(request.getParameter("id")));
+                clienteSessao.setIdCliente(Integer.parseInt(request.getParameter("id")));
                 Cliente cliente = clienteDAO.buscarClienteId(clienteSessao);
                 request.setAttribute("cliente", cliente);
                 request.setAttribute("escolha", escolha);
@@ -129,7 +129,7 @@ public class Gerentes extends HttpServlet {
                 String str = request.getParameter("str");
                 Cliente cliente = new Cliente();
                 
-                cliente.setId(Integer.parseInt(request.getParameter("idCliente")));
+                cliente.setIdCliente(Integer.parseInt(request.getParameter("idCliente")));
                 cliente.setNome(request.getParameter("nome"));
                 cliente.setSexo(request.getParameter("sexo"));
                 cliente.setCpf(request.getParameter("cpf"));
@@ -150,7 +150,7 @@ public class Gerentes extends HttpServlet {
                 cliente.setBairro(request.getParameter("bairro"));
                 cliente.setCidade(request.getParameter("cidade"));
                 cliente.setEstado(request.getParameter("estado"));
-                cliente.setStatus(Integer.parseInt(request.getParameter("perfil")));
+                cliente.setPerfil(Integer.parseInt(request.getParameter("perfil")));
                 
                 ClienteDAO clienteDAO = new ClienteDAO();
                 clienteDAO.atualizarCliente(cliente);
@@ -163,14 +163,9 @@ public class Gerentes extends HttpServlet {
                 String escolha = request.getParameter("escolha");
                 String str = request.getParameter("str");
                 Cliente cliente = new Cliente();
-                cliente.setId(Integer.parseInt(request.getParameter("id")));
-                int perfil = Integer.parseInt(request.getParameter("perfil"));
+                cliente.setIdCliente(Integer.parseInt(request.getParameter("id")));
                 ClienteDAO clienteDAO = new ClienteDAO();
-                if(perfil == 3){
-                    clienteDAO.removerAdministrador(cliente);
-                }else if(perfil == 5){
-                    clienteDAO.removerGerente(cliente);
-                }
+                clienteDAO.removerCliente(cliente);
                 request.setAttribute("escolha", escolha);
                 request.setAttribute("str", str);
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/Gerentes?action=buscarf");

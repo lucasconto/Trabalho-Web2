@@ -155,8 +155,8 @@
                         <label for="" class="col-sm-4 control-label">Perfil</label>
                         <div class="col-sm-8">
                             <select name="perfil" id="sexo" class="form-control">
-                                <option value="3" ${cliente.status == 3 ? 'selected' : ''} required>Administrador</option>
-                                <option value="5" ${cliente.status == 5 ? 'selected' : ''} required>Gerente</option>
+                                <option value="2" ${cliente.perfil == 2 ? 'selected' : ''} required>Administrador</option>
+                                <option value="3" ${cliente.perfil == 3 ? 'selected' : ''} required>Gerente</option>
                             </select>
                         </div>
                     </div>
@@ -238,7 +238,7 @@
                         <label for="" class="col-sm-4 control-label">Estado</label>
                         <div class="col-sm-8">
                             <input type="text" name="estado" class="form-control" value="${cliente.estado}" id="estado" placeholder="" required />
-                            <input type="hidden" value="${cliente.id}" name="idCliente"/>
+                            <input type="hidden" value="${cliente.idCliente}" name="idCliente"/>
                         </div>
                     </div> 
                     <div class="form-group">

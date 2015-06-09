@@ -106,33 +106,33 @@
                             <tr>
                                 <td>${usuario.nome}</td>
                                 <td>${usuario.cpf}</td>
-                            <c:if test="${usuario.status == 3}">
+                            <c:if test="${usuario.perfil == 2}">
                                 <td>Administrador</td>
                             </c:if>
-                            <c:if test="${usuario.status == 5}">
+                            <c:if test="${usuario.perfil == 3}">
                                 <td>Gerente</td>
                             </c:if>
                             <td>
                                 <div class="text-center">
-                                    <form action="./Gerentes?action=visualizarf&id=${usuario.id}" method="post" style="display: inline">
+                                    <form action="./Gerentes?action=visualizarf&id=${usuario.idCliente}" method="post" style="display: inline">
                                         <a href="#" onclick="this.parentNode.submit();">
                                             <span class="glyphicon glyphicon-eye-open" style="font-size: 20px"></span>
                                         <input type="hidden" value="${escolha}" name="escolha"/>
                                         <input type="hidden" value="${str}" name="str"/>
                                         </a>
                                     </form>
-                                    <form action="./Gerentes?action=valterarf&id=${usuario.id}" method="post" style="display: inline">
+                                    <form action="./Gerentes?action=valterarf&id=${usuario.idCliente}" method="post" style="display: inline">
                                         <a href="#" onclick="this.parentNode.submit();">
                                             <span class="glyphicon glyphicon-pencil" style="font-size: 20px"></span>
                                         <input type="hidden" value="${escolha}" name="escolha"/>
                                         <input type="hidden" value="${str}" name="str"/>
                                         </a>
                                     </form>
-                                    <form action="./Gerentes?action=excluirf&id=${usuario.id}" method="post" style="display: inline">
+                                    <form action="./Gerentes?action=excluirf&id=${usuario.idCliente}" method="post" style="display: inline">
                                     <a href="#" onclick="this.parentNode.submit();">
                                         <span class="glyphicon glyphicon-trash" style="font-size: 20px"></span>
                                     <input type="hidden" value="${escolha}" name="escolha"/>
-                                    <input type="hidden" value="${usuario.status}" name="perfil"/>
+                                    <input type="hidden" value="${usuario.perfil}" name="perfil"/>
                                     <input type="hidden" value="${str}" name="str"/>
                                     </a>
                                     </form>

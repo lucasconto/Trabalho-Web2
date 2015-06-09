@@ -74,7 +74,7 @@ public class Clientes extends HttpServlet {
             if ("alterarPerfil".equals(request.getParameter("action"))) {
                 ClienteDAO clienteDAO = new ClienteDAO();
                 Cliente clienteSessao = new Cliente();
-                clienteSessao.setId(3);
+                clienteSessao.setIdCliente(3);
                 Cliente cliente = clienteDAO.buscarClienteId(clienteSessao);
                 request.setAttribute("cliente", cliente);
 //                response.sendRedirect("./alterarCliente.jsp");
@@ -85,7 +85,7 @@ public class Clientes extends HttpServlet {
             if ("alterar".equals(request.getParameter("action"))) {
                 Cliente cliente = new Cliente();
                 
-                cliente.setId(Integer.parseInt(request.getParameter("idCliente")));
+                cliente.setIdCliente(Integer.parseInt(request.getParameter("idCliente")));
                 cliente.setNome(request.getParameter("nome"));
                 cliente.setSexo(request.getParameter("sexo"));
                 cliente.setCpf(request.getParameter("cpf"));
@@ -106,7 +106,8 @@ public class Clientes extends HttpServlet {
                 cliente.setBairro(request.getParameter("bairro"));
                 cliente.setCidade(request.getParameter("cidade"));
                 cliente.setEstado(request.getParameter("estado"));
-                cliente.setStatus(1);
+                cliente.setInativo(false);
+                cliente.setPerfil(1);
                 ClienteDAO clienteDAO = new ClienteDAO();
                 clienteDAO.atualizarCliente(cliente);
             }

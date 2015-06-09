@@ -25,13 +25,11 @@ import java.util.List;
  */
 public class ClienteDAO {
 
-    private final String stmtCadastraCliente = "insert into Cliente (nome, sexo, cpf, nascimento, telefone, email, senha, cep, endereco, endnumero, endcomplemento, bairro, cidade, estado, inativo) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    private final String stmtAtualizaCliente = "update Cliente set nome = ?, sexo = ?, cpf = ?, nascimento = ?, telefone = ?, email = ?, senha = ?, cep = ?, endereco = ?, endnumero = ?, endcomplemento = ?, bairro = ?, cidade = ?, estado = ? where idCliente = ?";
-    private final String stmtBuscarClienteId = "select * from Cliente where idcliente = ?";
+    private final String stmtCadastraCliente = "insert into Cliente (nome, sexo, cpf, nascimento, telefone, email, senha, cep, endereco, endnumero, endcomplemento, bairro, cidade, estado, inativo, perfil) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private final String stmtAtualizaCliente = "update Cliente set nome = ?, sexo = ?, cpf = ?, nascimento = ?, telefone = ?, email = ?, senha = ?, cep = ?, endereco = ?, endnumero = ?, endcomplemento = ?, bairro = ?, cidade = ?, estado = ?, perfil = ? where idCliente = ?";
+    private final String stmtBuscarClienteId = "select * from Cliente where (idcliente = ? and inativo=false) order by nome";
 //    private final String stmtListaCliente = "select * from Cliente";
-    private final String stmtRemoveCliente = "update Cliente set inativo = 0 where idCliente = ?";
-    private final String stmtRemoveAdministrador = "update Cliente set inativo = 2 where idCliente = ?";
-    private final String stmtRemoveGerente = "update Cliente set inativo = 4 where idCliente = ?";
+    private final String stmtRemoveCliente = "update Cliente set inativo = true where idCliente = ?";
 //    private final String stmtRemoveItemPedidoCliente = "delete from itempedido where idpedido = (select idpedido from pedido where idcliente = ?)";
 //    private final String stmtRemovePedidoCliente = "delete from pedido where idpedido = (select idpedido from pedido where idcliente= ? )";
     private final String stmtBuscarNome = "select * from Cliente where nome like ";
@@ -61,7 +59,8 @@ public class ClienteDAO {
             stmt.setString(12, cliente.getBairro());
             stmt.setString(13, cliente.getCidade());
             stmt.setString(14, cliente.getEstado());
-            stmt.setInt(15, cliente.getStatus());
+            stmt.setBoolean(15, cliente.isInativo());
+            stmt.setInt(16, cliente.getPerfil());
             stmt.executeUpdate();
             con.commit();
 
@@ -102,7 +101,8 @@ public class ClienteDAO {
             stmt.setString(12, cliente.getBairro());
             stmt.setString(13, cliente.getCidade());
             stmt.setString(14, cliente.getEstado());
-            stmt.setInt(15, cliente.getId());
+            stmt.setInt(15, cliente.getPerfil());
+            stmt.setInt(16, cliente.getIdCliente());
             stmt.executeUpdate();
             con.commit();
         } catch (SQLException e) {
@@ -127,55 +127,7 @@ public class ClienteDAO {
         try {
             con = ConnectionFactory.getConnection();
             stmt = con.prepareStatement(stmtRemoveCliente);
-            stmt.setLong(1, cliente.getId());
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                stmt.close();
-            } catch (Exception ex) {
-                System.out.println("Erro ao fechar stmt. Ex=" + ex.getMessage());
-            }
-            try {
-                con.close();
-            } catch (Exception ex) {
-                System.out.println("Erro ao fechar conexao. Ex = " + ex.getMessage());
-            }
-        }
-    }
-
-    public void removerAdministrador(Cliente cliente) throws ClassNotFoundException {
-        Connection con = null;
-        PreparedStatement stmt = null;
-        try {
-            con = ConnectionFactory.getConnection();
-            stmt = con.prepareStatement(stmtRemoveAdministrador);
-            stmt.setLong(1, cliente.getId());
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                stmt.close();
-            } catch (Exception ex) {
-                System.out.println("Erro ao fechar stmt. Ex=" + ex.getMessage());
-            }
-            try {
-                con.close();
-            } catch (Exception ex) {
-                System.out.println("Erro ao fechar conexao. Ex = " + ex.getMessage());
-            }
-        }
-    }
-
-    public void removerGerente(Cliente cliente) throws ClassNotFoundException {
-        Connection con = null;
-        PreparedStatement stmt = null;
-        try {
-            con = ConnectionFactory.getConnection();
-            stmt = con.prepareStatement(stmtRemoveGerente);
-            stmt.setLong(1, cliente.getId());
+            stmt.setLong(1, cliente.getIdCliente());
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -201,11 +153,11 @@ public class ClienteDAO {
         try {
             con = ConnectionFactory.getConnection();
             stmt = con.prepareStatement(stmtBuscarClienteId);
-            stmt.setInt(1, cliente.getId());
+            stmt.setInt(1, cliente.getIdCliente());
             rs = stmt.executeQuery();
             rs.next();
             Cliente clienteRetorno = new Cliente();
-            clienteRetorno.setId(cliente.getId());
+            clienteRetorno.setIdCliente(cliente.getIdCliente());
             clienteRetorno.setNome(rs.getString("nome"));
             clienteRetorno.setSexo(rs.getString("sexo"));
             clienteRetorno.setCpf(rs.getString("cpf"));
@@ -221,7 +173,7 @@ public class ClienteDAO {
             clienteRetorno.setBairro(rs.getString("bairro"));
             clienteRetorno.setCidade(rs.getString("cidade"));
             clienteRetorno.setEstado(rs.getString("estado"));
-            clienteRetorno.setStatus(Integer.parseInt(rs.getString("inativo")));
+            clienteRetorno.setPerfil(rs.getInt("perfil"));
 
             return clienteRetorno;
         } catch (SQLException e) {
@@ -292,13 +244,13 @@ public class ClienteDAO {
 
         try {
             con = ConnectionFactory.getConnection();
-            stmt = con.prepareStatement(stmtBuscarNome + "'%" + nome + "%' and (inativo = 5 or inativo = 3)");
+            stmt = con.prepareStatement(stmtBuscarNome + "'%" + nome + "%' and (perfil = 2 or perfil = 3) and inativo=false order by nome");
             rs = stmt.executeQuery();
             List<Cliente> listaClientes = new ArrayList();
 
             while (rs.next()) {
                 Cliente cliente = new Cliente();
-                cliente.setId(rs.getInt("idcliente"));
+                cliente.setIdCliente(rs.getInt("idcliente"));
                 cliente.setNome(rs.getString("nome"));
                 cliente.setSexo(rs.getString("sexo"));
                 cliente.setCpf(rs.getString("cpf"));
@@ -314,7 +266,7 @@ public class ClienteDAO {
                 cliente.setBairro(rs.getString("bairro"));
                 cliente.setCidade(rs.getString("cidade"));
                 cliente.setEstado(rs.getString("estado"));
-                cliente.setStatus(Integer.parseInt(rs.getString("inativo")));
+                cliente.setPerfil(rs.getInt("perfil"));
                 listaClientes.add(cliente);
             }
             return listaClientes;
@@ -347,13 +299,13 @@ public class ClienteDAO {
 
         try {
             con = ConnectionFactory.getConnection();
-            stmt = con.prepareStatement(stmtBuscarCPF + "'%" + cpf + "%' and (inativo = 5 or inativo = 3)");
+            stmt = con.prepareStatement(stmtBuscarCPF + "'%" + cpf + "%' and (perfil = 2 or perfil = 3) and inativo=false order by nome");
             rs = stmt.executeQuery();
             List<Cliente> listaClientes = new ArrayList();
 
             while (rs.next()) {
                 Cliente cliente = new Cliente();
-                cliente.setId(rs.getInt("idcliente"));
+                cliente.setIdCliente(rs.getInt("idcliente"));
                 cliente.setNome(rs.getString("nome"));
                 cliente.setSexo(rs.getString("sexo"));
                 cliente.setCpf(rs.getString("cpf"));
@@ -369,7 +321,7 @@ public class ClienteDAO {
                 cliente.setBairro(rs.getString("bairro"));
                 cliente.setCidade(rs.getString("cidade"));
                 cliente.setEstado(rs.getString("estado"));
-                cliente.setStatus(Integer.parseInt(rs.getString("inativo")));
+                cliente.setPerfil(rs.getInt("perfil"));
                 listaClientes.add(cliente);
             }
             return listaClientes;
@@ -402,13 +354,13 @@ public class ClienteDAO {
 
         try {
             con = ConnectionFactory.getConnection();
-            stmt = con.prepareStatement(stmtBuscarEmail + "'%" + email + "%' and (inativo = 5 or inativo = 3)");
+            stmt = con.prepareStatement(stmtBuscarEmail + "'%" + email + "%' and (perfil = 2 or perfil = 3) and inativo=false order by nome");
             rs = stmt.executeQuery();
             List<Cliente> listaClientes = new ArrayList();
 
             while (rs.next()) {
                 Cliente cliente = new Cliente();
-                cliente.setId(rs.getInt("idcliente"));
+                cliente.setIdCliente(rs.getInt("idcliente"));
                 cliente.setNome(rs.getString("nome"));
                 cliente.setSexo(rs.getString("sexo"));
                 cliente.setCpf(rs.getString("cpf"));
@@ -424,7 +376,7 @@ public class ClienteDAO {
                 cliente.setBairro(rs.getString("bairro"));
                 cliente.setCidade(rs.getString("cidade"));
                 cliente.setEstado(rs.getString("estado"));
-                cliente.setStatus(Integer.parseInt(rs.getString("inativo")));
+                cliente.setPerfil(rs.getInt("perfil"));
                 listaClientes.add(cliente);
             }
             return listaClientes;
@@ -465,7 +417,7 @@ public class ClienteDAO {
             } else {
                 rs.next();
                 Cliente cliente = new Cliente();
-                cliente.setId(rs.getInt("idcliente"));
+                cliente.setIdCliente(rs.getInt("idcliente"));
                 cliente.setNome(rs.getString("nome"));
                 cliente.setSexo(rs.getString("sexo"));
                 cliente.setCpf(rs.getString("cpf"));
@@ -481,7 +433,7 @@ public class ClienteDAO {
                 cliente.setBairro(rs.getString("bairro"));
                 cliente.setCidade(rs.getString("cidade"));
                 cliente.setEstado(rs.getString("estado"));
-                cliente.setStatus(Integer.parseInt(rs.getString("inativo")));
+                cliente.setInativo(rs.getBoolean("inativo"));
 
                 return cliente;
             }
