@@ -6,7 +6,7 @@ public class Itempedido {
     int idProduto;
     int quantidade;
     double valor;
-
+   
     public int getIdItempedido() {
         return idItempedido;
     }
