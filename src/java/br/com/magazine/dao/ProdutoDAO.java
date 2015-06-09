@@ -23,9 +23,9 @@ public class ProdutoDAO {
     private final String stmtCadastraProduto = "insert into produto (titulo, autor, fkeditora, preco, fkgenero) values (?,?,?,?,?)";
     //private final String stmtCadastraProduto = "insert into produto (titulo, autor, editora, categoria, preco, genero, idImg) values (?,?,?,?,?,?)";
     private final String stmtAtualizaProduto = "update produto set titulo = ?, autor = ?, editora = ?, preco = ?, genero = ? where idProduto = ?";
-    private final String stmtRemoveProduto = "update produto set inativo = 1 where idProduto = ?";
+    private final String stmtRemoveProduto = "update produto set inativo = true where idProduto = ?";
     private final String stmtListaProduto = "select * from produto";
-
+//
     
     public int cadastrarProduto (Produto p) throws ClassNotFoundException{ 
         Connection con = null;
