@@ -98,6 +98,24 @@ public class Gerentes extends HttpServlet {
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/listarFuncionario.jsp");
                 rd.forward(request,response);
             }
+            if ("buscarc".equals(request.getParameter("action"))) {
+                List<Cliente> listaClientes = new ArrayList();
+                ClienteDAO clienteDAO = new ClienteDAO();
+                String escolha = request.getParameter("escolha");
+                String str = request.getParameter("str");
+                if("nome".equals(escolha)){
+                    listaClientes = clienteDAO.buscarClienteNome(str);
+                } else if("cpf".equals(escolha)){
+                    listaClientes = clienteDAO.buscarClienteCPF(str);
+                } else if("email".equals(escolha)){
+                    listaClientes = clienteDAO.buscarClienteEmail(str);
+                }
+                request.setAttribute("listaClientes", listaClientes);
+                request.setAttribute("escolha", escolha);
+                request.setAttribute("str", str);
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/listarCliente.jsp");
+                rd.forward(request,response);
+            }
             if ("visualizarf".equals(request.getParameter("action"))) {
                 String escolha = request.getParameter("escolha");
                 String str = request.getParameter("str");
@@ -111,6 +129,19 @@ public class Gerentes extends HttpServlet {
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/visualizarFuncionario.jsp");
                 rd.forward(request,response);
             }
+            if ("visualizarc".equals(request.getParameter("action"))) {
+                String escolha = request.getParameter("escolha");
+                String str = request.getParameter("str");
+                ClienteDAO clienteDAO = new ClienteDAO();
+                Cliente clienteSessao = new Cliente();
+                clienteSessao.setIdCliente(Integer.parseInt(request.getParameter("id")));
+                Cliente cliente = clienteDAO.buscarClienteId(clienteSessao);
+                request.setAttribute("cliente", cliente);
+                request.setAttribute("escolha", escolha);
+                request.setAttribute("str", str);
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/visualizarCliente.jsp");
+                rd.forward(request,response);
+            }
             if ("valterarf".equals(request.getParameter("action"))) {
                 String escolha = request.getParameter("escolha");
                 String str = request.getParameter("str");
@@ -122,6 +153,19 @@ public class Gerentes extends HttpServlet {
                 request.setAttribute("escolha", escolha);
                 request.setAttribute("str", str);
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/alterarFuncionario.jsp");
+                rd.forward(request,response);
+            }
+            if ("valterarc".equals(request.getParameter("action"))) {
+                String escolha = request.getParameter("escolha");
+                String str = request.getParameter("str");
+                ClienteDAO clienteDAO = new ClienteDAO();
+                Cliente clienteSessao = new Cliente();
+                clienteSessao.setIdCliente(Integer.parseInt(request.getParameter("id")));
+                Cliente cliente = clienteDAO.buscarClienteId(clienteSessao);
+                request.setAttribute("cliente", cliente);
+                request.setAttribute("escolha", escolha);
+                request.setAttribute("str", str);
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/alterarCliente.jsp");
                 rd.forward(request,response);
             }
             if ("alterarf".equals(request.getParameter("action"))) {
@@ -159,6 +203,41 @@ public class Gerentes extends HttpServlet {
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/Gerentes?action=buscarf");
                 rd.forward(request,response);
             }
+            if ("alterarc".equals(request.getParameter("action"))) {
+                String escolha = request.getParameter("escolha");
+                String str = request.getParameter("str");
+                Cliente cliente = new Cliente();
+                
+                cliente.setIdCliente(Integer.parseInt(request.getParameter("idCliente")));
+                cliente.setNome(request.getParameter("nome"));
+                cliente.setSexo(request.getParameter("sexo"));
+                cliente.setCpf(request.getParameter("cpf"));
+                
+                String nascimentoStr = request.getParameter("nascimento");
+                DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                java.util.Date nascimentoUtil = format.parse(nascimentoStr);
+                java.sql.Date nascimentoSql = new java.sql.Date(nascimentoUtil.getTime());
+                cliente.setNascimento(nascimentoSql);
+                
+                cliente.setTelefone(request.getParameter("telefone"));
+                cliente.setEmail(request.getParameter("email"));
+                cliente.setSenha(request.getParameter("senha"));
+                cliente.setCep(request.getParameter("cep"));
+                cliente.setEndereco(request.getParameter("endereco"));
+                cliente.setEndNumero(request.getParameter("numero"));
+                cliente.setEndComplemento(request.getParameter("complemento"));
+                cliente.setBairro(request.getParameter("bairro"));
+                cliente.setCidade(request.getParameter("cidade"));
+                cliente.setEstado(request.getParameter("estado"));
+                cliente.setPerfil(1);
+                
+                ClienteDAO clienteDAO = new ClienteDAO();
+                clienteDAO.atualizarCliente(cliente);
+                request.setAttribute("escolha", escolha);
+                request.setAttribute("str", str);
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/Gerentes?action=buscarc");
+                rd.forward(request,response);
+            }
             if ("excluirf".equals(request.getParameter("action"))) {
                 String escolha = request.getParameter("escolha");
                 String str = request.getParameter("str");
@@ -169,6 +248,18 @@ public class Gerentes extends HttpServlet {
                 request.setAttribute("escolha", escolha);
                 request.setAttribute("str", str);
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/Gerentes?action=buscarf");
+                rd.forward(request,response);
+            }
+            if ("excluirc".equals(request.getParameter("action"))) {
+                String escolha = request.getParameter("escolha");
+                String str = request.getParameter("str");
+                Cliente cliente = new Cliente();
+                cliente.setIdCliente(Integer.parseInt(request.getParameter("id")));
+                ClienteDAO clienteDAO = new ClienteDAO();
+                clienteDAO.removerCliente(cliente);
+                request.setAttribute("escolha", escolha);
+                request.setAttribute("str", str);
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/Gerentes?action=buscarc");
                 rd.forward(request,response);
             }
         }

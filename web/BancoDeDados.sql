@@ -19,7 +19,7 @@ Create table Cliente(
     cidade varchar(30),
     estado varchar(30),
     inativo boolean,
-    perfil int,
+    perfil int
 );
 
 Create table Produto(

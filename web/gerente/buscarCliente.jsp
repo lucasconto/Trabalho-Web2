@@ -9,7 +9,6 @@
 
         <title>Cadastro de Categoria</title>
 
-
          <!--JQuery CSS-->
         <link rel="stylesheet" href="../js/jquery-ui.css">
 
@@ -32,7 +31,8 @@
     </head>
     <body>
         <!--Inclui cabeçalho-->
-        <jsp:include page="./navGerente.jsp"/>
+        <jsp:include page="navGerente.jsp"/>
+        
         <div class="container">
            <div class="row">
             <div class="col-md-3">
@@ -48,8 +48,8 @@
                 </div>
             </div>
             <div class="col-md-9 ">
-                <h1>Buscar Funcionário</h1>
-                <form action="./Gerentes?action=buscarf" method="post" class="form-horizontal">
+                <h1>Buscar Cliente</h1>
+                <form action="./Gerentes?action=buscarc" method="post" class="form-horizontal">
                         <div class="form-group">
                         <div class="row">
                             <label class="col-md-2 control-label pull-left clearfix" for="">Buscar por:</label>
