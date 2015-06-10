@@ -45,3 +45,20 @@ Create table Genero(
     nome varchar(100),
     inativo int
 );
+
+create table pedido(
+idPedido serial,
+idCliente int,
+valorTotal real,
+data DateTime,
+situacao int
+)
+
+
+create table itemPedido(
+idItemPedido serial,
+idPedido int,
+irProduto int,
+quantidade int,
+valorUnitario int
+)
