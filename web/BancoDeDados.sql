@@ -52,7 +52,7 @@ idCliente int,
 valorTotal real,
 data DateTime,
 situacao int
-)
+);
 
 
 create table itemPedido(
@@ -61,4 +61,4 @@ idPedido int,
 irProduto int,
 quantidade int,
 valorUnitario int
-)
+);
