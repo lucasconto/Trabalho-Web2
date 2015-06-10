@@ -64,7 +64,7 @@
                             <tr>
                                 <td>${genero.idGenero}</td>
                                 <td>${genero.nome}</td>
-                                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-idgenero="${genero.idGenero}" data-genero="${genero.nome}">Editar</button></td>
+                                <td><a href="" data-toggle="modal" data-target="#exampleModal" data-idgenero="${genero.idGenero}" data-genero="${genero.nome}"><span class="glyphicon glyphicon-pencil "></span></a></td>
                                 <td><a href="Generos?action=remover&id=${genero.idGenero}"><span class="glyphicon glyphicon-trash"></span></a></td>
 
                             </tr>

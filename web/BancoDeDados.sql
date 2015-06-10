@@ -30,20 +30,20 @@ Create table Produto(
     fkgenero varchar(30),
     preco real,
     idImg serial,
-    inativo int
+    inativo boolean
 );
 
 
 Create table Editora(
     idEditora serial,
     nome varchar(100),
-    inativo int
+    inativo boolean
 );
 
 Create table Genero(
     idGenero serial,
     nome varchar(100),
-    inativo int
+    inativo boolean
 );
 
 create table pedido(

@@ -17,13 +17,13 @@ public class Produto {
     private double preco;
     private Genero genero;
     private int idImg;
-    private int inativo;
+    private boolean inativo;
     
-    public int getInativo() {
-    return inativo;
+   public boolean isInativo() {
+        return inativo;
     }
 
-    public void setInativo(int inativo) {
+    public void setInativo(boolean inativo) {
         this.inativo = inativo;
     }
 
