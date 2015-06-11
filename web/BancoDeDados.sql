@@ -50,7 +50,7 @@ create table pedido(
 idPedido serial,
 idCliente int,
 valorTotal real,
-data DateTime,
+data Timestamp,
 situacao int
 );
 
@@ -58,7 +58,7 @@ situacao int
 create table itemPedido(
 idItemPedido serial,
 idPedido int,
-irProduto int,
+idProduto int,
 quantidade int,
-valorUnitario int
+valorUnitario real
 );

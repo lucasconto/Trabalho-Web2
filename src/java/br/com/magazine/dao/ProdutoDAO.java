@@ -36,7 +36,7 @@ public class ProdutoDAO {
             stmt = con.prepareStatement(stmtCadastraProduto, PreparedStatement.RETURN_GENERATED_KEYS);
             stmt.setString(1, p.getTitulo());
             stmt.setString(2, p.getAutor());
-            stmt.setInt(3, p.getEditora());
+            stmt.setInt(3, p.getEditora().getIdEditora());
             stmt.setDouble(4, p.getPreco());
             stmt.setString(5, p.getGenero().getNome());
             stmt.executeUpdate();
@@ -75,7 +75,7 @@ public class ProdutoDAO {
             stmt = con.prepareStatement(stmtAtualizaProduto);
             stmt.setString(1, p.getTitulo());
             stmt.setString(2, p.getAutor());
-            stmt.setInt(3, p.getEditora());
+            stmt.setInt(3, p.getEditora().getIdEditora());
             stmt.setDouble(4, p.getPreco());
             stmt.setString(5, p.getGenero().getNome());
             stmt.setInt(6, p.getIdProduto());

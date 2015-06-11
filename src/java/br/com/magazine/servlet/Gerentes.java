@@ -8,9 +8,11 @@ package br.com.magazine.servlet;
 import br.com.magazine.dao.ClienteDAO;
 import br.com.magazine.dao.EditoraDAO;
 import br.com.magazine.dao.GeneroDAO;
+import br.com.magazine.dao.PedidoDAO;
 import br.com.magazine.entidade.Cliente;
 import br.com.magazine.entidade.Editora;
 import br.com.magazine.entidade.Genero;
+import br.com.magazine.entidade.Pedido;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -127,6 +129,22 @@ public class Gerentes extends HttpServlet {
                 request.setAttribute("escolha", escolha);
                 request.setAttribute("str", str);
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/visualizarFuncionario.jsp");
+                rd.forward(request,response);
+            }
+            if ("visualizarCompras".equals(request.getParameter("action"))) {
+                String escolha = request.getParameter("escolha");
+                String str = request.getParameter("str");
+                ClienteDAO clienteDAO = new ClienteDAO();
+                Cliente clienteSessao = new Cliente();
+                clienteSessao.setIdCliente(Integer.parseInt(request.getParameter("id")));
+                Cliente cliente = clienteDAO.buscarClienteId(clienteSessao);
+                PedidoDAO pedidoDAO = new PedidoDAO();
+                List<Pedido> listaPedidos = pedidoDAO.listaPedidosCliente(cliente);
+                request.setAttribute("cliente", cliente);
+                request.setAttribute("listaPedidos", listaPedidos);
+                request.setAttribute("escolha", escolha);
+                request.setAttribute("str", str);
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/listarComprasCliente.jsp");
                 rd.forward(request,response);
             }
             if ("visualizarc".equals(request.getParameter("action"))) {

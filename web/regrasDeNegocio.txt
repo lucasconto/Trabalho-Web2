@@ -4,3 +4,7 @@
     1. Cliente 
     2. Administrador 
     3. Gerente 
+4. Identificação dos pedidos. Flags:
+    0. Cancelado
+    1. Pago, aguardando recebimento.
+    3. Recebido, compra finalizada.

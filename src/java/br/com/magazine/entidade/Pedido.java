@@ -1,22 +1,22 @@
 package br.com.magazine.entidade;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 public class Pedido {
 
     int idPedido;
     int idCliente;
-    List<Itempedido> itens;
+    List<ItemPedido> itens;
     int status;
-    Date data;
+    Timestamp data;
     double valorTotal;
 
-    public List<Itempedido> getItens() {
+    public List<ItemPedido> getItens() {
         return itens;
     }
 
-    public void setItens(List<Itempedido> itens) {
+    public void setItens(List<ItemPedido> itens) {
         this.itens = itens;
     }
 
@@ -46,11 +46,11 @@ public class Pedido {
         this.status = status;
     }
 
-    public Date getData() {
+    public Timestamp getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(Timestamp data) {
         this.data = data;
     }
 

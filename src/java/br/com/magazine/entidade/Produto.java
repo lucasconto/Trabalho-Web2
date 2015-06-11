@@ -13,7 +13,7 @@ public class Produto {
     private int idProduto;
     private String titulo;
     private String autor;
-    private int editora;
+    private Editora editora;
     private double preco;
     private Genero genero;
     private int idImg;
@@ -51,14 +51,6 @@ public class Produto {
         this.autor = autor;
     }
 
-    public int getEditora() {
-        return editora;
-    }
-
-    public void setEditora(int editora) {
-        this.editora = editora;
-    }
-
     public double getPreco() {
         return preco;
     }
@@ -81,6 +73,20 @@ public class Produto {
 
     public void setGenero(Genero genero) {
         this.genero = genero;
+    }
+
+    /**
+     * @return the editora
+     */
+    public Editora getEditora() {
+        return editora;
+    }
+
+    /**
+     * @param editora the editora to set
+     */
+    public void setEditora(Editora editora) {
+        this.editora = editora;
     }
     
 }

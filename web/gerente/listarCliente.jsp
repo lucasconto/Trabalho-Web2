@@ -87,76 +87,59 @@
                             </div>
                         </div>
                     </form>
-                    <div id="accordion" class="panel-group">
+                    <table class="table table-striped table-bordered">
+                        <tr>
+                            <th>Nome</th>
+                            <th>CPF</th>
+                            <th>Ação</th>
+                        </tr>
                         <c:forEach var="cliente" items="${listaClientes}">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse${cliente.idCliente}">${cliente.nome} - <strong>CPF:</strong> ${cliente.cpf}</a>
-                                        <div class="pull-right">
-                                            <form action="./Gerentes?action=visualizarc&id=${cliente.idCliente}" method="post" style="display: inline">
-                                                <a href="#" onclick="this.parentNode.submit();">
-                                                    <span title="Visualizar" class="glyphicon glyphicon-eye-open" style="font-size: 20px"></span>
-                                                    <input type="hidden" value="${escolha}" name="escolha"/>
-                                                    <input type="hidden" value="${str}" name="str"/>
-                                                </a>
-                                            </form>
-                                            <form action="./Gerentes?action=valterarc&id=${cliente.idCliente}" method="post" style="display: inline">
-                                                <a href="#" onclick="this.parentNode.submit();">
-                                                    <span title="Alterar" class="glyphicon glyphicon-pencil" style="font-size: 20px"></span>
-                                                    <input type="hidden" value="${escolha}" name="escolha"/>
-                                                    <input type="hidden" value="${str}" name="str"/>
-                                                </a>
-                                            </form>
-                                            <form action="./Gerentes?action=excluirc&id=${cliente.idCliente}" method="post" style="display: inline">
-                                                <a href="#" onclick="this.parentNode.submit();">
-                                                    <span title="Excluir" class="glyphicon glyphicon-trash" style="font-size: 20px"></span>
-                                                    <input type="hidden" value="${escolha}" name="escolha"/>
-                                                    <input type="hidden" value="${usuario.perfil}" name="perfil"/>
-                                                    <input type="hidden" value="${str}" name="str"/>
-                                                </a>
-                                            </form>
-                                        </div>
-                                    </h4>
+                            <tr>
+                                <td>${cliente.nome}</td>
+                                <td>${cliente.cpf}</td>
+                            <td>
+                                <div class="text-center">
+                                    <form action="./Gerentes?action=visualizarCompras&id=${cliente.idCliente}" method="post" style="display: inline">
+                                        <a href="#" onclick="this.parentNode.submit();">
+                                            <span title="Visualizar Compras" class="glyphicon glyphicon-shopping-cart" style="font-size: 20px"></span>
+                                            <input type="hidden" value="${escolha}" name="escolha"/>
+                                            <input type="hidden" value="${str}" name="str"/>
+                                        </a>
+                                    </form>
+                                    <form action="./Gerentes?action=visualizarAcoes&id=${cliente.idCliente}" method="post" style="display: inline">
+                                        <a href="#" onclick="this.parentNode.submit();">
+                                            <span title="Visualizar Ações" class="glyphicon glyphicon-list-alt" style="font-size: 20px"></span>
+                                            <input type="hidden" value="${escolha}" name="escolha"/>
+                                            <input type="hidden" value="${str}" name="str"/>
+                                        </a>
+                                    </form>
+                                    <form action="./Gerentes?action=visualizarf&id=${cliente.idCliente}" method="post" style="display: inline">
+                                        <a href="#" onclick="this.parentNode.submit();">
+                                            <span title="Editar" class="glyphicon glyphicon-eye-open" style="font-size: 20px"></span>
+                                            <input type="hidden" value="${escolha}" name="escolha"/>
+                                            <input type="hidden" value="${str}" name="str"/>
+                                        </a>
+                                    </form>
+                                    <form action="./Gerentes?action=valterarf&id=${cliente.idCliente}" method="post" style="display: inline">
+                                        <a href="#" onclick="this.parentNode.submit();">
+                                            <span title="Alterar" class="glyphicon glyphicon-pencil" style="font-size: 20px"></span>
+                                            <input type="hidden" value="${escolha}" name="escolha"/>
+                                            <input type="hidden" value="${str}" name="str"/>
+                                        </a>
+                                    </form>
+                                    <form action="./Gerentes?action=excluirf&id=${cliente.idCliente}" method="post" style="display: inline">
+                                        <a href="#" onclick="this.parentNode.submit();">
+                                            <span title="Excluir" class="glyphicon glyphicon-trash" style="font-size: 20px"></span>
+                                            <input type="hidden" value="${escolha}" name="escolha"/>
+                                            <input type="hidden" value="${usuario.perfil}" name="perfil"/>
+                                            <input type="hidden" value="${str}" name="str"/>
+                                        </a>
+                                    </form>
                                 </div>
-                                <div id="collapse${cliente.idCliente}" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <table class="table table-striped table-bordered">
-                                            <tr>
-                                                <th>Número da Compra #</th>
-                                                <th>Data</th>
-                                                <th>Valor Total</th>
-                                            </tr>
-                                            <tr>
-                                                <td>183</td>
-                                                <td>12/11/2015</td>
-                                                <td>R$ 204,40</td>
-                                            </tr>
-                                            <tr>
-                                                <td>183</td>
-                                                <td>12/11/2015</td>
-                                                <td>R$ 204,40</td>
-                                            </tr>
-                                            <tr>
-                                                <td>183</td>
-                                                <td>12/11/2015</td>
-                                                <td>R$ 204,40</td>
-                                            </tr>
-                                            <tr>
-                                                <td>183</td>
-                                                <td>12/11/2015</td>
-                                                <td>R$ 204,40</td>
-                                            </tr>
-
-                                            <a style="padding-left: 30px;" href="#">
-                                                <strong> Visualizar Ações</strong>
-                                            </a>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+                            </td>
+                            </tr>
                         </c:forEach>
-                    </div>
+                    </table>
                 </div>
             </div>
         </div>
