@@ -22,7 +22,7 @@ public class ProdutoDAO {
     //sem imagem
     private final String stmtCadastraProduto = "insert into produto (titulo, autor, fkeditora, preco, fkgenero) values (?,?,?,?,?)";
     //private final String stmtCadastraProduto = "insert into produto (titulo, autor, editora, categoria, preco, genero, idImg) values (?,?,?,?,?,?)";
-    private final String stmtAtualizaProduto = "update produto set titulo = ?, autor = ?, editora = ?, preco = ?, genero = ? where idProduto = ?";
+    private final String stmtAtualizaProduto = "update produto set titulo = ?, autor = ?, fkeditora = ?, preco = ?, fkgenero = ? where idProduto = ?";
     private final String stmtRemoveProduto = "update produto set inativo = true where idProduto = ?";
     private final String stmtListaProduto = "select * from produto";
 //
@@ -36,7 +36,7 @@ public class ProdutoDAO {
             stmt = con.prepareStatement(stmtCadastraProduto, PreparedStatement.RETURN_GENERATED_KEYS);
             stmt.setString(1, p.getTitulo());
             stmt.setString(2, p.getAutor());
-            stmt.setInt(3, Integer.parseInt(p.getEditora()));
+            stmt.setInt(3, p.getEditora());
             stmt.setDouble(4, p.getPreco());
             stmt.setString(5, p.getGenero().getNome());
             //sem imagem
@@ -77,7 +77,7 @@ public class ProdutoDAO {
             stmt = con.prepareStatement(stmtAtualizaProduto);
             stmt.setString(1, p.getTitulo());
             stmt.setString(2, p.getAutor());
-            stmt.setString(3, p.getEditora());
+            stmt.setInt(3, p.getEditora());
             stmt.setDouble(4, p.getPreco());
             stmt.setString(5, p.getGenero().getNome());
             stmt.setInt(6, p.getIdProduto());
@@ -104,6 +104,7 @@ public class ProdutoDAO {
         PreparedStatement stmt = null;
         try {
             con = ConnectionFactory.getConnection();
+            con.setAutoCommit(false);
             stmt = con.prepareStatement(stmtRemoveProduto);
             stmt.setInt(1, p.getIdProduto());
             stmt.executeUpdate();
