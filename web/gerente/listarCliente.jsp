@@ -104,21 +104,21 @@
                                         <div class="pull-right">
                                             <form action="./Gerentes?action=visualizarc&id=${cliente.idCliente}" method="post" style="display: inline">
                                                 <a href="#" onclick="this.parentNode.submit();">
-                                                    <span class="glyphicon glyphicon-eye-open" style="font-size: 20px"></span>
+                                                    <span title="Visualizar" class="glyphicon glyphicon-eye-open" style="font-size: 20px"></span>
                                                     <input type="hidden" value="${escolha}" name="escolha"/>
                                                     <input type="hidden" value="${str}" name="str"/>
                                                 </a>
                                             </form>
                                             <form action="./Gerentes?action=valterarc&id=${cliente.idCliente}" method="post" style="display: inline">
                                                 <a href="#" onclick="this.parentNode.submit();">
-                                                    <span class="glyphicon glyphicon-pencil" style="font-size: 20px"></span>
+                                                    <span title="Alterar" class="glyphicon glyphicon-pencil" style="font-size: 20px"></span>
                                                     <input type="hidden" value="${escolha}" name="escolha"/>
                                                     <input type="hidden" value="${str}" name="str"/>
                                                 </a>
                                             </form>
                                             <form action="./Gerentes?action=excluirc&id=${cliente.idCliente}" method="post" style="display: inline">
                                                 <a href="#" onclick="this.parentNode.submit();">
-                                                    <span class="glyphicon glyphicon-trash" style="font-size: 20px"></span>
+                                                    <span title="Excluir" class="glyphicon glyphicon-trash" style="font-size: 20px"></span>
                                                     <input type="hidden" value="${escolha}" name="escolha"/>
                                                     <input type="hidden" value="${usuario.perfil}" name="perfil"/>
                                                     <input type="hidden" value="${str}" name="str"/>
