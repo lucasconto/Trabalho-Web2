@@ -49,19 +49,19 @@
                 <h1>Cadastro de Produto</h1>
                 <form class="form-horizontal" id="form" method="POST" action="../Produtos?action=cadastrar" onsubmit="//return valida(this);"  enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="" class="col-sm-4 control-label">Título</label>
+                        <label  class="col-sm-4 control-label">Título</label>
                         <div class="col-sm-8">
                             <input name="titulo" id="titulo" type="text" class="form-control" placeholder="">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="" class="col-sm-4 control-label">Autor</label>
+                        <label  class="col-sm-4 control-label">Autor</label>
                         <div class="col-sm-8">
                             <input name="autor" id="autor" type="text" class="form-control" id="" placeholder="">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="" class="col-sm-4 control-label">Editora</label>
+                        <label  class="col-sm-4 control-label">Editora</label>
                         <div class="col-sm-8">
                             <select name="editora" id="editora" class="form-control">
                                 <option>Selecione</option>
@@ -71,7 +71,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="" class="col-sm-4 control-label">Categoria</label>
+                        <label  class="col-sm-4 control-label">Categoria</label>
                         <div class="col-sm-8">
                             <select name="categoria" id="categoria" class="form-control">
                                 <option>Selecione</option>
@@ -81,18 +81,18 @@
                         </div>
                     </div> 
                     <div class="form-group">
-                        <label for="" class="col-sm-4 control-label">Preço</label>
+                        <label  class="col-sm-4 control-label">Preço</label>
                         <div class="col-sm-8">
                             <div class="input-group">
                             <span class="input-group-addon">R$</span>
-                            <input name="preco" id="preco" type="text" class="form-control" id="" placeholder="">
+                            <input name="preco" id="preco" type="text" class="form-control" placeholder="">
                             </div>
                         </div>
                     </div>                    
                     <div class="form-group">
-                        <label for="" class="col-sm-4 control-label">Imagem</label>
+                        <label class="col-sm-4 control-label">Imagem</label>
                         <div class="col-sm-8">
-                            <input name="idImg" id="idImg"  type="file" class="" id=""  accept="image/jpeg">
+                            <input name="idImg" id="idImg"  type="file" class=""  accept="image/jpeg">
                             
                         </div>
                     </div>  

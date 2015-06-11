@@ -15,10 +15,11 @@ import java.text.SimpleDateFormat;
  */
 public class TesteData {
    public static void main(String[] args) throws ParseException{
-       String dataStr = "12/02/2012";
-       DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-       java.util.Date utilData = format.parse(dataStr);
-       java.sql.Date sqlData = new java.sql.Date(utilData.getTime());
-       System.out.println(sqlData);
+//       String dataStr = "12/02/2012";
+//       DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+//       java.util.Date utilData = format.parse(dataStr);
+//       java.sql.Date sqlData = new java.sql.Date(utilData.getTime());
+//       System.out.println(sqlData);
+      System.out.println(System.getProperty("user.home"));
    } 
 }

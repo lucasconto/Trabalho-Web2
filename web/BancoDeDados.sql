@@ -27,7 +27,7 @@ Create table Produto(
     titulo varchar(100),
     autor varchar(50),
     fkEditora int,
-    fkgenero varchar(30),
+    fkgenero int,
     preco real,
     idImg serial,
     inativo boolean

@@ -41,11 +41,20 @@ public class Produtos extends HttpServlet{
         try (PrintWriter out = response.getWriter()) {
             if ("cadastrar".equals(request.getParameter("action"))) {
                 Part filePart = request.getPart("idImg"); // Retrieves <input type="file" name="file">
-                String fileName = "teste primeiro";
                 
-                File uploads = new File("c:/teste");
+                ProdutoDAO dao = new ProdutoDAO();
+                Produto produto = new Produto();
+                Genero genero = new Genero();
+                produto.setGenero(genero);
+                produto.setTitulo("teste");            
+                String nomeArquivo = dao.cadastrarProduto(produto)+ ".jpg";           
+                File homedir = new File(System.getProperty("user.home"));
+                File fileToRead = new File(homedir, "/teste");
+
                 
-                File file = new File(uploads, fileName); 
+            //    File uploads = new File("c:/teste");
+            //    File file = new File(uploads, fileName); 
+                File file = new File(fileToRead, nomeArquivo); 
                 
                 try (InputStream input = filePart.getInputStream()) {  // How to obtain part is answered in http://stackoverflow.com/a/2424824
                     Files.copy(input, file.toPath());
@@ -60,14 +69,14 @@ public class Produtos extends HttpServlet{
                 out.println("<h1>Servlet Produtos at " + request.getContextPath() + "</h1>");
                 out.println("</body>");
                 out.println("</html>");
-                Produto produto = new Produto();
-                Genero genero = new Genero();
+              //  Produto produto = new Produto();
+              //  Genero genero = new Genero();
                 Editora editora = new Editora();
                 EditoraDAO editoraDAO = new EditoraDAO();
                 editora = editoraDAO.buscarIdEditora(editora);
                 
                 editora.setNome(request.getParameter("editora"));
-                genero.setNome(request.getParameter("categoria"));
+                genero.setNome(request.getParameter("genero"));
                 
 
                 produto.setTitulo(request.getParameter("titulo"));
@@ -78,11 +87,10 @@ public class Produtos extends HttpServlet{
                 
                
                 //sem imagem
-                //produto.setidImg(Integer.parseInt(request.getParameter("idImg")));
-
-                        
-                ProdutoDAO dao = new ProdutoDAO();
-                dao.cadastrarProduto(produto);
+                //produto.setidImg(Integer.parseInt(request.getParameter("idImg")));                
+             
+                
+      
             }
         }
     }

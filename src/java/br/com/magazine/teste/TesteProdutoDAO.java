@@ -24,7 +24,7 @@ import java.text.ParseException;
 //        Produto produto = new Produto();
 //        produto.setTitulo("Evandro iz");
 //        produto.setAutor("Bruno Sella");
-//        produto.setEditora("1");
+//        produto.setEditora(1);
 //        produto.setPreco(20.89);
 //        produto.setGenero(genero);
 //        ProdutoDAO produtoDAO = new ProdutoDAO();

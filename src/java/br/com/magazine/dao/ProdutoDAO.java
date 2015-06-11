@@ -39,8 +39,6 @@ public class ProdutoDAO {
             stmt.setInt(3, p.getEditora());
             stmt.setDouble(4, p.getPreco());
             stmt.setString(5, p.getGenero().getNome());
-            //sem imagem
-            //stmt.setInt(6, p.getidImg());
             stmt.executeUpdate();
             con.commit();
             
