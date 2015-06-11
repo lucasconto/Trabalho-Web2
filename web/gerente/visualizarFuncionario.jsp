@@ -35,7 +35,6 @@
     <body>
         <!--Inclui cabeçalho-->
         <jsp:include page="navGerente.jsp"/>
-
         <div class="container">
             <div class=" col-sm-offset-3 col-sm-6">
                 <h1>Dados Cadastrais</h1>

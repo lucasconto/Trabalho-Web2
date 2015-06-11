@@ -35,15 +35,7 @@
 
             <div class="row">
 
-                <div class="col-md-3">
-
-
-                    <div class="list-group">
-
-                        <a href="#" class="list-group-item">Revistas</a>
-                        <a href="#" class="list-group-item">Revistas em Quadrinhos</a>
-                    </div>
-                </div>
+                <jsp:include page="menuCliente.jsp"/>
 
                 <div class="col-md-9">
 
