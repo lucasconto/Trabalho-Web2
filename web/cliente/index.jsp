@@ -1,4 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -91,134 +93,34 @@
                     <br/>
 
                     <div class="row">
-                        <div class="col-sm-4 col-lg-4 col-md-4">
-                            <div class="thumbnail">
-                                <img src="http://placehold.it/320x150" alt="">
-                                <div class="caption">
-                                    <h4><a href="verProduto.jsp">Monica Edição 1000</a>
-                                    </h4>
-                                    <p>
-                                        Gênero: Comédia<br/>
-                                        Número de Páginas: 55<br/>
-                                        Editora: Globo<br/>
-                                        Autor: Maurício de Souza<br/>
-                                    <h4 class="pull-left">R$24.99</h4>
-                                    <br/>
-                                    <a href="carrinhoCompras.jsp " class="pull-right">
-                                        Adicionar ao Carrinho
-                                        <span class="glyphicon glyphicon-shopping-cart"></span></a>
-                                    </p>
+                        <c:forEach var="produto" items="${listaProdutos}">
+                            <div class="col-sm-4 col-lg-4 col-md-4">
+                                <div class="thumbnail">
+                                            <img src="${pageContext.request.contextPath}/Imagens/${produto.idImg}.jpg" style="width: 120px;height: 120px" class="media-object" alt="">
+                                </div>
+                                <div class="container container-fluid">
+                                    <div class="caption">
+                                        <h4>
+                                            <a href="verProduto.jsp">
+                                                <p class="">
+                                                    ${produto.titulo}
+                                                </p>
+                                            </a>
+                                        </h4>
+                                        <p>
+                                            Gênero: ${produto.genero.nome}<br/>
+                                            Editora: ${produto.editora.nome}<br/>
+                                            Autor: ${produto.autor}<br/>
+                                        <h4 class="pull-left"><fmt:formatNumber value="${produto.preco}" minFractionDigits="2" type="currency"/></h4>
+                                        <br/>
+                                        <a href="carrinhoCompras.jsp " class="pull-right">
+                                            Adicionar ao Carrinho
+                                            <span class="glyphicon glyphicon-shopping-cart"></span></a>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="col-sm-4 col-lg-4 col-md-4">
-                            <div class="thumbnail">
-                                <img src="http://placehold.it/320x150" alt="">
-                                <div class="caption">
-                                    <h4><a href="#">Wolverine Aniversário</a>
-                                    </h4>
-                                    <p>
-                                        Gênero: Ação<br/>
-                                        Número de Páginas: 203<br/>
-                                        Editora: Marvel<br/>
-                                        Autor: Marvel Comics<br/>
-                                    <h4 class="pull-left">R$204.99</h4>
-                                    <br/>
-                                    <a href="#" class="pull-right">
-                                        Adicionar ao Carrinho
-                                        <span class="glyphicon glyphicon-shopping-cart"></span></a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-4 col-lg-4 col-md-4">
-                            <div class="thumbnail">
-                                <img src="http://placehold.it/320x150" alt="">
-                                <div class="caption">
-                                    <h4><a href="#">Casa e Construção maio/2015</a>
-                                    </h4>
-                                    <p>
-                                        Gênero: Casa<br/>
-                                        Número de Páginas: 34<br/>
-                                        Editora: Minhateca<br/>
-                                        Autor: Joao do Pé de Feijão<br/>
-                                    <h4 class="pull-left">R$28.99</h4>
-                                    <br/>
-                                    <a href="#" class="pull-right">
-                                        Adicionar ao Carrinho
-                                        <span class="glyphicon glyphicon-shopping-cart"></span></a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-4 col-lg-4 col-md-4">
-                            <div class="thumbnail">
-                                <img src="http://placehold.it/320x150" alt="">
-                                <div class="caption">
-                                    <h4><a href="#">Monica Edição 1000</a>
-                                    </h4>
-                                    <p>
-                                        Gênero: Comédia<br/>
-                                        Número de Páginas: 55<br/>
-                                        Editora: Globo<br/>
-                                        Autor: Maurício de Souza<br/>
-                                    <h4 class="pull-left">R$24.99</h4>
-                                    <br/>
-                                    <a href="#" class="pull-right">
-                                        Adicionar ao Carrinho
-                                        <span class="glyphicon glyphicon-shopping-cart"></span></a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 col-lg-4 col-md-4">
-                            <div class="thumbnail">
-                                <img src="http://placehold.it/320x150" alt="">
-                                <div class="caption">
-                                    <h4><a href="#">Monica Edição 1000</a>
-                                    </h4>
-                                    <p>
-                                        Gênero: Comédia<br/>
-                                        Número de Páginas: 55<br/>
-                                        Editora: Globo<br/>
-                                        Autor: Maurício de Souza<br/>
-                                    <h4 class="pull-left">R$24.99</h4>
-                                    <br/>
-                                    <a href="#" class="pull-right">
-                                        Adicionar ao Carrinho
-                                        <span class="glyphicon glyphicon-shopping-cart"></span></a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-4 col-lg-4 col-md-4">
-                            <div class="thumbnail">
-                                <img src="http://placehold.it/320x150" alt="">
-                                <div class="caption">
-                                    <h4><a href="#">Monica Edição 1000</a>
-                                    </h4>
-                                    <p>
-                                        Gênero: Comédia<br/>
-                                        Número de Páginas: 55<br/>
-                                        Editora: Globo<br/>
-                                        Autor: Maurício de Souza<br/>
-                                    <h4 class="pull-left">R$24.99</h4>
-                                    <br/>
-                                    <a href="#" class="pull-right">
-                                        Adicionar ao Carrinho
-                                        <span class="glyphicon glyphicon-shopping-cart"></span></a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-4 col-lg-4 col-md-4">
-                        </div>
-
+                        </c:forEach>
                     </div>
 
                 </div>
@@ -226,19 +128,21 @@
             </div>
 
         </div>
-        <!-- /.container -->
 
-        <!--Inclui Rodapé-->
-        <jsp:include page="../comum/rodape.jsp"/>
+    </div>
+    <!-- /.container -->
+
+    <!--Inclui Rodapé-->
+    <jsp:include page="../comum/rodape.jsp"/>
 
 
 
-        <!-- jQuery -->
-        <script src="../js/jquery.min.js"></script>
+    <!-- jQuery -->
+    <script src="../js/jquery.min.js"></script>
 
-        <!-- Bootstrap Core JavaScript -->
-        <script src="../js/bootstrap.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../js/bootstrap.min.js"></script>
 
-    </body>
+</body>
 
 </html>

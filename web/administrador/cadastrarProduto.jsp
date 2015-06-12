@@ -65,18 +65,18 @@
                         <div class="col-sm-8">
                             <select name="editora" id="editora" class="form-control">
                                 <option>Selecione</option>
-                                <option>Editora 1</option>
-                                <option>Editora 2</option>
+                                <option value="1">Editora 1</option>
+                                <option value="2">Editora 2</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label  class="col-sm-4 control-label">Categoria</label>
                         <div class="col-sm-8">
-                            <select name="categoria" id="categoria" class="form-control">
+                            <select name="genero" id="categoria" class="form-control">
                                 <option>Selecione</option>
-                                <option>Categoria 1</option>
-                                <option>Categoria 2</option>
+                                <option value="1">Categoria 1</option>
+                                <option value="2">Categoria 2</option>
                             </select>
                         </div>
                     </div> 

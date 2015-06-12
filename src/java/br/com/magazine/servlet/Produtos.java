@@ -45,16 +45,30 @@ public class Produtos extends HttpServlet{
                 ProdutoDAO dao = new ProdutoDAO();
                 Produto produto = new Produto();
                 Genero genero = new Genero();
+                genero.setIdGenero(Integer.parseInt(request.getParameter("genero")));
                 produto.setGenero(genero);
+                Editora editora = new Editora();
+                editora.setIdEditora(Integer.parseInt(request.getParameter("editora")));
+                produto.setEditora(editora);
                 produto.setTitulo("teste");            
+               
+                             
+//                ----Salvando em um diretorio no servidor----
                 String nomeArquivo = dao.cadastrarProduto(produto)+ ".jpg";           
                 File homedir = new File(System.getProperty("user.home"));
-                File fileToRead = new File(homedir, "/teste");
+                File file = new File(homedir+"\\teste", nomeArquivo); 
+                
+                //----Salvando no projeto do servidor--------
+//                String nomeArquivo = dao.cadastrarProduto(produto)+ ".jpg";     
+//                String caminho = request.getServletContext().getRealPath("");
+//                String caminhoSalvar = caminho + File.separator + "imagemLivros";
+//                File uploads = new File("/imagemLivros");
+//                File file = new File(caminhoSalvar, nomeArquivo); 
+                
 
                 
-            //    File uploads = new File("c:/teste");
-            //    File file = new File(uploads, fileName); 
-                File file = new File(fileToRead, nomeArquivo); 
+                
+                
                 
                 try (InputStream input = filePart.getInputStream()) {  // How to obtain part is answered in http://stackoverflow.com/a/2424824
                     Files.copy(input, file.toPath());
@@ -71,12 +85,12 @@ public class Produtos extends HttpServlet{
                 out.println("</html>");
               //  Produto produto = new Produto();
               //  Genero genero = new Genero();
-                Editora editora = new Editora();
-                EditoraDAO editoraDAO = new EditoraDAO();
-                editora = editoraDAO.buscarIdEditora(editora);
-                
-                editora.setNome(request.getParameter("editora"));
-                genero.setNome(request.getParameter("genero"));
+//                Editora editora = new Editora();
+//                EditoraDAO editoraDAO = new EditoraDAO();
+//                editora = editoraDAO.buscarIdEditora(editora);
+//                
+//                editora.setNome(request.getParameter("editora"));
+//                genero.setNome(request.getParameter("genero"));
                 
 
                 produto.setTitulo(request.getParameter("titulo"));

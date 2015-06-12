@@ -6,13 +6,16 @@
 package br.com.magazine.servlet;
 
 import br.com.magazine.dao.ClienteDAO;
+import br.com.magazine.dao.ProdutoDAO;
 import br.com.magazine.entidade.Cliente;
+import br.com.magazine.entidade.Produto;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -110,6 +113,13 @@ public class Clientes extends HttpServlet {
                 cliente.setPerfil(1);
                 ClienteDAO clienteDAO = new ClienteDAO();
                 clienteDAO.atualizarCliente(cliente);
+            }else{
+                ProdutoDAO produtoDAO = new ProdutoDAO();
+                
+                List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidos();
+                request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
+                rd.forward(request,response);
             }
         }
     }

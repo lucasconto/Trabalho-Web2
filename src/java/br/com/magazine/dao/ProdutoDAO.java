@@ -5,6 +5,8 @@
  */
 package br.com.magazine.dao;
 
+import br.com.magazine.entidade.Editora;
+import br.com.magazine.entidade.Genero;
 import br.com.magazine.entidade.Produto;
 import br.com.magazine.util.ConnectionFactory;
 import java.sql.Connection;
@@ -25,6 +27,7 @@ public class ProdutoDAO {
     private final String stmtAtualizaProduto = "update produto set titulo = ?, autor = ?, fkeditora = ?, preco = ?, fkgenero = ? where idProduto = ?";
     private final String stmtRemoveProduto = "update produto set inativo = true where idProduto = ?";
     private final String stmtListaProduto = "select * from produto";
+    private final String stmtListaProdutosMaisVendidos = "select itempedido.idproduto,sum(quantidade) as soma, preco, titulo, autor, idimg, fkgenero, fkeditora, genero.nome as generonome, editora.nome as editoranome from itempedido left join produto on (produto.idproduto = itempedido.idproduto) inner join genero on (produto.fkgenero = genero.idgenero) inner join editora on (produto.fkeditora = editora.ideditora) where produto.inativo = false group by itempedido.idproduto, autor, produto.titulo,preco,idimg,fkgenero, fkeditora,generonome, editoranome order by soma desc limit 12";
 //
     
     public int cadastrarProduto (Produto p) throws ClassNotFoundException{ 
@@ -38,7 +41,7 @@ public class ProdutoDAO {
             stmt.setString(2, p.getAutor());
             stmt.setInt(3, p.getEditora().getIdEditora());
             stmt.setDouble(4, p.getPreco());
-            stmt.setString(5, p.getGenero().getNome());
+            stmt.setInt(5, p.getGenero().getIdGenero());
             stmt.executeUpdate();
             con.commit();
             
@@ -140,6 +143,61 @@ public class ProdutoDAO {
                 Produto produto = new Produto();
                 produto.setIdProduto(rs.getInt("idProduto"));
                 produto.setTitulo(rs.getString("titulo"));
+                listaProdutos.add(produto);
+            }
+            return listaProdutos;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                rs.close();
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar result set.Erro: " + ex.getMessage());
+            }
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar statement. Ex = " + ex.getMessage());
+            }
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar a conexao. Ex = " + ex.getMessage());
+            }
+        }
+
+    }    
+    
+    
+    public List<Produto> listarProdutosMaisVendidos() throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(stmtListaProdutosMaisVendidos);
+            rs = stmt.executeQuery();
+            List<Produto> listaProdutos = new ArrayList();
+            while (rs.next()) {
+                Produto produto = new Produto();
+                produto.setIdProduto(rs.getInt("idProduto"));
+                produto.setPreco(rs.getDouble("preco"));
+                produto.setTitulo(rs.getString("titulo"));
+                produto.setAutor(rs.getString("autor"));
+                produto.setidImg(rs.getInt("idimg"));
+                
+                Genero genero = new Genero();
+                genero.setIdGenero(rs.getInt("fkGenero"));
+                genero.setNome(rs.getString("generoNome"));
+                produto.setGenero(genero);
+                
+                Editora editora = new Editora();
+                editora.setIdEditora(rs.getInt("fkEditora"));
+                editora.setNome(rs.getString("editoraNome"));
+                produto.setEditora(editora);
+                
                 listaProdutos.add(produto);
             }
             return listaProdutos;
