@@ -1,3 +1,4 @@
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%> 
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -24,16 +25,16 @@
                 <li class="dropdown" id="menuLogin">
                     <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">Login<strong class="caret"></strong></a>
 
-                    <div class="dropdown-menu pull-left" style="padding:17px; min-width: 0px;">
+                    <div class="dropdown-menu pull-left" style="padding:20px; min-width: 300px;">
                         <form class="form" id="formLogin" action="../cliente/index.jsp">
                             <div style="padding: 5px">
-                                <input name="email" id="username" type="text" placeholder="Username">
+                                <input name="email" class="form-control" id="username" type="text" placeholder="Email">
                             </div>
                             <div style="padding: 5px">
-                                <input name="password" id="password" type="password" placeholder="Password"><br>
+                                <input name="password" class="form-control" id="password" type="password" placeholder="Senha"><br>
                             </div>
                             <div style="padding: 5px">
-                                <button type="submit" id="btnLogin" class="btn" >Login</button>
+                                <button type="submit" id="btnLogin" class="btn" >Entrar</button>
                             </div>
                         </form>
                     </div>
@@ -41,10 +42,12 @@
                 <li>
                     <a href="cadastrarCliente.jsp"> Cadastrar </a>
                 </li>
-                <li class="dropdown" id="menuLogin">
+                <c:if test="${sessionScope.user != null}">
+               <li class="dropdown" id="menuLogin">
                     <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">
                         <span class="glyphicon glyphicon-shopping-cart"></span>
-                        Carrinho [3 Itens]<strong class="caret"></strong>
+                        Carrinho [${Carrinho.getNumeroItens()} Itens]
+                        <strong class="caret"></strong>
 
                     </a>
 
@@ -75,6 +78,7 @@
                         <h4 class="pull-right">Total R$340,00</h4>
                     </div>
                 </li>
+                </c:if>
             </ul>
 
         </div>
