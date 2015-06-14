@@ -7,16 +7,16 @@ public class Pedido {
 
     int idPedido;
     int idCliente;
-    List<Itempedido> itens;
+    List<ItemPedido> itens;
     int status;
     Timestamp data;
     double valorTotal;
 
-    public List<Itempedido> getItens() {
+    public List<ItemPedido> getItens() {
         return itens;
     }
 
-    public void setItens(List<Itempedido> itens) {
+    public void setItens(List<ItemPedido> itens) {
         this.itens = itens;
     }
 

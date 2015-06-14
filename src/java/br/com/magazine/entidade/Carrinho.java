@@ -5,7 +5,7 @@ import java.util.List;
 public class Carrinho {
 
     double total;
-    List<Itempedido> itens;
+    List<ItemPedido> itens;
 
     public double getTotal() {
         return total;
@@ -15,11 +15,11 @@ public class Carrinho {
         this.total = total;
     }
 
-    public List<Itempedido> getItens() {
+    public List<ItemPedido> getItens() {
         return itens;
     }
 
-    public void setItens(List<Itempedido> itens) {
+    public void setItens(List<ItemPedido> itens) {
         this.itens = itens;
     }
 
