@@ -8,7 +8,7 @@ package br.com.magazine.dao;
 import br.com.magazine.entidade.Cliente;
 import br.com.magazine.entidade.Editora;
 import br.com.magazine.entidade.Genero;
-import br.com.magazine.entidade.ItemPedido;
+import br.com.magazine.entidade.Itempedido;
 import br.com.magazine.entidade.Pedido;
 import br.com.magazine.entidade.Produto;
 import br.com.magazine.util.ConnectionFactory;
@@ -54,8 +54,8 @@ public class PedidoDAO {
                 idPedido = rs.getInt(1);
             }
             con.commit();
-            List<ItemPedido> i = pedido.getItens();
-            for (ItemPedido cada : i) {
+            List<Itempedido> i = pedido.getItens();
+            for (Itempedido cada : i) {
                 cada.setIdPedido(idPedido);
             }
             //chamar funcao inserir produtos na item pedido ///
@@ -78,9 +78,9 @@ public class PedidoDAO {
     }
     /* função privada para cadastrar os itens do carrinho*/
 
-    private void cadastrarItensDoPedido(List<ItemPedido> p) throws ClassNotFoundException {
-        for (ItemPedido cada : p) {
-            ItemPedidoDAO ip = new ItemPedidoDAO();
+    private void cadastrarItensDoPedido(List<Itempedido> p) throws ClassNotFoundException {
+        for (Itempedido cada : p) {
+            ItempedidoDAO ip = new ItempedidoDAO();
             ip.cadastrarItemPedido(cada);
         }
     }
@@ -134,9 +134,9 @@ public class PedidoDAO {
                 stmt2 = con.prepareStatement(stmtListaItensPedido);
                 stmt2.setInt(1, pedido.getIdPedido());
                 rs2 = stmt2.executeQuery();
-                List<ItemPedido> listaItensPedido = new ArrayList();
+                List<Itempedido> listaItensPedido = new ArrayList();
                 while (rs2.next()) {
-                    ItemPedido itemPedido = new ItemPedido();
+                    Itempedido itemPedido = new Itempedido();
                     itemPedido.setIdItemPedido(rs2.getInt("iditempedido"));
                     itemPedido.setIdPedido(pedido.getIdPedido());
                     itemPedido.setQuantidade(rs2.getInt("quantidade"));

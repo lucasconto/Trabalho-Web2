@@ -8,7 +8,7 @@ package br.com.magazine.teste;
 import br.com.magazine.dao.PedidoDAO;
 import br.com.magazine.entidade.Cliente;
 import br.com.magazine.entidade.Genero;
-import br.com.magazine.entidade.ItemPedido;
+import br.com.magazine.entidade.Itempedido;
 import br.com.magazine.entidade.Pedido;
 import java.sql.SQLException;
 import java.util.List;
@@ -24,7 +24,7 @@ public class TestePedidoDAO {
         PedidoDAO pedidoDAO = new PedidoDAO();
         List<Pedido> listaPedidos = pedidoDAO.listaPedidosCliente(cliente);
         for(Pedido pedido : listaPedidos){
-            for(ItemPedido itemPedido : pedido.getItens())
+            for(Itempedido itemPedido : pedido.getItens())
                 System.out.println(itemPedido.getProduto().getTitulo());
         }
     }
