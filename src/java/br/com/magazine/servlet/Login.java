@@ -62,7 +62,7 @@ public class Login extends HttpServlet {
                         HttpSession session = request.getSession();
                         session.setAttribute("nome", cliente.getNome());
                         session.setAttribute("idcliente", cliente.getIdCliente());
-
+                        session.setAttribute("logado", true);
                     } else {
                         //erro: senha invalida
                         request.setAttribute("mensagem", "Erro: Senha inválida.");

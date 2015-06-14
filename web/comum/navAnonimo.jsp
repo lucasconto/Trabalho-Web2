@@ -42,11 +42,11 @@
                 <li>
                     <a href="cadastrarCliente.jsp"> Cadastrar </a>
                 </li>
-                <c:if test="${sessionScope.user != null}">
+                <c:if test="${sessionScope.carrinho == null}">
                <li class="dropdown" id="menuLogin">
                     <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">
                         <span class="glyphicon glyphicon-shopping-cart"></span>
-                        Carrinho [${Carrinho.getNumeroItens()} Itens]
+                        Carrinho [${sessionScope.carrinho.NumeroItens} Itens]
                         <strong class="caret"></strong>
 
                     </a>

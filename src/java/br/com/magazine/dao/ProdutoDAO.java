@@ -21,7 +21,9 @@ import java.util.List;
  * @author Groupo X
  */
 public class ProdutoDAO {
+
     //sem imagem
+
     private final String stmtCadastraProduto = "insert into produto (titulo, autor, fkeditora, preco, fkgenero) values (?,?,?,?,?)";
     //private final String stmtCadastraProduto = "insert into produto (titulo, autor, editora, categoria, preco, genero, idImg) values (?,?,?,?,?,?)";
     private final String stmtAtualizaProduto = "update produto set titulo = ?, autor = ?, fkeditora = ?, preco = ?, fkgenero = ? where idProduto = ?";
@@ -29,8 +31,8 @@ public class ProdutoDAO {
     private final String stmtListaProduto = "select * from produto";
     private final String stmtListaProdutosMaisVendidos = "select itempedido.idproduto,sum(quantidade) as soma, preco, titulo, autor, idimg, fkgenero, fkeditora, genero.nome as generonome, editora.nome as editoranome from itempedido left join produto on (produto.idproduto = itempedido.idproduto) inner join genero on (produto.fkgenero = genero.idgenero) inner join editora on (produto.fkeditora = editora.ideditora) where produto.inativo = false group by itempedido.idproduto, autor, produto.titulo,preco,idimg,fkgenero, fkeditora,generonome, editoranome order by soma desc limit 12";
 //
-    
-    public int cadastrarProduto (Produto p) throws ClassNotFoundException{ 
+
+    public int cadastrarProduto(Produto p) throws ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
         try {
@@ -44,15 +46,14 @@ public class ProdutoDAO {
             stmt.setInt(5, p.getGenero().getIdGenero());
             stmt.executeUpdate();
             con.commit();
-            
-             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-            if (generatedKeys.next()) {
-                return generatedKeys.getInt("idimg");
+
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt("idimg");
+                } else {
+                    throw new SQLException("Creating user failed, no ID obtained.");
+                }
             }
-            else {
-                throw new SQLException("Creating user failed, no ID obtained.");
-            }
-        }
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao inserir um produto no banco de dados. Origem: " + e.getMessage());
         } finally {
@@ -67,9 +68,10 @@ public class ProdutoDAO {
                 System.out.println("Erro ao fechar a conexao. Ex = " + ex.getMessage());
             }
         }
-        
+
     }
-        public void atualizarProduto(Produto p) throws ClassNotFoundException {
+
+    public void atualizarProduto(Produto p) throws ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
         try {
@@ -99,8 +101,8 @@ public class ProdutoDAO {
             }
         }
     }
-     
-        public void removerProduto(Produto p) throws ClassNotFoundException {
+
+    public void removerProduto(Produto p) throws ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
         try {
@@ -125,10 +127,48 @@ public class ProdutoDAO {
             }
         }
     }
-        
-     
-        
-        
+
+    private final String stmtBuscaProdutoPorId = "select * from produto where idProduto = ? and inativo = false";
+//nao retorna genero e editora
+    public Produto listarProdutoPorId(int id) throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(stmtBuscaProdutoPorId);
+            stmt.setInt(1, id);
+            rs = stmt.executeQuery();
+            Produto produto = new Produto();
+                produto.setIdProduto(rs.getInt("idProduto"));
+                produto.setTitulo(rs.getString("titulo"));
+                produto.setAutor(rs.getString("autor"));
+                produto.setPreco(rs.getDouble("preco"));
+            return produto;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                rs.close();
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar result set.Erro: " + ex.getMessage());
+            }
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar statement. Ex = " + ex.getMessage());
+            }
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar a conexao. Ex = " + ex.getMessage());
+            }
+        }
+
+    }
+
     public List<Produto> listarProduto() throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
@@ -167,9 +207,8 @@ public class ProdutoDAO {
             }
         }
 
-    }    
-    
-    
+    }
+
     public List<Produto> listarProdutosMaisVendidos() throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
@@ -187,17 +226,17 @@ public class ProdutoDAO {
                 produto.setTitulo(rs.getString("titulo"));
                 produto.setAutor(rs.getString("autor"));
                 produto.setidImg(rs.getInt("idimg"));
-                
+
                 Genero genero = new Genero();
                 genero.setIdGenero(rs.getInt("fkGenero"));
                 genero.setNome(rs.getString("generoNome"));
                 produto.setGenero(genero);
-                
+
                 Editora editora = new Editora();
                 editora.setIdEditora(rs.getInt("fkEditora"));
                 editora.setNome(rs.getString("editoraNome"));
                 produto.setEditora(editora);
-                
+
                 listaProdutos.add(produto);
             }
             return listaProdutos;
@@ -222,7 +261,6 @@ public class ProdutoDAO {
             }
         }
 
-    }    
-        
-        
     }
+
+}
