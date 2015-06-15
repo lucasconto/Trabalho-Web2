@@ -113,7 +113,42 @@ public class Clientes extends HttpServlet {
                 cliente.setPerfil(1);
                 ClienteDAO clienteDAO = new ClienteDAO();
                 clienteDAO.atualizarCliente(cliente);
-            }else{
+            }if ("nomeAZ".equals(request.getParameter("action"))) {
+                ProdutoDAO produtoDAO = new ProdutoDAO();
+                List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidosAZ();
+                request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
+                request.setAttribute("ordem", "AZ");
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
+                rd.forward(request,response);
+            }
+            if ("nomeZA".equals(request.getParameter("action"))) {
+                ProdutoDAO produtoDAO = new ProdutoDAO();
+                
+                List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidosZA();
+                request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
+                request.setAttribute("ordem", "ZA");
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
+                rd.forward(request,response);
+            }
+            if ("Asc".equals(request.getParameter("action"))) {
+                ProdutoDAO produtoDAO = new ProdutoDAO();
+                
+                List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidosAsc();
+                request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
+                request.setAttribute("ordem", "Asc");
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
+                rd.forward(request,response);
+            }
+            if ("Desc".equals(request.getParameter("action"))) {
+                ProdutoDAO produtoDAO = new ProdutoDAO();
+                
+                List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidosDesc();
+                request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
+                request.setAttribute("ordem", "Desc");
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
+                rd.forward(request,response);
+            }
+            else{
                 ProdutoDAO produtoDAO = new ProdutoDAO();
                 
                 List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidos();
