@@ -7,4 +7,4 @@
 4. Identificação dos pedidos. Flags:
     0. Cancelado
     1. Pago, aguardando recebimento.
-    3. Recebido, compra finalizada.
+    2. Recebido, compra finalizada.

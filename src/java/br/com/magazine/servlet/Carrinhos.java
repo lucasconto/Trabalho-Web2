@@ -5,13 +5,17 @@
  */
 package br.com.magazine.servlet;
 
+import br.com.magazine.dao.PedidoDAO;
 import br.com.magazine.dao.ProdutoDAO;
 import br.com.magazine.entidade.Carrinho;
 import br.com.magazine.entidade.ItemPedido;
+import br.com.magazine.entidade.Pedido;
 import br.com.magazine.entidade.Produto;
+import br.com.magazine.entidade.StatusPedido;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -66,7 +70,6 @@ public class Carrinhos extends HttpServlet {
                         carrinho = new Carrinho();
                     }
                     carrinho.adicionarItem(itemPedido);
-                    carrinho.incrementaTotal(produto.getPreco());
                     session.setAttribute("carrinho", carrinho);
                     if (session.getAttribute("logado") == null) {
                         response.sendRedirect("cliente/Clientes");
@@ -75,6 +78,30 @@ public class Carrinhos extends HttpServlet {
                     }
 
 //                }
+            }
+//            if("verCarrinho".equals(request.getParameter("action"))){
+//                HttpSession session = request.getSession();
+//                Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
+//                
+//            }
+            if("comprar".equals(request.getParameter("action"))){
+                HttpSession session = request.getSession();
+                Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
+                Pedido pedido = new Pedido();
+                Timestamp dataPedido = new Timestamp(System.currentTimeMillis());
+                
+                pedido.setData(dataPedido);
+                pedido.setIdCliente(3);
+                pedido.setValorTotal(carrinho.getTotal());
+                pedido.setItens(carrinho.getListaItens());
+                StatusPedido statusPedido = new StatusPedido();
+                statusPedido.setIdStatusPedido(1);
+                pedido.setStatusPedido(statusPedido);
+                
+                PedidoDAO pedidoDAO = new PedidoDAO();
+                pedidoDAO.cadastrarPedido(pedido);
+                
+                response.sendRedirect("cliente/Clientes?action=pedidos");
             }
         }
     }

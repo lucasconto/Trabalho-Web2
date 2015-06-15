@@ -6,8 +6,11 @@
 package br.com.magazine.servlet;
 
 import br.com.magazine.dao.ClienteDAO;
+import br.com.magazine.dao.ItemPedidoDAO;
+import br.com.magazine.dao.PedidoDAO;
 import br.com.magazine.dao.ProdutoDAO;
 import br.com.magazine.entidade.Cliente;
+import br.com.magazine.entidade.Pedido;
 import br.com.magazine.entidade.Produto;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -113,7 +116,13 @@ public class Clientes extends HttpServlet {
                 cliente.setPerfil(1);
                 ClienteDAO clienteDAO = new ClienteDAO();
                 clienteDAO.atualizarCliente(cliente);
-            }if ("nomeAZ".equals(request.getParameter("action"))) {
+            }if("excluir".equals(request.getParameter("action"))) {
+                Cliente cliente = new Cliente();
+                ClienteDAO clienteDAO = new ClienteDAO();
+                cliente.setIdCliente(Integer.parseInt(request.getParameter("cliente-id")));
+                clienteDAO.removerCliente(cliente);
+            }
+            if ("nomeAZ".equals(request.getParameter("action"))) {
                 ProdutoDAO produtoDAO = new ProdutoDAO();
                 List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidosAZ();
                 request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
@@ -146,6 +155,20 @@ public class Clientes extends HttpServlet {
                 request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
                 request.setAttribute("ordem", "Desc");
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
+                rd.forward(request,response);
+            }
+            if ("pedidos".equals(request.getParameter("action"))) {
+                Cliente cliente = new Cliente();
+                cliente.setIdCliente(3);
+                
+                PedidoDAO pedidoDAO = new PedidoDAO();
+                List<Pedido> listaPedidosAbertos = pedidoDAO.listaItensPedidosCliente(cliente);
+                List<Pedido> listaPedidosFinalizados = pedidoDAO.listaPedidosFinalizadosCliente(cliente);
+                
+                request.setAttribute("listaPedidosAbertos", listaPedidosAbertos);
+                request.setAttribute("listaPedidosFinalizados", listaPedidosFinalizados);
+                
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/visualizarCompra.jsp");
                 rd.forward(request,response);
             }
             else{

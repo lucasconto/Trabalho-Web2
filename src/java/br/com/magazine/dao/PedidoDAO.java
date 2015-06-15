@@ -11,6 +11,7 @@ import br.com.magazine.entidade.Genero;
 import br.com.magazine.entidade.ItemPedido;
 import br.com.magazine.entidade.Pedido;
 import br.com.magazine.entidade.Produto;
+import br.com.magazine.entidade.StatusPedido;
 import br.com.magazine.util.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.Date;
@@ -26,7 +27,7 @@ import java.util.List;
  */
 public class PedidoDAO {
 
-    private final String stmtCadastraPedido = "insert into Pedido (idCliente,status,data,valortotal) values (?,?,?,?)";
+    private final String stmtCadastraPedido = "insert into Pedido (idCliente,idstatuspedido,data,valortotal) values (?,?,?,?)";
     private final String stmtAtualizaStatusPedido = "update Pedido set status = ? where idPedido = ?";
 
 //    private final String stmtRemoveCliente = "delete from Cliente where idCliente = ?";
@@ -43,7 +44,7 @@ public class PedidoDAO {
             con.setAutoCommit(false);
             stmt = con.prepareStatement(stmtCadastraPedido, PreparedStatement.RETURN_GENERATED_KEYS);
             stmt.setInt(1, pedido.getIdCliente());
-            stmt.setInt(2, pedido.getStatus());
+            stmt.setInt(2, pedido.getStatusPedido().getIdStatusPedido());
             stmt.setTimestamp(3, pedido.getData());
             stmt.setDouble(4, pedido.getValorTotal());
             stmt.executeUpdate();
@@ -54,12 +55,12 @@ public class PedidoDAO {
                 idPedido = rs.getInt(1);
             }
             con.commit();
-            List<ItemPedido> i = pedido.getItens();
-            for (ItemPedido cada : i) {
+            List<ItemPedido> listaItensPedido = pedido.getItens();
+            for (ItemPedido cada : listaItensPedido) {
                 cada.setIdPedido(idPedido);
             }
             //chamar funcao inserir produtos na item pedido ///
-            this.cadastrarItensDoPedido(i);
+            this.cadastrarItensDoPedido(listaItensPedido);
 
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao inserir um pedido no banco de dados. Origem: " + e.getMessage());
@@ -91,7 +92,7 @@ public class PedidoDAO {
         try {
             con = ConnectionFactory.getConnection();
             stmt = con.prepareStatement(stmtAtualizaStatusPedido);
-            stmt.setInt(1, p.getStatus());
+            stmt.setInt(1, p.getStatusPedido().getIdStatusPedido());
             stmt.setInt(2, p.getIdPedido());
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -110,9 +111,12 @@ public class PedidoDAO {
         }
     }
 
-    private final String stmtListaPedido = "select * from Pedido where idcliente = ? order by idpedido asc";
+    private final String stmtListaPedido = "select * from Pedido join statuspedido using (idStatusPedido) where idcliente = ? order by data desc";
+    private final String stmtListaPedidoAberto = "select * from Pedido join statuspedido using (idStatusPedido) where idcliente = ? and idStatusPedido = 1 order by data desc";
+    private final String stmtListaPedidoFinalizado = "select * from Pedido join statuspedido using (idStatusPedido) where idcliente = ? and idStatusPedido != 1 order by data desc";
     private final String stmtListaItensPedido = "select iditempedido, quantidade, valorunitario, idproduto , titulo, autor, ideditora, editora.nome as nomeEditora, preco, idgenero,genero.nome as generoNome, idImg,produto.inativo as produtoInativo from itempedido inner join produto using(idproduto) inner join editora on(fkeditora = ideditora) inner join genero on(fkgenero = idgenero)  where idpedido = ?";
-    public List<Pedido> listaPedidosCliente(Cliente cliente) throws SQLException, ClassNotFoundException {
+    
+    public List<Pedido> listaItensPedidosCliente(Cliente cliente) throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
         PreparedStatement stmt2 = null;
@@ -128,12 +132,17 @@ public class PedidoDAO {
                 Pedido pedido = new Pedido();
                 pedido.setIdPedido(rs.getInt("idpedido"));
                 pedido.setIdCliente(cliente.getIdCliente());
-                pedido.setStatus(rs.getInt("situacao"));
+                StatusPedido statusPedido = new StatusPedido();
+                statusPedido.setIdStatusPedido(rs.getInt("idStatusPedido"));
+                statusPedido.setDescricao(rs.getString("descricao"));
+                pedido.setStatusPedido(statusPedido);
+                
                 pedido.setData(rs.getTimestamp("data"));
                 pedido.setValorTotal(rs.getDouble("valortotal"));
                 stmt2 = con.prepareStatement(stmtListaItensPedido);
                 stmt2.setInt(1, pedido.getIdPedido());
                 rs2 = stmt2.executeQuery();
+                System.out.println(statusPedido.getDescricao());
                 List<ItemPedido> listaItensPedido = new ArrayList();
                 while (rs2.next()) {
                     ItemPedido itemPedido = new ItemPedido();
@@ -165,6 +174,106 @@ public class PedidoDAO {
                     
                     listaItensPedido.add(itemPedido);
                 }
+                pedido.setItens(listaItensPedido);
+                listaPedidos.add(pedido);
+
+            }
+            return listaPedidos;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                rs.close();
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar result set.Erro: " + ex.getMessage());
+            }
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar statement. Ex = " + ex.getMessage());
+            }
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar a conexao. Ex = " + ex.getMessage());
+            }
+        }
+
+    }
+    public List<Pedido> listaPedidosAbertosCliente(Cliente cliente) throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        PreparedStatement stmt2 = null;
+        ResultSet rs = null;
+        ResultSet rs2 = null;
+        try {
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(stmtListaPedidoAberto);
+            stmt.setInt(1, cliente.getIdCliente());
+            rs = stmt.executeQuery();
+            List<Pedido> listaPedidos = new ArrayList();
+            while (rs.next()) {
+                Pedido pedido = new Pedido();
+                pedido.setIdPedido(rs.getInt("idpedido"));
+                pedido.setIdCliente(cliente.getIdCliente());
+                StatusPedido statusPedido = new StatusPedido();
+                statusPedido.setIdStatusPedido(rs.getInt("idstatuspedido"));
+                statusPedido.setDescricao(rs.getString("descricao"));
+                pedido.setStatusPedido(statusPedido);
+                pedido.setData(rs.getTimestamp("data"));
+                pedido.setValorTotal(rs.getDouble("valortotal"));
+                List<ItemPedido> listaItensPedido = new ArrayList();
+                pedido.setItens(listaItensPedido);
+                listaPedidos.add(pedido);
+
+            }
+            return listaPedidos;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                rs.close();
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar result set.Erro: " + ex.getMessage());
+            }
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar statement. Ex = " + ex.getMessage());
+            }
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar a conexao. Ex = " + ex.getMessage());
+            }
+        }
+
+    }
+    public List<Pedido> listaPedidosFinalizadosCliente(Cliente cliente) throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        PreparedStatement stmt2 = null;
+        ResultSet rs = null;
+        ResultSet rs2 = null;
+        try {
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(stmtListaPedidoFinalizado);
+            stmt.setInt(1, cliente.getIdCliente());
+            rs = stmt.executeQuery();
+            List<Pedido> listaPedidos = new ArrayList();
+            while (rs.next()) {
+                Pedido pedido = new Pedido();
+                pedido.setIdPedido(rs.getInt("idpedido"));
+                pedido.setIdCliente(cliente.getIdCliente());
+                StatusPedido statusPedido = new StatusPedido();
+                statusPedido.setIdStatusPedido(rs.getInt("idstatuspedido"));
+                statusPedido.setDescricao(rs.getString("descricao"));
+                pedido.setStatusPedido(statusPedido);
+                pedido.setData(rs.getTimestamp("data"));
+                pedido.setValorTotal(rs.getDouble("valortotal"));
+                List<ItemPedido> listaItensPedido = new ArrayList();
                 pedido.setItens(listaItensPedido);
                 listaPedidos.add(pedido);
 

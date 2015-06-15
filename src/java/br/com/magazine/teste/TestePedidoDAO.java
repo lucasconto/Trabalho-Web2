@@ -22,7 +22,7 @@ public class TestePedidoDAO {
         Cliente cliente = new Cliente();
         cliente.setIdCliente(26);
         PedidoDAO pedidoDAO = new PedidoDAO();
-        List<Pedido> listaPedidos = pedidoDAO.listaPedidosCliente(cliente);
+        List<Pedido> listaPedidos = pedidoDAO.listaItensPedidosCliente(cliente);
         for(Pedido pedido : listaPedidos){
             for(ItemPedido itemPedido : pedido.getItens())
                 System.out.println(itemPedido.getProduto().getTitulo());

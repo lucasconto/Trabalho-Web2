@@ -139,7 +139,7 @@ public class Gerentes extends HttpServlet {
                 clienteSessao.setIdCliente(Integer.parseInt(request.getParameter("id")));
                 Cliente cliente = clienteDAO.buscarClienteId(clienteSessao);
                 PedidoDAO pedidoDAO = new PedidoDAO();
-                List<Pedido> listaPedidos = pedidoDAO.listaPedidosCliente(cliente);
+                List<Pedido> listaPedidos = pedidoDAO.listaItensPedidosCliente(cliente);
                 request.setAttribute("cliente", cliente);
                 request.setAttribute("listaPedidos", listaPedidos);
                 request.setAttribute("escolha", escolha);

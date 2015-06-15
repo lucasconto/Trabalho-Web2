@@ -52,7 +52,7 @@
                       <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">
                           <span class="glyphicon glyphicon-shopping-cart"></span>
                           <c:choose>
-                              <c:when test="${sessionScope.carrinho.getNumeroItens() == null}">Vazio</c:when>
+                              <c:when test="${sessionScope.carrinho.getNumeroItens() == null}">[Vazio]</c:when>
                               <c:when test="${sessionScope.carrinho.getNumeroItens() == 1}">[${sessionScope.carrinho.getNumeroItens()} Item]</c:when>
                               <c:otherwise>[${sessionScope.carrinho.getNumeroItens()} Itens]</c:otherwise>
                           </c:choose>
@@ -75,7 +75,9 @@
                               </tr>
                               </c:forEach> 
                           </table>
+                          <a href="./carrinhoCompras.jsp">
                           <button class="btn btn-default">Ver Carrinho</button>
+                          </a>
                           <h4 class="pull-right">Total <fmt:formatNumber value="${sessionScope.carrinho.total}" minFractionDigits="2" type="currency"/></h4>
                       </div>
                     </li>

@@ -47,13 +47,17 @@ Create table Genero(
 );
 
 create table pedido(
-idPedido serial,
-idCliente int,
-valorTotal real,
-data Timestamp,
-situacao int
+    idPedido serial,
+    idCliente int,
+    valorTotal real,
+    data Timestamp,
+    idStatusPedido int
 );
 
+create table statusPedido(
+    idStatusPedido int,
+    descricao varchar(100)
+);
 
 create table itemPedido(
 idItemPedido serial,

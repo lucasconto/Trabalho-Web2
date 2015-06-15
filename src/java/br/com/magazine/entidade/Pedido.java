@@ -8,7 +8,7 @@ public class Pedido {
     int idPedido;
     int idCliente;
     List<ItemPedido> itens;
-    int status;
+    private StatusPedido statusPedido;
     Timestamp data;
     double valorTotal;
 
@@ -38,14 +38,6 @@ public class Pedido {
         this.idPedido = idPedido;
     }
 
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
     public Timestamp getData() {
         return data;
     }
@@ -60,6 +52,20 @@ public class Pedido {
 
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
+    }
+
+    /**
+     * @return the statusPedido
+     */
+    public StatusPedido getStatusPedido() {
+        return statusPedido;
+    }
+
+    /**
+     * @param statusPedido the statusPedido to set
+     */
+    public void setStatusPedido(StatusPedido statusPedido) {
+        this.statusPedido = statusPedido;
     }
 
 }

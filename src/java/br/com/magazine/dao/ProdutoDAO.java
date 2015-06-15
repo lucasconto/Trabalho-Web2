@@ -151,6 +151,7 @@ public class ProdutoDAO {
             produto.setTitulo(rs.getString("titulo"));
             produto.setAutor(rs.getString("autor"));
             produto.setPreco(rs.getDouble("preco"));
+            produto.setidImg(rs.getInt("idImg"));
             return produto;
 
         } catch (SQLException e) {

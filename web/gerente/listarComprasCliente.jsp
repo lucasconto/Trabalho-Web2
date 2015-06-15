@@ -69,6 +69,7 @@
                 <div class="col-md-9 ">  
                     <h1>Visualizar Compras</h1>
                     <div id="accordion" class="panel-group">
+                        
                         <c:forEach var="pedido" items="${listaPedidos}">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
@@ -77,7 +78,8 @@
                                             <strong>Compra #: </strong>${pedido.idPedido} &nbsp;&nbsp;&nbsp; 
                                             <strong>Data: </strong><fmt:formatDate value="${pedido.data}" pattern="dd/MM/yyyy HH:mm:ss" />  &nbsp;&nbsp;&nbsp;
                                             <strong>Valor Total:</strong>
-                                            <fmt:formatNumber value="${pedido.valorTotal}" minFractionDigits="2" type="currency"/>  
+                                            <fmt:formatNumber value="${pedido.valorTotal}" minFractionDigits="2" type="currency"/>    &nbsp;&nbsp;&nbsp;
+                                            <strong>Situação: </strong>${pedido.statusPedido.descricao}
                                         </a>
                                     </h4>
                                 </div>

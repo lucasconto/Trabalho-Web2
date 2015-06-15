@@ -8,8 +8,12 @@ public class Carrinho {
     double total;
     List<ItemPedido> listaItens;
 
-    public void incrementaTotal(double total) {
-        this.total += total;
+    public void incrementaTotal() {
+        double soma = 0;
+        for(ItemPedido item : this.listaItens){
+            soma = soma + item.getProduto().getPreco() * item.getQuantidade();
+        }
+        this.total = soma;
     }
 
     public double getTotal() {
@@ -47,17 +51,9 @@ public class Carrinho {
                 
             }
         }
-        atualizaValor();
+        this.incrementaTotal();
     }
     
-    public void atualizaValor(){
-        double soma = 0;
-        for(ItemPedido item : this.listaItens){
-            soma = soma + item.getProduto().getPreco() * item.getQuantidade();
-        }
-        this.total = soma;
-    }
-
     public int getNumeroItens() {
         if(this.listaItens == null){
             return 0;
@@ -67,7 +63,6 @@ public class Carrinho {
         for(ItemPedido item : this.listaItens){
             soma = soma + item.getQuantidade();
         }
-        this.total = soma;
         return soma;
         }
     }

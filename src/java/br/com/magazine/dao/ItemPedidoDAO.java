@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ItemPedidoDAO {
 
-    private final String stmtInserirItempedido = "insert into Itempedido (idPedido,idProduto, quantidade, valor) values (?,?,?,?)";
+    private final String stmtInserirItempedido = "insert into Itempedido (idPedido,idProduto, quantidade, valorunitario) values (?,?,?,?)";
     private final String stmtAtualizaItempedido = "update Itempedido set idPedido = ? , idProduto = ?,  quantidade = ?, valor = ? where idItempedido = ?";
     private final String stmtListaItempedido = "select * from Itempedido where idPedido = ?";
     private final String stmtRemoveItempedido = "delete from Itempedido where idItempedido = ?";
@@ -34,7 +34,7 @@ public class ItemPedidoDAO {
             stmt.setInt(2, p.getProduto().getIdProduto());
             stmt.setInt(3, p.getQuantidade());
             stmt.setDouble(4, p.getValorUnitario());
-            stmt.executeQuery();
+            stmt.executeUpdate();
             con.commit();
 
         } catch (SQLException e) {

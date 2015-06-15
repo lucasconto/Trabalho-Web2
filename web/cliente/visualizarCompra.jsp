@@ -1,4 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -43,35 +45,50 @@
                                    <th>Situação</th>
                                    <th>Marcar como entregue</th>
                                </tr>
-                               <tr>
-                                   <td>183</td>
-                                   <td>12/11/2015</td>
-                                   <td>R$ 204,40</td>
-                                   <td>Em processamento.</td>
+                               <c:forEach var="pedido" items="${listaPedidosAbertos}">
+                                   <td colspan="5">
+                                  <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse${pedido.idPedido}">
+                                            <td>${pedido.idPedido}</td>
+                                            <td><fmt:formatDate value="${pedido.data}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
+                                            <td><fmt:formatNumber value="${pedido.valorTotal}" minFractionDigits="2" type="currency"/>  </td>
+                                            <td>${pedido.statusPedido.descricao}</td>
+                                        </a>
+                                    </h4>
+                                </div>
+                                  </td>
+                                <div id="collapse${pedido.idPedido}" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <table class="table table-striped table-bordered">
+                                            <tr>
+                                                <th>Item #</th>
+                                                <th>Título</th>
+                                                <th>Quantidade</th>
+                                                <th>Valor Unitário</th>
+                                            </tr>
+                                            <c:forEach var="itemPedido" items="${pedido.itens}">
+                                            <tr>
+                                                <td>${itemPedido.idItemPedido}</td>
+                                                <td>${itemPedido.produto.titulo}</td>
+                                                <td>${itemPedido.quantidade}</td>
+                                                <td><fmt:formatNumber value="${itemPedido.valorUnitario}" minFractionDigits="2" type="currency"/> </td>
+                                             
+                                            </tr>
+                                            </c:forEach>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div> 
+<!--                               <tr>
+                                   <td>${pedido.idPedido}</td>
+                                   <td><fmt:formatDate value="${pedido.data}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
+                                   <td><fmt:formatNumber value="${pedido.valorTotal}" minFractionDigits="2" type="currency"/></td>
+                                   <td>${pedido.statusPedido.descricao}</td>
                                    <td><a href="#">Marcar como entregue.</a></td>
-                                </tr>
-                                                              <tr>
-                                   <td>183</td>
-                                   <td>12/11/2015</td>
-                                   <td>R$ 204,40</td>
-                                    <td>Saiu para entrega.</td>
-                                    <td><a href="#">Marcar como entregue.</a></td>
-                                </tr>
-                                                              <tr>
-                                   <td>183</td>
-                                   <td>12/11/2015</td>
-                                   <td>R$ 204,40</td>
-                                   <td>Aguardando Estoque</td>
-                                   <td><a href="#">Marcar como entregue.</a></td>
-                                </tr>
-                                <tr>
-                                   <td>183</td>
-                                   <td>12/11/2015</td>
-                                   <td>R$ 204,40</td>
-                                   <td>Aguardando Pagamento</td>
-                                   <td><a href="#">Marcar como entregue.</a></td>
-                               </tr>
-                               
+                                </tr>-->
+                               </c:forEach>
                            </table>
                        </div>
                    </div>
@@ -89,30 +106,14 @@
                                    <th>Situação</th>
                                </tr>
                                <tr>
-                                   <td>183</td>
-                                   <td>12/11/2015</td>
-                                   <td>R$ 204,40</td>
-                                   <td>Entregue</td>
+                                   <c:forEach var="pedido" items="${listaPedidosFinalizados}">
+                                       
+                                   <td>${pedido.idPedido}</td>
+                                   <td><fmt:formatDate value="${pedido.data}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
+                                   <td><fmt:formatNumber value="${pedido.valorTotal}" minFractionDigits="2" type="currency"/></td>
+                                   <td>${pedido.statusPedido.descricao}</td>
                                 </tr>
-                                                              <tr>
-                                   <td>183</td>
-                                   <td>12/11/2015</td>
-                                   <td>R$ 204,40</td>
-                                   <td>Entregue</td>
-                                </tr>
-                                                              <tr>
-                                   <td>183</td>
-                                   <td>12/11/2015</td>
-                                   <td>R$ 204,40</td>
-                                   <td>Cancelado</td>
-                                </tr>
-                                <tr>
-                                   <td>183</td>
-                                   <td>12/11/2015</td>
-                                   <td>R$ 204,40</td>
-                                   <td>Entregue</td>
-                               </tr>
-                               
+                                   </c:forEach>
                            </table>
                        </div>
                    </div>
