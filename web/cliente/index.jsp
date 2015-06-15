@@ -89,22 +89,46 @@
                             </button>
                         </div>
                     </div>
-
                     <br/>
+                    <div class="row">
+                        <div class="panel pull-right" >
+                            Ordenar por:
+                                <c:if test="${ordem != 'AZ'}">
+                                <a href="./Clientes?action=nomeAZ">
+                                Nome 
+                                    <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                                </c:if>
+                                <c:if test="${ordem == 'AZ'}">
+                           <a href="./Clientes?action=nomeZA">
+                                Nome 
+                                    <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>
+                                </c:if>
+                            </a> 
+                                 <c:if test="${ordem != 'Asc'}">
+                             <a href="./Clientes?action=Asc"> 
+                                 Preço 
+                                     <span class="glyphicon glyphicon-sort-by-attributes"></span>
+                             </a>
+                                 </c:if>
+                                 <c:if test="${ordem == 'Asc'}">
+                             <a href="./Clientes?action=Desc"> 
+                                 Preço 
+                                     <span class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+                             </a>
+                                 </c:if>
+                        </div>
+                    </div>
+
 
                     <div class="row">
                         <c:forEach var="produto" items="${listaProdutos}">
                             <div class="col-sm-4 col-lg-4 col-md-4">
                                 <div class="thumbnail">
                                             <img src="${pageContext.request.contextPath}/Imagens/${produto.idImg}.jpg" style="width: 120px;height: 120px" class="media-object" alt="">
-                                </div>
-                                <div class="container container-fluid">
                                     <div class="caption">
                                         <h4>
                                             <a href="verProduto.jsp">
-                                                <p class="">
-                                                    ${produto.titulo}
-                                                </p>
+                                                ${produto.titulo}
                                             </a>
                                         </h4>
                                         <p>
@@ -113,13 +137,14 @@
                                             Autor: ${produto.autor}<br/>
                                         <h4 class="pull-left"><fmt:formatNumber value="${produto.preco}" minFractionDigits="2" type="currency"/></h4>
                                         <br/>
-                                        <a href="carrinhoCompras.jsp " class="pull-right">
+                                        <a href="../Carrinhos?action=addCarrinho&id=${produto.idProduto}" class="pull-right">
                                             Adicionar ao Carrinho
                                             <span class="glyphicon glyphicon-shopping-cart"></span></a>
                                         </p>
                                     </div>
                                 </div>
                             </div>
+                                        
                         </c:forEach>
                     </div>
 

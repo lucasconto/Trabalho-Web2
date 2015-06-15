@@ -30,6 +30,10 @@ public class ProdutoDAO {
     private final String stmtRemoveProduto = "update produto set inativo = true where idProduto = ?";
     private final String stmtListaProduto = "select * from produto";
     private final String stmtListaProdutosMaisVendidos = "select itempedido.idproduto,sum(quantidade) as soma, preco, titulo, autor, idimg, fkgenero, fkeditora, genero.nome as generonome, editora.nome as editoranome from itempedido left join produto on (produto.idproduto = itempedido.idproduto) inner join genero on (produto.fkgenero = genero.idgenero) inner join editora on (produto.fkeditora = editora.ideditora) where produto.inativo = false group by itempedido.idproduto, autor, produto.titulo,preco,idimg,fkgenero, fkeditora,generonome, editoranome order by soma desc limit 12";
+    private final String stmtListaProdutosMaisVendidosAZ = "select * from(select itempedido.idproduto,sum(quantidade) as soma, preco, titulo, autor, idimg, fkgenero, fkeditora, genero.nome as generonome, editora.nome as editoranome from itempedido left join produto on (produto.idproduto = itempedido.idproduto) inner join genero on (produto.fkgenero = genero.idgenero) inner join editora on (produto.fkeditora = editora.ideditora) where produto.inativo = false group by itempedido.idproduto, autor, produto.titulo,preco,idimg,fkgenero, fkeditora,generonome, editoranome order by soma desc limit 12) as tabela order by titulo asc";
+    private final String stmtListaProdutosMaisVendidosZA = "select * from(select itempedido.idproduto,sum(quantidade) as soma, preco, titulo, autor, idimg, fkgenero, fkeditora, genero.nome as generonome, editora.nome as editoranome from itempedido left join produto on (produto.idproduto = itempedido.idproduto) inner join genero on (produto.fkgenero = genero.idgenero) inner join editora on (produto.fkeditora = editora.ideditora) where produto.inativo = false group by itempedido.idproduto, autor, produto.titulo,preco,idimg,fkgenero, fkeditora,generonome, editoranome order by soma desc limit 12) as tabela order by titulo desc";
+    private final String stmtListaProdutosMaisVendidosAsc = "select * from(select itempedido.idproduto,sum(quantidade) as soma, preco, titulo, autor, idimg, fkgenero, fkeditora, genero.nome as generonome, editora.nome as editoranome from itempedido left join produto on (produto.idproduto = itempedido.idproduto) inner join genero on (produto.fkgenero = genero.idgenero) inner join editora on (produto.fkeditora = editora.ideditora) where produto.inativo = false group by itempedido.idproduto, autor, produto.titulo,preco,idimg,fkgenero, fkeditora,generonome, editoranome order by soma desc limit 12) as tabela order by preco asc";
+    private final String stmtListaProdutosMaisVendidosDesc = "select * from(select itempedido.idproduto,sum(quantidade) as soma, preco, titulo, autor, idimg, fkgenero, fkeditora, genero.nome as generonome, editora.nome as editoranome from itempedido left join produto on (produto.idproduto = itempedido.idproduto) inner join genero on (produto.fkgenero = genero.idgenero) inner join editora on (produto.fkeditora = editora.ideditora) where produto.inativo = false group by itempedido.idproduto, autor, produto.titulo,preco,idimg,fkgenero, fkeditora,generonome, editoranome order by soma desc limit 12) as tabela order by preco desc";
 //
 
     public int cadastrarProduto(Produto p) throws ClassNotFoundException {
@@ -130,6 +134,7 @@ public class ProdutoDAO {
 
     private final String stmtBuscaProdutoPorId = "select * from produto where idProduto = ? and inativo = false";
 //nao retorna genero e editora
+
     public Produto listarProdutoPorId(int id) throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
@@ -140,11 +145,12 @@ public class ProdutoDAO {
             stmt = con.prepareStatement(stmtBuscaProdutoPorId);
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
+            rs.next();
             Produto produto = new Produto();
-                produto.setIdProduto(rs.getInt("idProduto"));
-                produto.setTitulo(rs.getString("titulo"));
-                produto.setAutor(rs.getString("autor"));
-                produto.setPreco(rs.getDouble("preco"));
+            produto.setIdProduto(rs.getInt("idProduto"));
+            produto.setTitulo(rs.getString("titulo"));
+            produto.setAutor(rs.getString("autor"));
+            produto.setPreco(rs.getDouble("preco"));
             return produto;
 
         } catch (SQLException e) {
@@ -217,6 +223,220 @@ public class ProdutoDAO {
         try {
             con = ConnectionFactory.getConnection();
             stmt = con.prepareStatement(stmtListaProdutosMaisVendidos);
+            rs = stmt.executeQuery();
+            List<Produto> listaProdutos = new ArrayList();
+            while (rs.next()) {
+                Produto produto = new Produto();
+                produto.setIdProduto(rs.getInt("idProduto"));
+                produto.setPreco(rs.getDouble("preco"));
+                produto.setTitulo(rs.getString("titulo"));
+                produto.setAutor(rs.getString("autor"));
+                produto.setidImg(rs.getInt("idimg"));
+
+                Genero genero = new Genero();
+                genero.setIdGenero(rs.getInt("fkGenero"));
+                genero.setNome(rs.getString("generoNome"));
+                produto.setGenero(genero);
+
+                Editora editora = new Editora();
+                editora.setIdEditora(rs.getInt("fkEditora"));
+                editora.setNome(rs.getString("editoraNome"));
+                produto.setEditora(editora);
+
+                listaProdutos.add(produto);
+            }
+            return listaProdutos;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                rs.close();
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar result set.Erro: " + ex.getMessage());
+            }
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar statement. Ex = " + ex.getMessage());
+            }
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar a conexao. Ex = " + ex.getMessage());
+            }
+        }
+
+    }
+    
+    public List<Produto> listarProdutosMaisVendidosAZ() throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(stmtListaProdutosMaisVendidosAZ);
+            rs = stmt.executeQuery();
+            List<Produto> listaProdutos = new ArrayList();
+            while (rs.next()) {
+                Produto produto = new Produto();
+                produto.setIdProduto(rs.getInt("idProduto"));
+                produto.setPreco(rs.getDouble("preco"));
+                produto.setTitulo(rs.getString("titulo"));
+                produto.setAutor(rs.getString("autor"));
+                produto.setidImg(rs.getInt("idimg"));
+
+                Genero genero = new Genero();
+                genero.setIdGenero(rs.getInt("fkGenero"));
+                genero.setNome(rs.getString("generoNome"));
+                produto.setGenero(genero);
+
+                Editora editora = new Editora();
+                editora.setIdEditora(rs.getInt("fkEditora"));
+                editora.setNome(rs.getString("editoraNome"));
+                produto.setEditora(editora);
+
+                listaProdutos.add(produto);
+            }
+            return listaProdutos;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                rs.close();
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar result set.Erro: " + ex.getMessage());
+            }
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar statement. Ex = " + ex.getMessage());
+            }
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar a conexao. Ex = " + ex.getMessage());
+            }
+        }
+
+    }
+    
+    public List<Produto> listarProdutosMaisVendidosZA() throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(stmtListaProdutosMaisVendidosZA);
+            rs = stmt.executeQuery();
+            List<Produto> listaProdutos = new ArrayList();
+            while (rs.next()) {
+                Produto produto = new Produto();
+                produto.setIdProduto(rs.getInt("idProduto"));
+                produto.setPreco(rs.getDouble("preco"));
+                produto.setTitulo(rs.getString("titulo"));
+                produto.setAutor(rs.getString("autor"));
+                produto.setidImg(rs.getInt("idimg"));
+
+                Genero genero = new Genero();
+                genero.setIdGenero(rs.getInt("fkGenero"));
+                genero.setNome(rs.getString("generoNome"));
+                produto.setGenero(genero);
+
+                Editora editora = new Editora();
+                editora.setIdEditora(rs.getInt("fkEditora"));
+                editora.setNome(rs.getString("editoraNome"));
+                produto.setEditora(editora);
+
+                listaProdutos.add(produto);
+            }
+            return listaProdutos;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                rs.close();
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar result set.Erro: " + ex.getMessage());
+            }
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar statement. Ex = " + ex.getMessage());
+            }
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar a conexao. Ex = " + ex.getMessage());
+            }
+        }
+
+    }
+    public List<Produto> listarProdutosMaisVendidosAsc() throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(stmtListaProdutosMaisVendidosAsc);
+            rs = stmt.executeQuery();
+            List<Produto> listaProdutos = new ArrayList();
+            while (rs.next()) {
+                Produto produto = new Produto();
+                produto.setIdProduto(rs.getInt("idProduto"));
+                produto.setPreco(rs.getDouble("preco"));
+                produto.setTitulo(rs.getString("titulo"));
+                produto.setAutor(rs.getString("autor"));
+                produto.setidImg(rs.getInt("idimg"));
+
+                Genero genero = new Genero();
+                genero.setIdGenero(rs.getInt("fkGenero"));
+                genero.setNome(rs.getString("generoNome"));
+                produto.setGenero(genero);
+
+                Editora editora = new Editora();
+                editora.setIdEditora(rs.getInt("fkEditora"));
+                editora.setNome(rs.getString("editoraNome"));
+                produto.setEditora(editora);
+
+                listaProdutos.add(produto);
+            }
+            return listaProdutos;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                rs.close();
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar result set.Erro: " + ex.getMessage());
+            }
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar statement. Ex = " + ex.getMessage());
+            }
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar a conexao. Ex = " + ex.getMessage());
+            }
+        }
+
+    }
+    public List<Produto> listarProdutosMaisVendidosDesc() throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(stmtListaProdutosMaisVendidosDesc);
             rs = stmt.executeQuery();
             List<Produto> listaProdutos = new ArrayList();
             while (rs.next()) {

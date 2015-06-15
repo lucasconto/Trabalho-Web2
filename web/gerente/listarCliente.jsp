@@ -113,14 +113,14 @@
                                             <input type="hidden" value="${str}" name="str"/>
                                         </a>
                                     </form>
-                                    <form action="./Gerentes?action=visualizarf&id=${cliente.idCliente}" method="post" style="display: inline">
+                                    <form action="./Gerentes?action=visualizarc&id=${cliente.idCliente}" method="post" style="display: inline">
                                         <a href="#" onclick="this.parentNode.submit();">
                                             <span title="Editar" class="glyphicon glyphicon-eye-open" style="font-size: 20px"></span>
                                             <input type="hidden" value="${escolha}" name="escolha"/>
                                             <input type="hidden" value="${str}" name="str"/>
                                         </a>
                                     </form>
-                                    <form action="./Gerentes?action=valterarf&id=${cliente.idCliente}" method="post" style="display: inline">
+                                    <form action="./Gerentes?action=valterarc&id=${cliente.idCliente}" method="post" style="display: inline">
                                         <a href="#" onclick="this.parentNode.submit();">
                                             <span title="Alterar" class="glyphicon glyphicon-pencil" style="font-size: 20px"></span>
                                             <input type="hidden" value="${escolha}" name="escolha"/>

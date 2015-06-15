@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -49,35 +51,32 @@
                     <li class="dropdown" id="menuLogin">
                       <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">
                           <span class="glyphicon glyphicon-shopping-cart"></span>
-                          Carrinho [0 Itens]<strong class="caret"></strong>
-                      
+                          <c:choose>
+                              <c:when test="${sessionScope.carrinho.getNumeroItens() == null}">Vazio</c:when>
+                              <c:when test="${sessionScope.carrinho.getNumeroItens() == 1}">[${sessionScope.carrinho.getNumeroItens()} Item]</c:when>
+                              <c:otherwise>[${sessionScope.carrinho.getNumeroItens()} Itens]</c:otherwise>
+                          </c:choose>
+                          
+                          <strong class="caret"></strong>
                       </a>
-                      
                       <div class="dropdown-menu pull-right" style="padding:5px;">
                           <table class="table table-striped">
+                                  
                               <tr>
                                 <th>Item</th>
                                 <th>Quantidade</th>
                                 <th>Total</th>
                               </tr>
+                              <c:forEach var="itemCarrinho" items="${sessionScope.carrinho.listaItens}">
                               <tr>
-                                  <td><span class="glyphicon glyphicon-picture"> Turma da Monica Ed.50</span></td>
-                                  <td>50</td>
-                                  <td>R$ 109,90</td>
+                                  <td><span class="glyphicon glyphicon-picture"> ${itemCarrinho.produto.titulo}</span></td>
+                                  <td>${itemCarrinho.quantidade}</td>
+                                  <td><fmt:formatNumber value="${itemCarrinho.valorUnitario}" minFractionDigits="2" type="currency"/></td>
                               </tr>
-                              <tr>
-                                <td><span class="glyphicon glyphicon-picture"> Wolverine Aniversário</span></td>
-                                  <td>1</td>
-                                  <td>R$ 85,60</td>
-                              </tr>
-                              <tr>
-                                  <td><span class="glyphicon glyphicon-picture"> Casa e Construção maio/2015</span></td>
-                                  <td>2</td>
-                                  <td>R$ 10,99</td>
-                              </tr>
+                              </c:forEach> 
                           </table>
                           <button class="btn btn-default">Ver Carrinho</button>
-                          <h4 class="pull-right">Total R$340,00</h4>
+                          <h4 class="pull-right">Total <fmt:formatNumber value="${sessionScope.carrinho.total}" minFractionDigits="2" type="currency"/></h4>
                       </div>
                     </li>
 

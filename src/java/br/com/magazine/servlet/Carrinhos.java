@@ -7,6 +7,7 @@ package br.com.magazine.servlet;
 
 import br.com.magazine.dao.ProdutoDAO;
 import br.com.magazine.entidade.Carrinho;
+import br.com.magazine.entidade.ItemPedido;
 import br.com.magazine.entidade.Produto;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -43,29 +44,37 @@ public class Carrinhos extends HttpServlet {
             if ("addCarrinho".equals(request.getParameter("action"))) {
                 int idProduto = Integer.parseInt(request.getParameter("id"));
                 HttpSession session = request.getSession();
-                Carrinho carrinho = (Carrinho)session.getAttribute("carrinho");
-                boolean logado = (boolean)session.getAttribute("logado");
-                out.print("entrou nessa linha");
-                
-                ProdutoDAO produtoDAO = new ProdutoDAO();
-                Produto produto = new Produto();
-                //produto = produtoDAO.listarProdutoPorId(idProduto);
-                produto.setIdProduto(1);
-                produto.setTitulo("zuera never ends");
-                produto.setPreco(199);
-                
-                if (carrinho == null) {
-                    carrinho = new Carrinho();
-                }
-                carrinho.adicionarItem(produto);
-                carrinho.incrementaTotal(produto.getPreco());
-                session.setAttribute("carrinho", carrinho);
-                if (logado) {
-                    response.sendRedirect("cliente/index.jsp");
-                } else {
-                    response.sendRedirect("comum/index.jsp");
-                }
+                Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
+//                if (session.getAttribute("logado") != null) {
 
+//                    boolean logado = (boolean) session.getAttribute("logado");
+                    out.print("entrou nessa linha");
+
+                    ProdutoDAO produtoDAO = new ProdutoDAO();
+                    Produto produto = new Produto();
+                    produto = produtoDAO.listarProdutoPorId(idProduto);
+//                    produto.setIdProduto(1);
+//                    produto.setTitulo("zuera never ends");
+//                    produto.setPreco(199);
+                    
+                    ItemPedido itemPedido = new ItemPedido();
+                    itemPedido.setQuantidade(1);
+                    itemPedido.setValorUnitario(produto.getPreco());
+                    itemPedido.setProduto(produto);
+
+                    if (carrinho == null) {
+                        carrinho = new Carrinho();
+                    }
+                    carrinho.adicionarItem(itemPedido);
+                    carrinho.incrementaTotal(produto.getPreco());
+                    session.setAttribute("carrinho", carrinho);
+                    if (session.getAttribute("logado") == null) {
+                        response.sendRedirect("cliente/Clientes");
+                    } else {
+                        response.sendRedirect("comum/index.jsp");
+                    }
+
+//                }
             }
         }
     }

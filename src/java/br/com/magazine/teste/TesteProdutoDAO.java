@@ -10,6 +10,8 @@ import br.com.magazine.entidade.Produto;
 import br.com.magazine.entidade.Genero;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 
         public class TesteProdutoDAO {    
@@ -67,11 +69,19 @@ import java.text.ParseException;
       //
         
        // Remover
-        Produto produto = new Produto();
-        produto.setIdProduto(1);
-        ProdutoDAO produtoDAO = new ProdutoDAO();
-        produtoDAO.removerProduto(produto);
+//        Produto produto = new Produto();
+//        produto.setIdProduto(1);
+//        ProdutoDAO produtoDAO = new ProdutoDAO();
+//        produtoDAO.removerProduto(produto);
+       List<Produto> listaProdutos = new ArrayList();
+       ProdutoDAO produtoDAO  = new ProdutoDAO();
+       listaProdutos = produtoDAO.listarProdutosMaisVendidos();
+        for(Produto teste : listaProdutos){
+            System.out.println(teste.getTitulo());;
         }
+        
+        }
+            
         
 }
 /**

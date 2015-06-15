@@ -1,11 +1,12 @@
 package br.com.magazine.entidade;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Carrinho {
 
     double total;
-    List<Produto> itens;
+    List<ItemPedido> listaItens;
 
     public void incrementaTotal(double total) {
         this.total += total;
@@ -19,20 +20,56 @@ public class Carrinho {
         this.total = total;
     }
 
-    public List<Produto> getItens() {
-        return itens;
+    public List<ItemPedido> getListaItens() {
+        return listaItens;
     }
 
-    public void setItens(List<Produto> itens) {
-        this.itens = itens;
+    public void setListaItens(List<Produto> itens) {
+        this.listaItens = listaItens;
     }
 
-    public void adicionarItem(Produto produto) {
-        itens.add(produto);
+    public void adicionarItem(ItemPedido itemPedido) {
+        if(this.listaItens == null){
+            this.listaItens = new ArrayList();
+            listaItens.add(itemPedido);
+        }else{
+            boolean produtoExistente = false;
+            for(ItemPedido item : this.listaItens){
+                if(item.getProduto().getIdProduto() == itemPedido.getProduto().getIdProduto()){
+                    int quantidadeSomada = item.getQuantidade() + itemPedido.getQuantidade();
+                    item.setQuantidade(quantidadeSomada);
+                    produtoExistente = true;
+                    break;
+                }
+            }
+            if(!produtoExistente){
+                listaItens.add(itemPedido);
+                
+            }
+        }
+        atualizaValor();
+    }
+    
+    public void atualizaValor(){
+        double soma = 0;
+        for(ItemPedido item : this.listaItens){
+            soma = soma + item.getProduto().getPreco() * item.getQuantidade();
+        }
+        this.total = soma;
     }
 
     public int getNumeroItens() {
-        return itens.isEmpty() ? 0 : itens.size();
+        if(this.listaItens == null){
+            return 0;
+        }else{
+            
+        int soma = 0;
+        for(ItemPedido item : this.listaItens){
+            soma = soma + item.getQuantidade();
+        }
+        this.total = soma;
+        return soma;
+        }
     }
 
 }
