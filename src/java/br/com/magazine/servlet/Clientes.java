@@ -113,7 +113,15 @@ public class Clientes extends HttpServlet {
                 cliente.setPerfil(1);
                 ClienteDAO clienteDAO = new ClienteDAO();
                 clienteDAO.atualizarCliente(cliente);
-            }else{
+            }
+            if("excluir".equals(request.getParameter("action"))) {
+                Cliente cliente = new Cliente();
+                ClienteDAO clienteDAO = new ClienteDAO();
+                cliente.setIdCliente(Integer.parseInt(request.getParameter("cliente-id")));
+                clienteDAO.removerCliente(cliente);
+                
+            }
+            else{
                 ProdutoDAO produtoDAO = new ProdutoDAO();
                 
                 List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidos();
