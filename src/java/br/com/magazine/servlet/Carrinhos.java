@@ -101,6 +101,8 @@ public class Carrinhos extends HttpServlet {
                 PedidoDAO pedidoDAO = new PedidoDAO();
                 pedidoDAO.cadastrarPedido(pedido);
                 
+                carrinho = new Carrinho();
+                session.setAttribute("carrinho", carrinho);
                 response.sendRedirect("cliente/Clientes?action=pedidos");
             }
         }

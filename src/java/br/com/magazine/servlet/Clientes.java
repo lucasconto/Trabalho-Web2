@@ -12,6 +12,7 @@ import br.com.magazine.dao.ProdutoDAO;
 import br.com.magazine.entidade.Cliente;
 import br.com.magazine.entidade.Pedido;
 import br.com.magazine.entidade.Produto;
+import br.com.magazine.entidade.StatusPedido;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -162,7 +163,7 @@ public class Clientes extends HttpServlet {
                 cliente.setIdCliente(3);
                 
                 PedidoDAO pedidoDAO = new PedidoDAO();
-                List<Pedido> listaPedidosAbertos = pedidoDAO.listaItensPedidosCliente(cliente);
+                List<Pedido> listaPedidosAbertos = pedidoDAO.listaPedidosAbertosCliente(cliente);
                 List<Pedido> listaPedidosFinalizados = pedidoDAO.listaPedidosFinalizadosCliente(cliente);
                 
                 request.setAttribute("listaPedidosAbertos", listaPedidosAbertos);
@@ -170,6 +171,33 @@ public class Clientes extends HttpServlet {
                 
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/visualizarCompra.jsp");
                 rd.forward(request,response);
+                return;
+            }
+            if ("confirmarRecebimento".equals(request.getParameter("action"))) {
+                
+                Pedido pedido = new Pedido();
+                pedido.setIdPedido(Integer.parseInt(request.getParameter("id")));
+                StatusPedido statusPedido = new StatusPedido();
+                statusPedido.setIdStatusPedido(2);
+                pedido.setStatusPedido(statusPedido);
+                PedidoDAO pedidoDAO = new PedidoDAO();
+                pedidoDAO.atualizarStatusPedido(pedido);
+                
+                
+                response.sendRedirect("./Clientes?action=pedidos");
+            }
+            if ("cancelar".equals(request.getParameter("action"))) {
+                
+                Pedido pedido = new Pedido();
+                pedido.setIdPedido(Integer.parseInt(request.getParameter("id")));
+                StatusPedido statusPedido = new StatusPedido();
+                statusPedido.setIdStatusPedido(0);
+                pedido.setStatusPedido(statusPedido);
+                PedidoDAO pedidoDAO = new PedidoDAO();
+                pedidoDAO.atualizarStatusPedido(pedido);
+                
+                
+                response.sendRedirect("./Clientes?action=pedidos");
             }
             else{
                 ProdutoDAO produtoDAO = new ProdutoDAO();

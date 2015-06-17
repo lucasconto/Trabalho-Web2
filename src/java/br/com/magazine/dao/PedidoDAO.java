@@ -28,7 +28,7 @@ import java.util.List;
 public class PedidoDAO {
 
     private final String stmtCadastraPedido = "insert into Pedido (idCliente,idstatuspedido,data,valortotal) values (?,?,?,?)";
-    private final String stmtAtualizaStatusPedido = "update Pedido set status = ? where idPedido = ?";
+    private final String stmtAtualizaStatusPedido = "update Pedido set idStatusPedido = ? where idPedido = ?";
 
 //    private final String stmtRemoveCliente = "delete from Cliente where idCliente = ?";
 //    private final String stmtRemoveItemPedidoCliente = "delete from itempedido where idpedido = (select idpedido from pedido where idcliente = ?)";

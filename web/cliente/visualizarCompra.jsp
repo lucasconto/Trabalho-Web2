@@ -27,106 +27,212 @@
         <!--Inclui cabeçalho-->
         <jsp:include page="navCliente.jsp"/>
         <div class="container">
-           <div class="row">
-            <jsp:include page="menuCliente.jsp"/>
-            <div class="col-md-9 ">   
-            <h1>Compras</h1>
-            <div id="accordion" class="panel-group">
-               <div class="panel panel-default">
-                   <div class="panel-heading" style="font-size: 20px">
-                            <strong>Compras em Aberto</strong>
-                   </div>
-                       <div class="panel-body">
-                           <table class="table table-striped table-bordered">
-                               <tr>
-                                   <th>Número da Compra #</th>
-                                   <th>Data</th>
-                                   <th>Valor Total</th>
-                                   <th>Situação</th>
-                                   <th>Marcar como entregue</th>
-                               </tr>
-                               <c:forEach var="pedido" items="${listaPedidosAbertos}">
-                                   <td colspan="5">
-                                  <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse${pedido.idPedido}">
-                                            <td>${pedido.idPedido}</td>
-                                            <td><fmt:formatDate value="${pedido.data}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
-                                            <td><fmt:formatNumber value="${pedido.valorTotal}" minFractionDigits="2" type="currency"/>  </td>
-                                            <td>${pedido.statusPedido.descricao}</td>
-                                        </a>
-                                    </h4>
-                                </div>
-                                  </td>
-                                <div id="collapse${pedido.idPedido}" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <table class="table table-striped table-bordered">
-                                            <tr>
-                                                <th>Item #</th>
-                                                <th>Título</th>
-                                                <th>Quantidade</th>
-                                                <th>Valor Unitário</th>
-                                            </tr>
-                                            <c:forEach var="itemPedido" items="${pedido.itens}">
-                                            <tr>
-                                                <td>${itemPedido.idItemPedido}</td>
-                                                <td>${itemPedido.produto.titulo}</td>
-                                                <td>${itemPedido.quantidade}</td>
-                                                <td><fmt:formatNumber value="${itemPedido.valorUnitario}" minFractionDigits="2" type="currency"/> </td>
-                                             
-                                            </tr>
-                                            </c:forEach>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div> 
-<!--                               <tr>
-                                   <td>${pedido.idPedido}</td>
-                                   <td><fmt:formatDate value="${pedido.data}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
-                                   <td><fmt:formatNumber value="${pedido.valorTotal}" minFractionDigits="2" type="currency"/></td>
-                                   <td>${pedido.statusPedido.descricao}</td>
-                                   <td><a href="#">Marcar como entregue.</a></td>
-                                </tr>-->
-                               </c:forEach>
-                           </table>
-                       </div>
-                   </div>
-               </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading" style="font-size: 20px">
-                        <strong>Compras Finalizadas</strong>
-                   </div>
-                       <div class="panel-body">
-                           <table class="table table-striped table-bordered">
-                               <tr>
-                                   <th>Número da Compra #</th>
-                                   <th>Data</th>
-                                   <th>Valor Total</th>
-                                   <th>Situação</th>
-                               </tr>
-                               <tr>
-                                   <c:forEach var="pedido" items="${listaPedidosFinalizados}">
-                                       
-                                   <td>${pedido.idPedido}</td>
-                                   <td><fmt:formatDate value="${pedido.data}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
-                                   <td><fmt:formatNumber value="${pedido.valorTotal}" minFractionDigits="2" type="currency"/></td>
-                                   <td>${pedido.statusPedido.descricao}</td>
-                                </tr>
-                                   </c:forEach>
-                           </table>
-                       </div>
-                   </div>
-           </div>
+            <div class="row">
+                <jsp:include page="menuCliente.jsp"/>
+                <div class="col-md-9 ">   
+                    <h1>Compras</h1>
+                    <div id="accordion" class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="font-size: 20px">
+                                <strong>Compras em Aberto</strong>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table table-striped table-bordered">
+                                    <tr>
+                                        <th>Número da Compra #</th>
+                                        <th>Data</th>
+                                        <th>Valor Total</th>
+                                        <th>Situação</th>
+                                        <th>Ação</th>
+                                    </tr>
+                                    <c:forEach var="pedido" items="${listaPedidosAbertos}">
+                                        <tr>
+                                            <td>
+                                                <a href="" data-toggle="modal" data-target="#exampleModal${pedido.idPedido}">
+                                                    ${pedido.idPedido}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="" data-toggle="modal" data-target="#exampleModal${pedido.idPedido}">
+                                                    <fmt:formatDate value="${pedido.data}" pattern="dd/MM/yyyy HH:mm:ss" />
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="" data-toggle="modal" data-target="#exampleModal${pedido.idPedido}">
+                                                    <fmt:formatNumber value="${pedido.valorTotal}" minFractionDigits="2" type="currency"/>  
+                                                </a>
+                                            </td>
+                                            <td data-toggle="collapse" href="#collapse${pedido.idPedido}" >
+                                                <a href="" data-toggle="modal" data-target="#exampleModal${pedido.idPedido}">
+                                                    ${pedido.statusPedido.descricao}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                 <a href="Clientes?action=confirmarRecebimento&id=${pedido.idPedido}"><span class="glyphicon glyphicon-ok-circle" style="color: green;" title="Confirmar Recebimento"></span></a>&nbsp;&nbsp;
+                                                <a href="Clientes?action=cancelar&id=${pedido.idPedido}"><span class="glyphicon glyphicon-remove-circle" title="Cancelar Pedido" style="color: red;"></span></a>
+                                                <!--Inicio do modal-->
+                                                <div class="modal fade" id="exampleModal${pedido.idPedido}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title" id="exampleModalLabel">Detalhes da Compra #${pedido.idPedido} </h4>
+                                                                <div class="modal-body">
+                                                                    <table class="table table-striped table-bordered">
+                                                                        <tr>
+                                                                            <th>ID</th>
+                                                                            <th>Título</th>
+                                                                            <th>Quantidade</th>
+                                                                            <th>Valor Unitário</th>
+                                                                        </tr>
+                                                                        <c:forEach var="itemPedido" items="${pedido.itens}">
+                                                                            <tr>
+                                                                                <td>${itemPedido.idItemPedido}</td>
+                                                                                <td>${itemPedido.produto.titulo}</td>
+                                                                                <td>${itemPedido.quantidade}</td>
+                                                                                <td><fmt:formatNumber value="${itemPedido.valorUnitario}" minFractionDigits="2" type="currency"/> </td>
+                                                                            </tr>
+                                                                        </c:forEach>
+                                                                    </table>
+                                                                    <div class="col-md-offset-8">
+                                                                        <h3>Total: <fmt:formatNumber value="${pedido.valorTotal}" minFractionDigits="2" type="currency"/> </h3>
+                                                                    </div>
+                                                                    <br/>
+                                                                    <div class="col-md-2">
+                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                                                    </div>
+                                                                    <div class="col-md-2 col-md-offset-3">
+                                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar Pedido</button>
+                                                                    </div>
+                                                                    <div class="col-md-2 col-md-offset-1">
+                                                                        <button type="button" class="btn btn-success" data-dismiss="modal">Confirmar Recebimento</button>
+                                                                    </div>
+                                                                    <br/>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--Fim do modal-->
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="accordion" class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="font-size: 20px">
+                                <strong>Compras Finalizadas</strong>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table table-striped table-bordered">
+                                    <tr>
+                                        <th>Número da Compra #</th>
+                                        <th>Data</th>
+                                        <th>Valor Total</th>
+                                        <th>Situação</th>
+                                        <th>Ação</th>
+                                    </tr>
+                                    <c:forEach var="pedido" items="${listaPedidosFinalizados}">
+                                        <tr>
+                                            <td>
+                                                <a href="" data-toggle="modal" data-target="#exampleModal${pedido.idPedido}">
+                                                    ${pedido.idPedido}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="" data-toggle="modal" data-target="#exampleModal${pedido.idPedido}">
+                                                    <fmt:formatDate value="${pedido.data}" pattern="dd/MM/yyyy HH:mm:ss" />
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="" data-toggle="modal" data-target="#exampleModal${pedido.idPedido}">
+                                                    <fmt:formatNumber value="${pedido.valorTotal}" minFractionDigits="2" type="currency"/>  
+                                                </a>
+                                            </td>
+                                            <td data-toggle="collapse" href="#collapse${pedido.idPedido}" >
+                                                <a href="" data-toggle="modal" data-target="#exampleModal${pedido.idPedido}">
+                                                    ${pedido.statusPedido.descricao}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="Clientes?action=confirmarRecebimento&id=${pedido.idPedido}"><span class="glyphicon glyphicon-ok-circle" style="color: green;" title="Confirmar Recebimento"></span></a>&nbsp;&nbsp;
+                                                <a href="Generos?action=cancelar&id=${pedido.idPedido}"><span class="glyphicon glyphicon-remove-circle" title="Cancelar Pedido" style="color: red;"></span></a>
+                                                <!--Inicio do modal-->
+                                                <div class="modal fade" id="exampleModal${pedido.idPedido}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title" id="exampleModalLabel">Detalhes da Compra #${pedido.idPedido} </h4>
+                                                                <div class="modal-body">
+                                                                    <table class="table table-striped table-bordered">
+                                                                        <tr>
+                                                                            <th>ID</th>
+                                                                            <th>Título</th>
+                                                                            <th>Quantidade</th>
+                                                                            <th>Valor Unitário</th>
+                                                                        </tr>
+                                                                        <c:forEach var="itemPedido" items="${pedido.itens}">
+                                                                            <tr>
+                                                                                <td>${itemPedido.idItemPedido}</td>
+                                                                                <td>${itemPedido.produto.titulo}</td>
+                                                                                <td>${itemPedido.quantidade}</td>
+                                                                                <td><fmt:formatNumber value="${itemPedido.valorUnitario}" minFractionDigits="2" type="currency"/> </td>
+                                                                            </tr>
+                                                                        </c:forEach>
+                                                                    </table>
+                                                                    <div class="col-md-offset-8">
+                                                                        <h3>Total: <fmt:formatNumber value="${pedido.valorTotal}" minFractionDigits="2" type="currency"/> </h3>
+                                                                    </div>
+                                                                    <br/>
+                                                                    <div class="col-md-2">
+                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                                                    </div>
+                                                                    <div class="col-md-2 col-md-offset-3">
+                                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar Pedido</button>
+                                                                    </div>
+                                                                    <div class="col-md-2 col-md-offset-1">
+                                                                        <button type="button" class="btn btn-success" data-dismiss="modal">Confirmar Recebimento</button>
+                                                                    </div>
+                                                                    <br/>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--Fim do modal-->
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                </div>
             </div>
-        </div>
         </div>
         <!--Inclui Rodapé-->
         <jsp:include page="../comum/rodape.jsp"/>
-        
+
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="../js/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="../js/bootstrap.min.js"></script>
+        <script>
+//            $(function () {
+//
+//                $('#exampleModal').on('show.bs.modal', function (event) {
+//                    var button = $(event.relatedTarget); // Button that triggered the modal
+//                    var idItemPedido = button.data('idItemPedido'); // Extract info from data-* attributes
+//                    var titulo = button.data('titulo');
+//                    var modal = $(this);
+//                    modal.find('#genero-id').val(idItemPedido);
+//                    modal.find('#genero-nome').val(titulo);
+//                });
+//            });
+
+        </script>
     </body>
 </html>
