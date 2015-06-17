@@ -86,16 +86,16 @@
             <div class="col-md-9 ">   
             <h1>Produtos Mais Vendidos</h1>
              <div class="row">
-                 <form class="form">
+                 <form class="form" action="../Produtos?action=maisVendido" method="post">
                      <div class="form-group">
                         <div class="col-md-2">
                             <strong>Período:</strong>
                         </div>
                         <div class="col-md-2" style="padding: 0px">
-                            de <input type="text" class="f" maxlength="10" id="de" style="width: 90px" placeholder="dd/mm/aaa" OnKeyPress="formatar(this,'##/##/####')" required/>
+                            de <input type="text"  maxlength="10" id="de" name="de" style="width: 90px" placeholder="dd/mm/aaaa" OnKeyPress="formatar(this,'##/##/####')" required/>
                         </div>
                         <div class="col-md-2" style="padding: 0px">
-                            até <input type="text" class="f" maxlength="10" id="ate" style="width: 90px" placeholder="dd/mm/aaa" OnKeyPress="formatar(this,'##/##/####')" required/>
+                            até <input type="text"  maxlength="10" id="ate" name="ate" style="width: 90px" placeholder="dd/mm/aaaa" OnKeyPress="formatar(this,'##/##/####')" required/>
                         </div>
                         <div class="col-md-1" >
                             <button class="btn btn-default form-control" type="text">

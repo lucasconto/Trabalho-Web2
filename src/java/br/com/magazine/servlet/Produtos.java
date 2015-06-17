@@ -5,10 +5,13 @@ import br.com.magazine.dao.ProdutoDAO;
 import br.com.magazine.entidade.Editora;
 import br.com.magazine.entidade.Genero;
 import br.com.magazine.entidade.Produto;
+import br.com.magazine.util.ConnectionFactory;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.nio.file.Files;
 import java.text.ParseException;
 import java.util.logging.Level;
@@ -20,6 +23,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+
+import java.sql.*;
+import java.util.*;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.util.*;
+import net.sf.jasperreports.view.JasperViewer;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -38,6 +47,74 @@ public class Produtos extends HttpServlet{
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException, ParseException, ClassNotFoundException {
     response.setContentType("text/html;charset=UTF-8");
+        if ("maisVendido".equals(request.getParameter("action"))){
+                String de = request.getParameter("de");
+                String ate = request.getParameter("ate");
+                de = dateFormat(de);
+                ate = dateFormat(ate);
+                Connection con = null;
+                try{
+                    con = ConnectionFactory.getConnection();
+                
+                    // Caminho físico do relatório compilado
+                    String jasper = request.getContextPath() +"/maisVendidos.jasper";
+
+                    // Host onde o servlet esta executando 
+                    String host = "http://" + request.getServerName() +":" + request.getServerPort();
+
+                    // URL para acesso ao relatório
+                    URL jasperURL = new URL(host + jasper);
+
+                    HashMap params = new HashMap();
+                    params.put("de", de);
+                    params.put("ate", ate);
+                    byte[] bytes = JasperRunManager.runReportToPdf(jasperURL.openStream(), params, con);
+                    if (bytes != null) { 
+                        // A página será mostrada em PDF
+                        response.setContentType("application/pdf");
+                        
+                        // Envia o PDF para o Cliente
+                        OutputStream ops =null;  
+                        ops = response.getOutputStream();
+                        ops.write(bytes); 
+                    }
+                }
+                catch(ClassNotFoundException e) {
+                    // erro de driver
+                    response.setContentType("text/html;charset=UTF-8");
+                    PrintWriter out = response.getWriter();
+                    out.println("<html><head>");
+                    out.println("<title>Servlet Produtos</title>");
+                    out.println("</head><body>");
+                    out.println("<h1>Erro de Driver (" + e.getMessage() + ") no Servlet Produtos at " +request.getContextPath () + "</h1>");
+                    out.println("</body></html>");
+                    out.flush();
+                }
+                catch(SQLException e) {
+                    // erro de SQL
+                    response.setContentType("text/html;charset=UTF-8");
+                    PrintWriter out = response.getWriter();
+                    out.println("<html><head>");
+                    out.println("<title>Servlet Produtos</title>");
+                    out.println("</head><body>");
+                    out.println("<h1>Erro de SQL (" + e.getMessage() +") no Servlet Produtos at " +request.getContextPath () +"</h1>");
+                    out.println("</body></html>");
+                    out.flush();
+                }
+                catch(JRException e) {
+                    // erro de Jasper
+                    response.setContentType("text/html;charset=UTF-8");
+                    PrintWriter out = response.getWriter();
+                    out.println("<html><head>");
+                    out.println("<title>Servlet Produtos</title>");  
+                    out.println("</head><body>");
+                    out.println("<h1>Erro de Jasper (" + e.getMessage() + ") no Servlet Produtos at " +request.getContextPath () + "</h1>");
+                    out.println("</body></html>");
+                    out.flush();
+                }
+                finally {if (con!=null)try { con.close(); }catch(Exception e) {}}
+            }
+        else{
         try (PrintWriter out = response.getWriter()) {
             if ("cadastrar".equals(request.getParameter("action"))) {
                 Part filePart = request.getPart("idImg"); // Retrieves <input type="file" name="file">
@@ -102,11 +179,22 @@ public class Produtos extends HttpServlet{
                
                 //sem imagem
                 //produto.setidImg(Integer.parseInt(request.getParameter("idImg")));                
-             
+                
                 
       
             }
         }
+        }
+    }
+    
+    private String dateFormat (String date){
+        //this function will change the Date String format from dd/mm/yyyy to yyyy-mm-dd
+        String day, month, year;
+        day = date.substring(0, 2);
+        month = date.substring(3, 5);
+        year = date.substring(6, 10);
+        date = year + "-" + month + "-" + day;
+        return date;
     }
         
         @Override

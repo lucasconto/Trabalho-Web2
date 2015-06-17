@@ -28,6 +28,12 @@
 		</conditionalStyle>
 	</style>
 	<subDataset name="Table Dataset 1" uuid="2203befe-100e-4810-b6ca-2fb98715778b"/>
+	<parameter name="de" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT PRO.TITULO, PRO.AUTOR, EDI.NOME AS EDITORA, SUM(ITP.QUANTIDADE) AS TOTAL
 FROM PRODUTO PRO
@@ -37,9 +43,11 @@ INNER JOIN ITEMPEDIDO ITP
 ON ITP.IDPRODUTO = PRO.IDPRODUTO
 INNER JOIN PEDIDO PED
 ON ITP.IDPEDIDO = PED.IDPEDIDO
-WHERE PED.DATA::DATE BETWEEN '2015-02-01'::DATE/*SIMULACAO DATA INICIAL*/ AND '2015-02-28'::DATE /*SIMULACAO DATA FINAL*/
+WHERE PED.DATA::DATE BETWEEN $P{de}::DATE AND $P{ate}::DATE
 GROUP BY 1,2,3
-ORDER BY 4 DESC;]]>
+ORDER BY 4 DESC;
+
+]]>
 	</queryString>
 	<field name="titulo" class="java.lang.String"/>
 	<field name="autor" class="java.lang.String"/>
