@@ -185,6 +185,7 @@ public class Clientes extends HttpServlet {
                 
                 
                 response.sendRedirect("./Clientes?action=pedidos");
+                return;
             }
             if ("cancelar".equals(request.getParameter("action"))) {
                 
@@ -198,6 +199,7 @@ public class Clientes extends HttpServlet {
                 
                 
                 response.sendRedirect("./Clientes?action=pedidos");
+                return;
             }
             else{
                 ProdutoDAO produtoDAO = new ProdutoDAO();

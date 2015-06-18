@@ -79,14 +79,14 @@
                                                                 <div class="modal-body">
                                                                     <table class="table table-striped table-bordered">
                                                                         <tr>
-                                                                            <th>ID</th>
+                                                                            <th>ID #</th>
                                                                             <th>Título</th>
                                                                             <th>Quantidade</th>
-                                                                            <th>Valor Unitário</th>
+                                                                            <th>Valor Unitárioa</th>
                                                                         </tr>
                                                                         <c:forEach var="itemPedido" items="${pedido.itens}">
                                                                             <tr>
-                                                                                <td>${itemPedido.idItemPedido}</td>
+                                                                                <td>${itemPedido.produto.idProduto}</td>
                                                                                 <td>${itemPedido.produto.titulo}</td>
                                                                                 <td>${itemPedido.quantidade}</td>
                                                                                 <td><fmt:formatNumber value="${itemPedido.valorUnitario}" minFractionDigits="2" type="currency"/> </td>
@@ -101,10 +101,14 @@
                                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                                                                     </div>
                                                                     <div class="col-md-2 col-md-offset-3">
-                                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar Pedido</button>
+                                                                        <a href="Clientes?action=confirmarRecebimento&id=${pedido.idPedido}">
+                                                                        <button type="button" class="btn btn-danger">Cancelar Pedido</button>
+                                                                        </a>
                                                                     </div>
                                                                     <div class="col-md-2 col-md-offset-1">
-                                                                        <button type="button" class="btn btn-success" data-dismiss="modal">Confirmar Recebimento</button>
+                                                                        <a href="Clientes?action=cancelar&id=${pedido.idPedido}">
+                                                                        <button type="button" class="btn btn-success">Confirmar Recebimento</button>
+                                                                        </a>
                                                                     </div>
                                                                     <br/>
                                                                 </div>
@@ -132,7 +136,6 @@
                                         <th>Data</th>
                                         <th>Valor Total</th>
                                         <th>Situação</th>
-                                        <th>Ação</th>
                                     </tr>
                                     <c:forEach var="pedido" items="${listaPedidosFinalizados}">
                                         <tr>
@@ -155,10 +158,6 @@
                                                 <a href="" data-toggle="modal" data-target="#exampleModal${pedido.idPedido}">
                                                     ${pedido.statusPedido.descricao}
                                                 </a>
-                                            </td>
-                                            <td>
-                                                <a href="Clientes?action=confirmarRecebimento&id=${pedido.idPedido}"><span class="glyphicon glyphicon-ok-circle" style="color: green;" title="Confirmar Recebimento"></span></a>&nbsp;&nbsp;
-                                                <a href="Generos?action=cancelar&id=${pedido.idPedido}"><span class="glyphicon glyphicon-remove-circle" title="Cancelar Pedido" style="color: red;"></span></a>
                                                 <!--Inicio do modal-->
                                                 <div class="modal fade" id="exampleModal${pedido.idPedido}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
@@ -168,14 +167,14 @@
                                                                 <div class="modal-body">
                                                                     <table class="table table-striped table-bordered">
                                                                         <tr>
-                                                                            <th>ID</th>
+                                                                            <th>ID #</th>
                                                                             <th>Título</th>
                                                                             <th>Quantidade</th>
                                                                             <th>Valor Unitário</th>
                                                                         </tr>
                                                                         <c:forEach var="itemPedido" items="${pedido.itens}">
                                                                             <tr>
-                                                                                <td>${itemPedido.idItemPedido}</td>
+                                                                                <td>${itemPedido.produto.idProduto}</td>
                                                                                 <td>${itemPedido.produto.titulo}</td>
                                                                                 <td>${itemPedido.quantidade}</td>
                                                                                 <td><fmt:formatNumber value="${itemPedido.valorUnitario}" minFractionDigits="2" type="currency"/> </td>
@@ -188,12 +187,6 @@
                                                                     <br/>
                                                                     <div class="col-md-2">
                                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                                                                    </div>
-                                                                    <div class="col-md-2 col-md-offset-3">
-                                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar Pedido</button>
-                                                                    </div>
-                                                                    <div class="col-md-2 col-md-offset-1">
-                                                                        <button type="button" class="btn btn-success" data-dismiss="modal">Confirmar Recebimento</button>
                                                                     </div>
                                                                     <br/>
                                                                 </div>

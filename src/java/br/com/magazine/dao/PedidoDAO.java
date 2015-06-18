@@ -142,7 +142,6 @@ public class PedidoDAO {
                 stmt2 = con.prepareStatement(stmtListaItensPedido);
                 stmt2.setInt(1, pedido.getIdPedido());
                 rs2 = stmt2.executeQuery();
-                System.out.println(statusPedido.getDescricao());
                 List<ItemPedido> listaItensPedido = new ArrayList();
                 while (rs2.next()) {
                     ItemPedido itemPedido = new ItemPedido();
@@ -223,7 +222,40 @@ public class PedidoDAO {
                 pedido.setStatusPedido(statusPedido);
                 pedido.setData(rs.getTimestamp("data"));
                 pedido.setValorTotal(rs.getDouble("valortotal"));
+                stmt2 = con.prepareStatement(stmtListaItensPedido);
+                stmt2.setInt(1, pedido.getIdPedido());
+                rs2 = stmt2.executeQuery();
                 List<ItemPedido> listaItensPedido = new ArrayList();
+                while (rs2.next()) {
+                    ItemPedido itemPedido = new ItemPedido();
+                    itemPedido.setIdItemPedido(rs2.getInt("iditempedido"));
+                    itemPedido.setIdPedido(pedido.getIdPedido());
+                    itemPedido.setQuantidade(rs2.getInt("quantidade"));
+                    itemPedido.setValorUnitario(rs2.getDouble("valorunitario"));
+
+                    Produto produto = new Produto();
+                    produto.setIdProduto(rs2.getInt("idproduto"));
+                    produto.setTitulo(rs2.getString("titulo"));
+                    produto.setAutor(rs2.getString("autor"));
+                    produto.setPreco(rs2.getDouble("preco"));
+                    produto.setidImg(rs2.getInt("idImg"));
+                    produto.setInativo(rs2.getBoolean("produtoInativo"));
+
+                    Editora editora = new Editora();
+                    editora.setIdEditora(rs2.getInt("ideditora"));
+                    editora.setNome(rs2.getString("nomeEditora"));
+
+                    Genero genero = new Genero();
+                    genero.setIdGenero(rs2.getInt("idGenero"));
+                    genero.setNome(rs2.getString("generoNome"));
+
+                    produto.setEditora(editora);
+                    produto.setGenero(genero);
+                    
+                    itemPedido.setProduto(produto);
+                    
+                    listaItensPedido.add(itemPedido);
+                }
                 pedido.setItens(listaItensPedido);
                 listaPedidos.add(pedido);
 
@@ -273,7 +305,40 @@ public class PedidoDAO {
                 pedido.setStatusPedido(statusPedido);
                 pedido.setData(rs.getTimestamp("data"));
                 pedido.setValorTotal(rs.getDouble("valortotal"));
+               stmt2 = con.prepareStatement(stmtListaItensPedido);
+                stmt2.setInt(1, pedido.getIdPedido());
+                rs2 = stmt2.executeQuery();
                 List<ItemPedido> listaItensPedido = new ArrayList();
+                while (rs2.next()) {
+                    ItemPedido itemPedido = new ItemPedido();
+                    itemPedido.setIdItemPedido(rs2.getInt("iditempedido"));
+                    itemPedido.setIdPedido(pedido.getIdPedido());
+                    itemPedido.setQuantidade(rs2.getInt("quantidade"));
+                    itemPedido.setValorUnitario(rs2.getDouble("valorunitario"));
+
+                    Produto produto = new Produto();
+                    produto.setIdProduto(rs2.getInt("idproduto"));
+                    produto.setTitulo(rs2.getString("titulo"));
+                    produto.setAutor(rs2.getString("autor"));
+                    produto.setPreco(rs2.getDouble("preco"));
+                    produto.setidImg(rs2.getInt("idImg"));
+                    produto.setInativo(rs2.getBoolean("produtoInativo"));
+
+                    Editora editora = new Editora();
+                    editora.setIdEditora(rs2.getInt("ideditora"));
+                    editora.setNome(rs2.getString("nomeEditora"));
+
+                    Genero genero = new Genero();
+                    genero.setIdGenero(rs2.getInt("idGenero"));
+                    genero.setNome(rs2.getString("generoNome"));
+
+                    produto.setEditora(editora);
+                    produto.setGenero(genero);
+                    
+                    itemPedido.setProduto(produto);
+                    
+                    listaItensPedido.add(itemPedido);
+                }
                 pedido.setItens(listaItensPedido);
                 listaPedidos.add(pedido);
 
