@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="perfilCliente" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6fd61cbb-6e3b-4097-87ac-9edee58a8e11">
+	<property name="ireport.zoom" value="1.464100000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+CLI.NOME,
+CASE
+	WHEN PED.COUNT_COMPRAS <= 1 THEN 'Comprador Esporádico'
+	WHEN PED.COUNT_COMPRAS BETWEEN 2 AND 3 THEN 'Comprador Mediano'
+	ELSE 'Comprador Assíduo'
+END AS PERFIL
+FROM CLIENTE CLI
+INNER JOIN
+(
+	SELECT IDCLIENTE, COUNT(*) AS COUNT_COMPRAS
+	FROM PEDIDO
+	GROUP BY 1
+) PED ON CLI.IDCLIENTE = PED.IDCLIENTE
+ORDER BY 1;]]>
+	</queryString>
+	<field name="nome" class="java.lang.String"/>
+	<field name="perfil" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement x="165" y="0" width="244" height="29" uuid="07383525-ad11-4f44-b51d-5ffd5b6e7da3"/>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório Perfil de Cliente]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="45" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="250" height="20" uuid="41fa6262-f724-49db-9959-d8f2a459b590"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="0" width="253" height="20" uuid="f933d2c7-e4c0-4d38-9fe0-bf04dbcd34ae"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Perfil]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="250" height="20" uuid="040c9fb0-55e4-4231-9a6f-fe6ecd1f8b31"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="0" width="253" height="20" uuid="22e5aeec-46ab-453c-917c-bad7c2f246f0"/>
+				<textFieldExpression><![CDATA[$F{perfil}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
