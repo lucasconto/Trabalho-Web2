@@ -5,9 +5,10 @@
     <div class="list-group">
         <a href="buscarCliente.jsp" class="list-group-item">Buscar Cliente</a>
         
-        <a href="relatorioCompra.jsp" class="list-group-item">Relatorio de Compras</a>
+        <a href="Gerentes?action=compras" class="list-group-item">Relatorio de Compras</a>
+        
         <a href="relatorioMaisVendido.jsp" class="list-group-item">Produtos mais vendidos</a>
-        <a href="relatorioPerfil.jsp" class="list-group-item">Perfis de clientes</a>
+        <a href="Gerentes?action=perfilCliente" class="list-group-item">Perfis de clientes</a>
         
         <a href="./cadastrarFuncionario.jsp" class="list-group-item">Cadastrar Funcionario</a>
     </div>

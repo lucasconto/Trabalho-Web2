@@ -86,7 +86,7 @@
             <div class="col-md-9 ">   
             <h1>Produtos Mais Vendidos</h1>
              <div class="row">
-                 <form class="form" action="../Produtos?action=maisVendido" method="post">
+                 <form class="form" action="Gerentes?action=maisVendido" method="post">
                      <div class="form-group">
                         <div class="col-md-2">
                             <strong>Período:</strong>
