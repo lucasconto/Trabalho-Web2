@@ -48,12 +48,20 @@
                         <th>Valor Total</th>
                     </tr>
                     <c:forEach var="itemCarrinho" items="${sessionScope.carrinho.listaItens}">
-                    <tr>
-                        <td><img src="${pageContext.request.contextPath}/Imagens/${itemCarrinho.produto.idImg}.jpg" style="width: 50px;height: 50px" alt="">${itemCarrinho.produto.titulo}</td>
-                        <td>${itemCarrinho.quantidade}</td>
-                        <td><fmt:formatNumber value="${itemCarrinho.produto.preco}" minFractionDigits="2" type="currency"/></td>
-                        <td><fmt:formatNumber value="${itemCarrinho.produto.preco * itemCarrinho.quantidade}" minFractionDigits="2" type="currency"/></td>
-                    </tr>
+                        <tr>
+                            <td><img src="${pageContext.request.contextPath}/Imagens/${itemCarrinho.produto.idImg}.jpg" style="width: 50px;height: 50px" alt="">${itemCarrinho.produto.titulo}</td>
+                            <td>
+                                
+                                <div class="qnt-count">
+                                    <form class="form-horizontal" id="form" method="POST" action="Clientes?action=cadastrar" onsubmit="//return valida(this);">
+                                        
+                                        <a class="incr-btn">-</a> <input type="text" class="form-control" value="${itemCarrinho.quantidade}" style="width: 50px; display: inline;"/> +
+                                    </form>
+                                </div>
+                            </td>
+                            <td><fmt:formatNumber value="${itemCarrinho.produto.preco}" minFractionDigits="2" type="currency"/></td>
+                            <td><fmt:formatNumber value="${itemCarrinho.produto.preco * itemCarrinho.quantidade}" minFractionDigits="2" type="currency"/></td>
+                        </tr>
                     </c:forEach>
                     <tr class="warning text-info lead">
                         <td></td>
@@ -65,20 +73,20 @@
             </div>
             <div class="row">
                 <a href="../Carrinhos?action=comprar">
-                 <button class="btn btn-success btn-lg col-sm-3 col-sm-push-9">Finalizar Compra</button>
+                    <button class="btn btn-success btn-lg col-sm-3 col-sm-push-9">Finalizar Compra</button>
                 </a>
             </div>
 
         </div>
-                <!-- /.container -->
-                <jsp:include page="../comum/rodape.jsp"/>  
+        <!-- /.container -->
+        <jsp:include page="../comum/rodape.jsp"/>  
 
-                <!-- jQuery -->
-                <script src="../js/jquery.min.js"></script>
+        <!-- jQuery -->
+        <script src="../js/jquery.min.js"></script>
 
-                <!-- Bootstrap Core JavaScript -->
-                <script src="../js/bootstrap.min.js"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="../js/bootstrap.min.js"></script>
 
-                </body>
+    </body>
 
-                </html>
+</html>
