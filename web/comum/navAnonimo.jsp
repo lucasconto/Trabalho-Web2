@@ -25,7 +25,7 @@
                 <li class="dropdown" id="menuLogin">
                     <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">Login<strong class="caret"></strong></a>
 
-                    <div class="dropdown-menu pull-left" style="padding:20px; min-width: 300px;">
+                    <div class="dropdown-menu pull-left" style="padding:20px; min-width: 250px;">
                         <form class="form" id="formLogin" action="../cliente/index.jsp">
                             <div style="padding: 5px">
                                 <input name="email" class="form-control" id="username" type="text" placeholder="Email">

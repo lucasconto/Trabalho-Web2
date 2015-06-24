@@ -121,6 +121,7 @@ public class Clientes extends HttpServlet {
                 Cliente cliente = new Cliente();
                 ClienteDAO clienteDAO = new ClienteDAO();
                 cliente.setIdCliente(Integer.parseInt(request.getParameter("cliente-id")));
+                System.out.println(Integer.parseInt(request.getParameter("cliente-id")));
                 clienteDAO.removerCliente(cliente);
             }
             if ("nomeAZ".equals(request.getParameter("action"))) {

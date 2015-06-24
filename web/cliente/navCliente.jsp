@@ -52,14 +52,14 @@
                       <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">
                           <span class="glyphicon glyphicon-shopping-cart"></span>
                           <c:choose>
-                              <c:when test="${sessionScope.carrinho.getNumeroItens() == null}">[Vazio]</c:when>
+                              <c:when test="${sessionScope.carrinho.getNumeroItens() == null || sessionScope.carrinho.getNumeroItens() == 0}">[Vazio]</c:when>
                               <c:when test="${sessionScope.carrinho.getNumeroItens() == 1}">[${sessionScope.carrinho.getNumeroItens()} Item]</c:when>
                               <c:otherwise>[${sessionScope.carrinho.getNumeroItens()} Itens]</c:otherwise>
                           </c:choose>
                           
                           <strong class="caret"></strong>
                       </a>
-                      <div class="dropdown-menu pull-right" style="padding:5px;">
+                      <div class="dropdown-menu pull-right" style="padding:5px; ">
                           <table class="table table-striped">
                                   
                               <tr>

@@ -127,20 +127,47 @@
                                             <input type="hidden" value="${str}" name="str"/>
                                         </a>
                                     </form>
-                                    <form action="./Gerentes?action=excluirf&id=${cliente.idCliente}" method="post" style="display: inline">
-                                        <a href="#" onclick="this.parentNode.submit();">
+                                        <!--<a href="#" onclick="this.parentNode.submit();">-->
+                                        <a href="" data-toggle="modal" data-target="#exampleModal" data-escolha="${escolha}" data-str="${str}" data-idcliente="${cliente.idCliente}">
                                             <span title="Excluir" class="glyphicon glyphicon-trash" style="font-size: 20px"></span>
+<!--                                            
                                             <input type="hidden" value="${escolha}" name="escolha"/>
                                             <input type="hidden" value="${usuario.perfil}" name="perfil"/>
-                                            <input type="hidden" value="${str}" name="str"/>
+                                            <input type="hidden" value="${str}" name="str"/>-->
                                         </a>
-                                    </form>
                                 </div>
                             </td>
                             </tr>
                         </c:forEach>
                     </table>
                 </div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Exclusao de Conta</h4>
+            </div>
+            <div class="modal-body">
+                <form action="Gerentes?action=excluirc" method="post">
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" id="cliente-id" name="id"/>
+                        <input type="hidden" class="form-control" id="escolha-id" name="escolha"/>
+                        <input type="hidden" class="form-control" id="str-id" name="str"/>
+                    </div>                            
+                    <div class="form-group">
+                        <label for="genero-nome" class="control-label">Tem certeza de que deseja excluir este usuário?</label>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Nao</button>
+                        <button type="submit" class="btn btn-primary">Sim</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
             </div>
         </div>
         <!--Inclui Rodapé-->
@@ -148,5 +175,21 @@
 
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="../js/bootstrap.min.js"></script>
+        
+        <script>
+            $(function () {
+
+                $('#exampleModal').on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget); // Button that triggered the modal
+                    var idCliente = button.data('idcliente'); // Extract info from data-* attributes
+                    var escolha = button.data('escolha'); // Extract info from data-* attributes
+                    var str = button.data('str'); // Extract info from data-* attributes
+                    var modal = $(this);
+                    modal.find('#cliente-id').val(idCliente);
+                    modal.find('#escolha-id').val(escolha);
+                    modal.find('#str-id').val(str);
+                })
+            });
+        </script>
     </body>
 </html>

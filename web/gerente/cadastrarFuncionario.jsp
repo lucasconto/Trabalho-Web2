@@ -129,7 +129,11 @@
         <jsp:include page="navGerente.jsp"/>
 
         <div class="container">
-            <div class=" col-sm-offset-3 col-sm-6">
+            <div class="row">
+                
+                            <jsp:include page="menuGerente.jsp"/>
+                            <div class="col-md-9 ">   
+            <div class=" col-sm-offset-1 col-sm-6">
                 <h1>Dados Cadastrais</h1>
                 <form class="form-horizontal" id="form" method="POST" action="Gerentes?action=cadastrar" onsubmit="//return valida(this);">
                     <div class="form-group">
@@ -244,6 +248,8 @@
                         </div>
                     </div>
                 </form>
+            </div>
+            </div>
             </div>
         </div>
         <!--Inclui Rodapé-->
