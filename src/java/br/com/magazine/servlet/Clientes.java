@@ -202,6 +202,14 @@ public class Clientes extends HttpServlet {
                 response.sendRedirect("./Clientes?action=pedidos");
                 return;
             }
+            if ("visualizarProduto".equals(request.getParameter("action"))) {
+                ProdutoDAO produtoDAO = new ProdutoDAO();
+                int id = Integer.parseInt(request.getParameter("id"));
+                Produto produto = produtoDAO.listarProdutoPorId(id);
+                request.setAttribute("produto", produto);
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/visualizarProduto.jsp");
+                rd.forward(request,response);
+            }
             else{
                 ProdutoDAO produtoDAO = new ProdutoDAO();
                 

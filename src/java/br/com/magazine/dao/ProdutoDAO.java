@@ -132,7 +132,7 @@ public class ProdutoDAO {
         }
     }
 
-    private final String stmtBuscaProdutoPorId = "select * from produto where idProduto = ? and inativo = false";
+    private final String stmtBuscaProdutoPorId = "select idproduto, titulo, autor, idgenero, ideditora, preco, idimg, genero.nome as nomegenero, editora.nome as nomeeditora from produto  join genero on (genero.idgenero = produto.fkgenero) join editora on (editora.ideditora = produto.fkeditora) where idProduto = ? and produto.inativo = false";
 //nao retorna genero e editora
 
     public Produto listarProdutoPorId(int id) throws SQLException, ClassNotFoundException {
@@ -152,6 +152,17 @@ public class ProdutoDAO {
             produto.setAutor(rs.getString("autor"));
             produto.setPreco(rs.getDouble("preco"));
             produto.setidImg(rs.getInt("idImg"));
+            
+            Genero genero = new Genero();
+            genero.setIdGenero(rs.getInt("idGenero"));
+            genero.setNome(rs.getString("nomeGenero"));
+            produto.setGenero(genero);
+            
+            Editora editora = new Editora();
+            editora.setIdEditora(rs.getInt("idEditora"));
+            editora.setNome(rs.getString("nomeEditora"));
+            produto.setEditora(editora);
+            
             return produto;
 
         } catch (SQLException e) {

@@ -44,7 +44,7 @@
 
                     <div class="row carousel-holder">
 
-                        <div class="col-md-5 col-md-offset-3">
+                        <div class="col-md-12">
                             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                                 <ol class="carousel-indicators">
                                     <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -53,13 +53,13 @@
                                 </ol>
                                 <div class="carousel-inner">
                                     <div class="item active">
-                                        <img class="slide-image" src="${pageContext.request.contextPath}/Imagens/5.jpg" alt="" style="width: 400px; height: 300px;">
+                                        <img class="slide-image" src="http://placehold.it/800x300" alt="">
                                     </div>
                                     <div class="item">
-                                        <img class="slide-image" src="${pageContext.request.contextPath}/Imagens/2.jpg" alt="" style="width: 400px; height: 300px;">
+                                        <img class="slide-image" src="http://placehold.it/800x300" alt="">
                                     </div>
                                     <div class="item">
-                                        <img class="slide-image" src="${pageContext.request.contextPath}/Imagens/3.jpg" alt="" style="width: 400px; height: 300px;">
+                                        <img class="slide-image" src="http://placehold.it/800x300" alt="">
                                     </div>
                                 </div>
                                 <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
@@ -124,10 +124,10 @@
                         <c:forEach var="produto" items="${listaProdutos}">
                             <div class="col-sm-4 col-lg-4 col-md-4">
                                 <div class="thumbnail">
-                                            <img src="${pageContext.request.contextPath}/Imagens/${produto.idImg}.jpg" style="width: 100px;height: 120px" class="media-object" alt="">
+                                            <img src="${pageContext.request.contextPath}/Imagens/${produto.idImg}.jpg" style="width: 120px;height: 120px" class="media-object" alt="">
                                     <div class="caption">
                                         <h4>
-                                            <a href="Clientes?action=visualizarProduto&id=${produto.idProduto}">
+                                            <a href="verProduto.jsp">
                                                 ${produto.titulo}
                                             </a>
                                         </h4>
