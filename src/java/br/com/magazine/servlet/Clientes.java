@@ -6,10 +6,12 @@
 package br.com.magazine.servlet;
 
 import br.com.magazine.dao.ClienteDAO;
+import br.com.magazine.dao.GeneroDAO;
 import br.com.magazine.dao.ItemPedidoDAO;
 import br.com.magazine.dao.PedidoDAO;
 import br.com.magazine.dao.ProdutoDAO;
 import br.com.magazine.entidade.Cliente;
+import br.com.magazine.entidade.Genero;
 import br.com.magazine.entidade.Pedido;
 import br.com.magazine.entidade.Produto;
 import br.com.magazine.entidade.StatusPedido;
@@ -210,6 +212,23 @@ public class Clientes extends HttpServlet {
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/visualizarProduto.jsp");
                 rd.forward(request,response);
             }
+            if ("pesquisarProduto".equals(request.getParameter("action"))) {
+                GeneroDAO generoDAO = new GeneroDAO();
+                List<Genero> listaGeneros = generoDAO.listarGeneros();
+                request.setAttribute("listaGeneros", listaGeneros);
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/pesquisarProduto.jsp");
+                rd.forward(request,response);
+            }
+            if ("pesquisar".equals(request.getParameter("action"))) {
+                ProdutoDAO produtoDAO = new ProdutoDAO();
+                int id = Integer.parseInt(request.getParameter("genero"));
+                List<Produto> listaProdutos = produtoDAO.listarProdutoPorGenero(id);
+                request.setAttribute("listaProdutos", listaProdutos);
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
+                rd.forward(request,response);
+                return;
+            }
+            
             else{
                 ProdutoDAO produtoDAO = new ProdutoDAO();
                 

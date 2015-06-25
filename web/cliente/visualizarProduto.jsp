@@ -43,34 +43,47 @@
                     <div class="row">
                         <div class="col-md-offset-2">
                             <img src="${pageContext.request.contextPath}/Imagens/${produto.idImg}.jpg" style="width: 300px;height: 400px" class="media-object" alt="">
-                                <h4>
-                                    <a href="verProduto.jsp">
-                                        ${produto.titulo}
-                                    </a>
-                                </h4>
-                                Gênero: ${produto.genero.nome}<br/>
-                                Editora: ${produto.editora.nome}<br/>
-                                Autor: ${produto.autor}<br/>
-                                <h4 class="pull-left"><fmt:formatNumber value="${produto.preco}" minFractionDigits="2" type="currency"/></h4>
+                            <h4>
+                                <a href="verProduto.jsp">
+                                    ${produto.titulo}
+                                </a>
+                            </h4>
+                            Gênero: ${produto.genero.nome}<br/>
+                            Editora: ${produto.editora.nome}<br/>
+                            Autor: ${produto.autor}<br/>
+                            <h4 class="pull-left"><fmt:formatNumber value="${produto.preco}" minFractionDigits="2" type="currency"/></h4>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-1">
-                        <a href="../Carrinhos?action=addCarrinho&id=${produto.idProduto}">
-                            <button class="btn btn-default">
-                                Voltar
-                            </button>
-                        </a>
+
+                            <c:choose>
+                                <c:when test="${empty idproduto}">
+                                    <a href="./Clientes">
+                                        <button class="btn btn-default">
+                                            Voltar
+                                        </button>
+                                    </a>
+                                </c:when>
+                                <c:when test="${ idproduto}">
+                                    <a href="../Carrinhos?action=addCarrinho&id=${produto.idProduto}">
+                                        <button class="btn btn-default">
+                                            Voltar
+                                        </button>
+                                    </a>
+                                </c:when>
+
+                            </c:choose>
                         </div>
-                            <div class="col-md-2 col-md-offset-4">
-                                
-                        <a href="../Carrinhos?action=addCarrinho&id=${produto.idProduto}">
-                            <button class="btn btn-primary">
-                                Adicionar ao Carrinho
-                                <span class="glyphicon glyphicon-shopping-cart"></span>
-                            </button>
-                        </a>
-                            </div>
+                        <div class="col-md-2 col-md-offset-4">
+
+                            <a href="../Carrinhos?action=addCarrinho&id=${produto.idProduto}">
+                                <button class="btn btn-primary">
+                                    Adicionar ao Carrinho
+                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                </button>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
