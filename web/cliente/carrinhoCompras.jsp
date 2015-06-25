@@ -55,7 +55,11 @@
                                 <div class="qnt-count">
                                     <form class="form-horizontal" id="form" method="POST" action="Clientes?action=cadastrar" onsubmit="//return valida(this);">
                                         
-                                        <a class="incr-btn">-</a> <input type="text" class="form-control" value="${itemCarrinho.quantidade}" style="width: 50px; display: inline;"/> +
+                                        <a class="btn btn-default" href="../Carrinhos?action=diminuiQuantidade&id=${itemCarrinho.produto.idProduto}">
+                                            <span class="glyphicon glyphicon-minus"></span></a> 
+                                        <input type="text" class="form-control" value="${itemCarrinho.quantidade}" style="width: 50px; display: inline;"/> 
+                                        <a class="btn btn-default" href="../Carrinhos?action=aumentaQuantidade&id=${itemCarrinho.produto.idProduto}">
+                                            <span class="glyphicon glyphicon-plus"></span></a>
                                     </form>
                                 </div>
                             </td>

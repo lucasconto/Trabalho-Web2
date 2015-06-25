@@ -40,12 +40,12 @@ import java.util.List;
         
         
         //Listar
-//        List<Produto> listaProdutos = new ArrayList();
-//        ProdutoDAO produtoDAO = new ProdutoDAO();
-//        listaProdutos = produtoDAO.listarProduto();
-//        for(Produto teste : listaProdutos){
-//            System.out.println(teste.getTitulo());;
-//        }
+        List<Produto> listaProdutos = new ArrayList();
+        ProdutoDAO produtoDAO = new ProdutoDAO();
+        listaProdutos = produtoDAO.listarProduto();
+        for(Produto teste : listaProdutos){
+            System.out.println(teste.getTitulo());;
+        }
     
         
         
@@ -73,21 +73,9 @@ import java.util.List;
 //        produto.setIdProduto(1);
 //        ProdutoDAO produtoDAO = new ProdutoDAO();
 //        produtoDAO.removerProduto(produto);
-       List<Produto> listaProdutos = new ArrayList();
-       ProdutoDAO produtoDAO  = new ProdutoDAO();
-       listaProdutos = produtoDAO.listarProdutosMaisVendidos();
-        for(Produto teste : listaProdutos){
-            System.out.println(teste.getTitulo());;
-        }
-        
-        }
+
             
         
 }
-/**
- *
- * @author brunosella
- */
-
-    
-
+        
+        }

@@ -35,11 +35,11 @@ public class ClienteDAO {
     private final String stmtBuscarNomeCliente = "select * from Cliente where nome ilike ? and perfil = 1 and inativo=false order by nome";
     private final String stmtBuscarCPFCliente = "select * from Cliente where cpf ilike ? and perfil = 1 and inativo=false order by nome";
     private final String stmtBuscarEmailCliente = "select * from Cliente where email ilike ? and perfil = 1 and inativo=false order by nome";
-    
+
     private final String stmtBuscarNomeFuncionario = "select * from Cliente where nome ilike ? and perfil in (2,3) and inativo=false order by nome";
     private final String stmtBuscarCPFFuncionario = "select * from Cliente where cpf ilike ? and perfil in (2,3) and inativo=false order by nome";
     private final String stmtBuscarEmailFuncionario = "select * from Cliente where email ilike ? and perfil in (2,3) and inativo=false order by nome";
-    
+
     private final String stmtBuscarEmailExato = "select * from Cliente where email = ?";
 //    private final String stmtProcuraSobreNome = "select * from Cliente where sobrenome like ";
 //    private final String stmtProcuraCPF = "select * from Cliente where cpf like ";
@@ -243,31 +243,32 @@ public class ClienteDAO {
 //
 //    }
 //    
-    public List<Cliente> montaListaClientes(ResultSet rs) throws SQLException{
+    public List<Cliente> montaListaClientes(ResultSet rs) throws SQLException {
         List<Cliente> listaClientes = new ArrayList();
-            while (rs.next()) {
-                Cliente cliente = new Cliente();
-                cliente.setIdCliente(rs.getInt("idcliente"));
-                cliente.setNome(rs.getString("nome"));
-                cliente.setSexo(rs.getString("sexo"));
-                cliente.setCpf(rs.getString("cpf"));
-                Date nascimento = rs.getDate("nascimento");
-                cliente.setNascimento(nascimento);
-                cliente.setTelefone(rs.getString("telefone"));
-                cliente.setEmail(rs.getString("email"));
-                cliente.setSenha(rs.getString("senha"));
-                cliente.setCep(rs.getString("cep"));
-                cliente.setEndereco(rs.getString("endereco"));
-                cliente.setEndNumero(rs.getString("endnumero"));
-                cliente.setEndComplemento(rs.getString("endcomplemento"));
-                cliente.setBairro(rs.getString("bairro"));
-                cliente.setCidade(rs.getString("cidade"));
-                cliente.setEstado(rs.getString("estado"));
-                cliente.setPerfil(rs.getInt("perfil"));
-                listaClientes.add(cliente);
-            }
-            return listaClientes;
+        while (rs.next()) {
+            Cliente cliente = new Cliente();
+            cliente.setIdCliente(rs.getInt("idcliente"));
+            cliente.setNome(rs.getString("nome"));
+            cliente.setSexo(rs.getString("sexo"));
+            cliente.setCpf(rs.getString("cpf"));
+            Date nascimento = rs.getDate("nascimento");
+            cliente.setNascimento(nascimento);
+            cliente.setTelefone(rs.getString("telefone"));
+            cliente.setEmail(rs.getString("email"));
+            cliente.setSenha(rs.getString("senha"));
+            cliente.setCep(rs.getString("cep"));
+            cliente.setEndereco(rs.getString("endereco"));
+            cliente.setEndNumero(rs.getString("endnumero"));
+            cliente.setEndComplemento(rs.getString("endcomplemento"));
+            cliente.setBairro(rs.getString("bairro"));
+            cliente.setCidade(rs.getString("cidade"));
+            cliente.setEstado(rs.getString("estado"));
+            cliente.setPerfil(rs.getInt("perfil"));
+            listaClientes.add(cliente);
+        }
+        return listaClientes;
     }
+
     public List<Cliente> buscarFuncionarioNome(String nome) throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
@@ -275,9 +276,9 @@ public class ClienteDAO {
 
         try {
             con = ConnectionFactory.getConnection();
-            nome = "%"+nome+"%";
+            nome = "%" + nome + "%";
             stmt = con.prepareStatement(stmtBuscarNomeFuncionario);
-            stmt.setString(1,nome);
+            stmt.setString(1, nome);
             rs = stmt.executeQuery();
             return montaListaClientes(rs);
 
@@ -309,7 +310,7 @@ public class ClienteDAO {
 
         try {
             con = ConnectionFactory.getConnection();
-            cpf = "%"+cpf+"%";
+            cpf = "%" + cpf + "%";
             stmt = con.prepareStatement(stmtBuscarCPFFuncionario);
             stmt.setString(1, cpf);
             rs = stmt.executeQuery();
@@ -342,9 +343,9 @@ public class ClienteDAO {
 
         try {
             con = ConnectionFactory.getConnection();
-            email = "%"+email+"%";
+            email = "%" + email + "%";
             stmt = con.prepareStatement(stmtBuscarEmailFuncionario);
-            stmt.setString(1,email);
+            stmt.setString(1, email);
             rs = stmt.executeQuery();
             return montaListaClientes(rs);
         } catch (SQLException e) {
@@ -367,6 +368,7 @@ public class ClienteDAO {
             }
         }
     }
+
     public List<Cliente> buscarClienteNome(String nome) throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
@@ -374,9 +376,9 @@ public class ClienteDAO {
 
         try {
             con = ConnectionFactory.getConnection();
-            nome = "%"+nome+"%";
+            nome = "%" + nome + "%";
             stmt = con.prepareStatement(stmtBuscarNomeCliente);
-            stmt.setString(1,nome);
+            stmt.setString(1, nome);
             rs = stmt.executeQuery();
             return montaListaClientes(rs);
 
@@ -408,7 +410,7 @@ public class ClienteDAO {
 
         try {
             con = ConnectionFactory.getConnection();
-            cpf = "%"+cpf+"%";
+            cpf = "%" + cpf + "%";
             stmt = con.prepareStatement(stmtBuscarCPFCliente);
             stmt.setString(1, cpf);
             rs = stmt.executeQuery();
@@ -441,9 +443,9 @@ public class ClienteDAO {
 
         try {
             con = ConnectionFactory.getConnection();
-            email = "%"+email+"%";
+            email = "%" + email + "%";
             stmt = con.prepareStatement(stmtBuscarEmailCliente);
-            stmt.setString(1,email);
+            stmt.setString(1, email);
             rs = stmt.executeQuery();
             return montaListaClientes(rs);
         } catch (SQLException e) {
@@ -467,8 +469,7 @@ public class ClienteDAO {
         }
     }
 
-    
-public Cliente buscarClientePorEmail(String email) throws SQLException, ClassNotFoundException {
+    public Cliente buscarClientePorEmail(String email) throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -479,10 +480,7 @@ public Cliente buscarClientePorEmail(String email) throws SQLException, ClassNot
             stmt.setString(1, email);
             rs = stmt.executeQuery();
             // query vazia
-            if (!rs.next()) {
-                return null;
-            } else {
-                rs.next();
+            if (rs.next()) {
                 Cliente cliente = new Cliente();
                 cliente.setIdCliente(rs.getInt("idcliente"));
                 cliente.setNome(rs.getString("nome"));
@@ -500,9 +498,10 @@ public Cliente buscarClientePorEmail(String email) throws SQLException, ClassNot
                 cliente.setBairro(rs.getString("bairro"));
                 cliente.setCidade(rs.getString("cidade"));
                 cliente.setEstado(rs.getString("estado"));
-                cliente.setInativo(rs.getBoolean("inativo"));
-
+                cliente.setPerfil(rs.getInt("perfil"));
                 return cliente;
+            } else {
+                return null;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -524,7 +523,6 @@ public Cliente buscarClientePorEmail(String email) throws SQLException, ClassNot
             }
         }
     }
-    
 
 //    
 //    

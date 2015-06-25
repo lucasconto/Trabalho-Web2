@@ -48,39 +48,49 @@ public class Login extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             if ("login".equals(request.getParameter("action"))) {
+
+                String email = request.getParameter("email");
+                String senha = request.getParameter("senha");
+//                if (email.isEmpty() || senha.isEmpty()) {
+//                    request.setAttribute("mensagem", "Informe usuário e senha válidos");
+//                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/comum/login.jsp");
+//                    rd.forward(request, response);
+//                }
+
                 ClienteDAO clienteDAO = new ClienteDAO();
                 Cliente cliente = new Cliente();
-                cliente = clienteDAO.buscarClientePorEmail(request.getParameter("email"));
+                cliente = clienteDAO.buscarClientePorEmail(email);
                 if (cliente == null) {
                     //erro, não achou o cliente no banco
-                    request.setAttribute("mensagem", "Erro: Cliente não encontrado na base de dados.");
+                    request.setAttribute("mensagem", "Email Inválido! Cliente não encontrado na base de dados.");
                     RequestDispatcher rd = getServletContext().getRequestDispatcher("/comum/login.jsp");
                     rd.forward(request, response);
                 } else {
-                    String senha = request.getParameter("senha");
-                    if (senha.equals(cliente.getSenha())) {
-                        HttpSession session = request.getSession();
+                    String senhaCliente = cliente.getSenha();
+                    if (!senhaCliente.isEmpty() && senha.equals(senhaCliente)) {
+                        HttpSession session = request.getSession(true);
+                        session.setAttribute("cliente", cliente);
                         session.setAttribute("nome", cliente.getNome());
                         session.setAttribute("idcliente", cliente.getIdCliente());
                         session.setAttribute("logado", true);
+                        response.sendRedirect("../cliente/Clientes");
+//                        RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
+//                        rd.forward(request, response);
                     } else {
                         //erro: senha invalida
-                        request.setAttribute("mensagem", "Erro: Senha inválida.");
+                        request.setAttribute("mensagem", "Senha inválida!");
                         RequestDispatcher rd = getServletContext().getRequestDispatcher("/comum/login.jsp");
                         rd.forward(request, response);
                     }
                 }
-
             }
             if ("logout".equals(request.getParameter("action"))) {
                 HttpSession session = request.getSession(false);
                 if (session != null) {
                     session.invalidate();
                 }
-                RequestDispatcher rd = getServletContext().
-                        getRequestDispatcher("/index.jsp");
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
                 rd.forward(request, response);
-
             }
 
         }
