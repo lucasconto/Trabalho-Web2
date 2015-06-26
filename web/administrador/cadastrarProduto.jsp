@@ -78,8 +78,9 @@
                         <div class="col-sm-8">
                             <select name="genero" id="categoria" class="form-control">
                                 <option>Selecione</option>
-                                <option value="1">Categoria 1</option>
-                                <option value="2">Categoria 2</option>
+                                <c:forEach items="${listaGeneros}" var="genero">
+                                <option value="${genero.idGenero}"> ${genero.nome}</option>
+                                </c:forEach>
                             </select>
                         </div>
                     </div> 

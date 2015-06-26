@@ -87,14 +87,14 @@ public class Produtos extends HttpServlet{
                 List<Editora> listaEditoras = new ArrayList();
                 EditoraDAO editoraDAO = new EditoraDAO();
                 listaEditoras = editoraDAO.listarEditoras();
-                request.setAttribute("editoraLista", listaEditoras);
+                request.setAttribute("listaEditoras", listaEditoras);
                 
                 
                 List<Genero> listaGeneros = new ArrayList();
                 GeneroDAO generoDAO = new GeneroDAO();
                 listaGeneros = generoDAO.listarGeneros();
                 
-                request.setAttribute("generoLista", listaGeneros);
+                request.setAttribute("listaGeneros", listaGeneros);
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/administrador/cadastrarProduto.jsp");
                 rd.forward(request,response);
                 
