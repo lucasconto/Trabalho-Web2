@@ -48,7 +48,7 @@
                 <jsp:include page="menuAdministrador.jsp"/>
             <div class=" col-sm-6">
                 <h1>Cadastro de Produto</h1>
-                <form class="form-horizontal" id="form" method="POST" action="../Produtos?action=cadastrar" onsubmit="//return valida(this);"  enctype="multipart/form-data">
+                <form class="form-horizontal" id="form" method="POST" action="./Produtos?action=cadastrar" onsubmit="//return valida(this);"  enctype="multipart/form-data">
                     <div class="form-group">
                         <label  class="col-sm-4 control-label">Título</label>
                         <div class="col-sm-8">

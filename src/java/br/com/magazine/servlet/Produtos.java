@@ -76,7 +76,7 @@ public class Produtos extends HttpServlet{
                     Files.copy(input, file.toPath());
                 }
                 
-                response.sendRedirect("./administrador/cadastrarProduto.jsp");
+                response.sendRedirect("./cadastrarProduto.jsp");
                 return;
     
                 
