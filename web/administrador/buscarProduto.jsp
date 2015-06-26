@@ -46,8 +46,8 @@
                            <div class="col-md-2">
                             <select name="escolha" class="form-control">
                                 <option value="titulo">Titulo</option>
-                                <option value="editora">CPF</option>
-                                <option value="genero">Email</option>
+                                <option value="editora">Editora</option>
+                                <option value="genero">Genero</option>
                             </select>
                         </div>
                             <div class="col-md-7">

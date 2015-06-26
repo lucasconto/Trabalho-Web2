@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,17 +56,17 @@ public class Clientes extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             if ("cadastrar".equals(request.getParameter("action"))) {
                 Cliente cliente = new Cliente();
-                
+
                 cliente.setNome(request.getParameter("nome"));
                 cliente.setSexo(request.getParameter("sexo"));
                 cliente.setCpf(request.getParameter("cpf"));
-                
+
                 String nascimentoStr = request.getParameter("nascimento");
                 DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                 java.util.Date nascimentoUtil = format.parse(nascimentoStr);
                 java.sql.Date nascimentoSql = new java.sql.Date(nascimentoUtil.getTime());
                 cliente.setNascimento(nascimentoSql);
-                
+
                 cliente.setTelefone(request.getParameter("telefone"));
                 cliente.setEmail(request.getParameter("email"));
                 cliente.setSenha(request.getParameter("senha"));
@@ -76,10 +77,10 @@ public class Clientes extends HttpServlet {
                 cliente.setBairro(request.getParameter("bairro"));
                 cliente.setCidade(request.getParameter("cidade"));
                 cliente.setEstado(request.getParameter("estado"));
-                
+
                 ClienteDAO clienteDAO = new ClienteDAO();
                 clienteDAO.cadastrarCliente(cliente);
-            } 
+            }
             if ("alterarPerfil".equals(request.getParameter("action"))) {
                 ClienteDAO clienteDAO = new ClienteDAO();
                 Cliente clienteSessao = new Cliente();
@@ -89,22 +90,22 @@ public class Clientes extends HttpServlet {
 //                response.sendRedirect("./alterarCliente.jsp");
 //                return;
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/alterarCliente.jsp");
-                rd.forward(request,response);
+                rd.forward(request, response);
             }
             if ("alterar".equals(request.getParameter("action"))) {
                 Cliente cliente = new Cliente();
-                
+
                 cliente.setIdCliente(Integer.parseInt(request.getParameter("idCliente")));
                 cliente.setNome(request.getParameter("nome"));
                 cliente.setSexo(request.getParameter("sexo"));
                 cliente.setCpf(request.getParameter("cpf"));
-                
+
                 String nascimentoStr = request.getParameter("nascimento");
                 DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                 java.util.Date nascimentoUtil = format.parse(nascimentoStr);
                 java.sql.Date nascimentoSql = new java.sql.Date(nascimentoUtil.getTime());
                 cliente.setNascimento(nascimentoSql);
-                
+
                 cliente.setTelefone(request.getParameter("telefone"));
                 cliente.setEmail(request.getParameter("email"));
                 cliente.setSenha(request.getParameter("senha"));
@@ -119,7 +120,8 @@ public class Clientes extends HttpServlet {
                 cliente.setPerfil(1);
                 ClienteDAO clienteDAO = new ClienteDAO();
                 clienteDAO.atualizarCliente(cliente);
-            }if("excluir".equals(request.getParameter("action"))) {
+            }
+            if ("excluir".equals(request.getParameter("action"))) {
                 Cliente cliente = new Cliente();
                 ClienteDAO clienteDAO = new ClienteDAO();
                 cliente.setIdCliente(Integer.parseInt(request.getParameter("cliente-id")));
@@ -132,52 +134,52 @@ public class Clientes extends HttpServlet {
                 request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
                 request.setAttribute("ordem", "AZ");
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
-                rd.forward(request,response);
+                rd.forward(request, response);
             }
             if ("nomeZA".equals(request.getParameter("action"))) {
                 ProdutoDAO produtoDAO = new ProdutoDAO();
-                
+
                 List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidosZA();
                 request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
                 request.setAttribute("ordem", "ZA");
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
-                rd.forward(request,response);
+                rd.forward(request, response);
             }
             if ("Asc".equals(request.getParameter("action"))) {
                 ProdutoDAO produtoDAO = new ProdutoDAO();
-                
+
                 List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidosAsc();
                 request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
                 request.setAttribute("ordem", "Asc");
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
-                rd.forward(request,response);
+                rd.forward(request, response);
             }
             if ("Desc".equals(request.getParameter("action"))) {
                 ProdutoDAO produtoDAO = new ProdutoDAO();
-                
+
                 List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidosDesc();
                 request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
                 request.setAttribute("ordem", "Desc");
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
-                rd.forward(request,response);
+                rd.forward(request, response);
             }
             if ("pedidos".equals(request.getParameter("action"))) {
                 Cliente cliente = new Cliente();
                 cliente.setIdCliente(3);
-                
+
                 PedidoDAO pedidoDAO = new PedidoDAO();
                 List<Pedido> listaPedidosAbertos = pedidoDAO.listaPedidosAbertosCliente(cliente);
                 List<Pedido> listaPedidosFinalizados = pedidoDAO.listaPedidosFinalizadosCliente(cliente);
-                
+
                 request.setAttribute("listaPedidosAbertos", listaPedidosAbertos);
                 request.setAttribute("listaPedidosFinalizados", listaPedidosFinalizados);
-                
+
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/visualizarCompra.jsp");
-                rd.forward(request,response);
+                rd.forward(request, response);
                 return;
             }
             if ("confirmarRecebimento".equals(request.getParameter("action"))) {
-                
+
                 Pedido pedido = new Pedido();
                 pedido.setIdPedido(Integer.parseInt(request.getParameter("id")));
                 StatusPedido statusPedido = new StatusPedido();
@@ -185,13 +187,12 @@ public class Clientes extends HttpServlet {
                 pedido.setStatusPedido(statusPedido);
                 PedidoDAO pedidoDAO = new PedidoDAO();
                 pedidoDAO.atualizarStatusPedido(pedido);
-                
-                
+
                 response.sendRedirect("./Clientes?action=pedidos");
                 return;
             }
             if ("cancelar".equals(request.getParameter("action"))) {
-                
+
                 Pedido pedido = new Pedido();
                 pedido.setIdPedido(Integer.parseInt(request.getParameter("id")));
                 StatusPedido statusPedido = new StatusPedido();
@@ -199,8 +200,7 @@ public class Clientes extends HttpServlet {
                 pedido.setStatusPedido(statusPedido);
                 PedidoDAO pedidoDAO = new PedidoDAO();
                 pedidoDAO.atualizarStatusPedido(pedido);
-                
-                
+
                 response.sendRedirect("./Clientes?action=pedidos");
                 return;
             }
@@ -210,32 +210,54 @@ public class Clientes extends HttpServlet {
                 Produto produto = produtoDAO.listarProdutoPorId(id);
                 request.setAttribute("produto", produto);
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/visualizarProduto.jsp");
-                rd.forward(request,response);
+                rd.forward(request, response);
             }
             if ("pesquisarProduto".equals(request.getParameter("action"))) {
                 GeneroDAO generoDAO = new GeneroDAO();
                 List<Genero> listaGeneros = generoDAO.listarGeneros();
                 request.setAttribute("listaGeneros", listaGeneros);
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/pesquisarProduto.jsp");
-                rd.forward(request,response);
-            }
-            if ("pesquisar".equals(request.getParameter("action"))) {
-                ProdutoDAO produtoDAO = new ProdutoDAO();
-                int id = Integer.parseInt(request.getParameter("genero"));
-                List<Produto> listaProdutos = produtoDAO.listarProdutoPorGenero(id);
-                request.setAttribute("listaProdutos", listaProdutos);
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
-                rd.forward(request,response);
+                rd.forward(request, response);
                 return;
             }
-            
-            else{
+            if ("pesquisar".equals(request.getParameter("action"))) {
+                GeneroDAO generoDAO = new GeneroDAO();
+                List<Genero> listaGeneros = generoDAO.listarGeneros();
+                request.setAttribute("listaGeneros", listaGeneros);
                 ProdutoDAO produtoDAO = new ProdutoDAO();
-                
+                if (request.getParameter("genero") != null) {
+                    int id = Integer.parseInt(request.getParameter("genero"));
+                    List<Produto> listaProdutos = produtoDAO.listarProdutoPorGenero(id);
+                    request.setAttribute("id", id);
+                    request.setAttribute("listaProdutos", listaProdutos);
+                }else if(request.getParameter("str")!= null){
+                    List<Produto> listaProdutos =new ArrayList();
+                    String escolha = request.getParameter("escolha");
+                    String str = request.getParameter("str");
+                    if("titulo".equals(escolha)){
+                        listaProdutos = produtoDAO.buscarTituloProduto(str);
+                    } else if("genero".equals(escolha)){
+                        listaProdutos = produtoDAO.buscarGeneroProduto(str);
+                    } else if("autor".equals(escolha)){
+                        listaProdutos = produtoDAO.buscarAutorProduto(str);
+                    }
+                    request.setAttribute("escolha", escolha);
+                    request.setAttribute("str", str);
+                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/pesquisarProduto.jsp");
+                    rd.forward(request,response);
+                    return;
+                }
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/pesquisarProduto.jsp");
+                rd.forward(request, response);
+                return;
+            } else {
+                ProdutoDAO produtoDAO = new ProdutoDAO();
+
                 List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidos();
                 request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
-                rd.forward(request,response);
+                rd.forward(request, response);
+                return;
             }
         }
     }

@@ -5,7 +5,7 @@
     <div class="list-group">
 
         <a href="index.jsp" class="list-group-item">Inicio</a>
-        <a href="pesquisarProdutos.jsp" class="list-group-item">Pesquisar Produtos</a>
+        <a href="./Clientes?action=pesquisarProduto" class="list-group-item">Pesquisar Produtos</a>
         <a href="visualizarCompra.jsp" class="list-group-item">Visualizar Compras</a>
         <a href="" data-toggle="modal" data-target="#exampleModal" data-idcliente="${cliente.idCliente}" class="list-group-item">Excluir Conta</a>
 

@@ -23,22 +23,20 @@ import java.util.List;
 public class ProdutoDAO {
 
     //sem imagem
-
     private final String stmtCadastraProduto = "insert into produto (titulo, autor, fkeditora, preco, fkgenero, inativo) values (?,?,?,?,?,false)";
     //private final String stmtCadastraProduto = "insert into produto (titulo, autor, editora, categoria, preco, genero, idImg) values (?,?,?,?,?,?)";
     private final String stmtAtualizaProduto = "update produto set titulo = ?, autor = ?, fkeditora = ?, preco = ?, fkgenero = ? where idProduto = ?";
     private final String stmtRemoveProduto = "update produto set inativo = true where idProduto = ?";
-    private final String stmtListaProdutosPorGenero = "select * from(select itempedido.idproduto,sum(quantidade) as soma, preco, titulo, autor, idimg, fkgenero, fkeditora, genero.nome as generonome, editora.nome as editoranome from itempedido left join produto on (produto.idproduto = itempedido.idproduto) inner join genero on (produto.fkgenero = genero.idgenero) inner join editora on (produto.fkeditora = editora.ideditora) where produto.inativo = false and idgenero = ? group by itempedido.idproduto, autor, produto.titulo,preco,idimg,fkgenero, fkeditora,generonome, editoranome order by soma desc) as tabela order by titulo asc";
+    private final String stmtListaProdutosPorGenero = "select idproduto, idgenero, ideditora, idimg, titulo, editora.nome as nomeEditora, genero.nome as nomeGenero, preco, autor from produto join genero on genero.idgenero = produto.fkgenero join editora on editora.ideditora = produto.fkeditora where idgenero = ? order by titulo asc";
     private final String stmtListaProduto = "select * from produto";
     private final String stmtListaProdutosMaisVendidos = "select itempedido.idproduto,sum(quantidade) as soma, preco, titulo, autor, idimg, fkgenero, fkeditora, genero.nome as generonome, editora.nome as editoranome from itempedido left join produto on (produto.idproduto = itempedido.idproduto) inner join genero on (produto.fkgenero = genero.idgenero) inner join editora on (produto.fkeditora = editora.ideditora) where produto.inativo = false group by itempedido.idproduto, autor, produto.titulo,preco,idimg,fkgenero, fkeditora,generonome, editoranome order by soma desc limit 12";
     private final String stmtListaProdutosMaisVendidosAZ = "select * from(select itempedido.idproduto,sum(quantidade) as soma, preco, titulo, autor, idimg, fkgenero, fkeditora, genero.nome as generonome, editora.nome as editoranome from itempedido left join produto on (produto.idproduto = itempedido.idproduto) inner join genero on (produto.fkgenero = genero.idgenero) inner join editora on (produto.fkeditora = editora.ideditora) where produto.inativo = false group by itempedido.idproduto, autor, produto.titulo,preco,idimg,fkgenero, fkeditora,generonome, editoranome order by soma desc limit 12) as tabela order by titulo asc";
     private final String stmtListaProdutosMaisVendidosZA = "select * from(select itempedido.idproduto,sum(quantidade) as soma, preco, titulo, autor, idimg, fkgenero, fkeditora, genero.nome as generonome, editora.nome as editoranome from itempedido left join produto on (produto.idproduto = itempedido.idproduto) inner join genero on (produto.fkgenero = genero.idgenero) inner join editora on (produto.fkeditora = editora.ideditora) where produto.inativo = false group by itempedido.idproduto, autor, produto.titulo,preco,idimg,fkgenero, fkeditora,generonome, editoranome order by soma desc limit 12) as tabela order by titulo desc";
     private final String stmtListaProdutosMaisVendidosAsc = "select * from(select itempedido.idproduto,sum(quantidade) as soma, preco, titulo, autor, idimg, fkgenero, fkeditora, genero.nome as generonome, editora.nome as editoranome from itempedido left join produto on (produto.idproduto = itempedido.idproduto) inner join genero on (produto.fkgenero = genero.idgenero) inner join editora on (produto.fkeditora = editora.ideditora) where produto.inativo = false group by itempedido.idproduto, autor, produto.titulo,preco,idimg,fkgenero, fkeditora,generonome, editoranome order by soma desc limit 12) as tabela order by preco asc";
     private final String stmtListaProdutosMaisVendidosDesc = "select * from(select itempedido.idproduto,sum(quantidade) as soma, preco, titulo, autor, idimg, fkgenero, fkeditora, genero.nome as generonome, editora.nome as editoranome from itempedido left join produto on (produto.idproduto = itempedido.idproduto) inner join genero on (produto.fkgenero = genero.idgenero) inner join editora on (produto.fkeditora = editora.ideditora) where produto.inativo = false group by itempedido.idproduto, autor, produto.titulo,preco,idimg,fkgenero, fkeditora,generonome, editoranome order by soma desc limit 12) as tabela order by preco desc";
-    private final String stmtBuscarTituloProduto = "select idproduto, idgenero, ideditora, idimg, titulo, editora.nome as nomeEditora, genero.nome as nomeGenero, preco, autor from produto join genero on genero.idgenero = produto.fkgenero join editora on editora.ideditora = produto.fkeditora where titulo ilike ? order by titulo";
-    private final String stmtBuscarGeneroProduto = "select * from Cliente where cpf ilike ? and perfil = 1 and inativo=false order by nome";
-    private final String stmtBuscarEditoraCliente = "select * from Cliente where email ilike ? and perfil = 1 and inativo=false order by nome";
-
+    private final String stmtBuscarTituloProduto = "select idproduto, idgenero, ideditora, idimg, titulo, editora.nome as nomeEditora, genero.nome as nomeGenero, preco, autor from produto join genero on genero.idgenero = produto.fkgenero join editora on editora.ideditora = produto.fkeditora where titulo ilike ? order by titulo asc";
+    private final String stmtBuscarGeneroProduto = "select idproduto, idgenero, ideditora, idimg, titulo, editora.nome as nomeEditora, genero.nome as nomeGenero, preco, autor from produto join genero on genero.idgenero = produto.fkgenero join editora on editora.ideditora = produto.fkeditora where generoNome ilike ? order by titulo asc";
+    private final String stmtBuscarAutorProduto = "select idproduto, idgenero, ideditora, idimg, titulo, editora.nome as nomeEditora, genero.nome as nomeGenero, preco, autor from produto join genero on genero.idgenero = produto.fkgenero join editora on editora.ideditora = produto.fkeditora where autor ilike ? order by titulo asc";
 
     public int cadastrarProduto(Produto p) throws ClassNotFoundException {
         Connection con = null;
@@ -156,17 +154,17 @@ public class ProdutoDAO {
             produto.setAutor(rs.getString("autor"));
             produto.setPreco(rs.getDouble("preco"));
             produto.setidImg(rs.getInt("idImg"));
-            
+
             Genero genero = new Genero();
             genero.setIdGenero(rs.getInt("idGenero"));
             genero.setNome(rs.getString("nomeGenero"));
             produto.setGenero(genero);
-            
+
             Editora editora = new Editora();
             editora.setIdEditora(rs.getInt("idEditora"));
             editora.setNome(rs.getString("nomeEditora"));
             produto.setEditora(editora);
-            
+
             return produto;
 
         } catch (SQLException e) {
@@ -230,8 +228,7 @@ public class ProdutoDAO {
         }
 
     }
-    
-    
+
     public List<Produto> listarProdutoPorGenero(int idGenero) throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
@@ -246,6 +243,75 @@ public class ProdutoDAO {
                 Produto produto = new Produto();
                 produto.setIdProduto(rs.getInt("idProduto"));
                 produto.setTitulo(rs.getString("titulo"));
+                produto.setAutor(rs.getString("autor"));
+                produto.setPreco(rs.getDouble("preco"));
+                produto.setidImg(rs.getInt("idImg"));
+
+                Genero genero = new Genero();
+                genero.setIdGenero(rs.getInt("idGenero"));
+                genero.setNome(rs.getString("nomeGenero"));
+                produto.setGenero(genero);
+
+                Editora editora = new Editora();
+                editora.setIdEditora(rs.getInt("idEditora"));
+                editora.setNome(rs.getString("nomeEditora"));
+                produto.setEditora(editora);
+
+                listaProdutos.add(produto);
+            }
+            return listaProdutos;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                rs.close();
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar result set.Erro: " + ex.getMessage());
+            }
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar statement. Ex = " + ex.getMessage());
+            }
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar a conexao. Ex = " + ex.getMessage());
+            }
+        }
+
+    }
+    
+    public List<Produto> buscarTituloProduto(String titulo) throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            con = ConnectionFactory.getConnection();
+            titulo = "%" + titulo + "%";
+            stmt = con.prepareStatement(stmtBuscarTituloProduto);
+            stmt.setString(1, titulo);
+            rs = stmt.executeQuery();
+            List<Produto> listaProdutos = new ArrayList();
+            while (rs.next()) {
+                Produto produto = new Produto();
+                produto.setIdProduto(rs.getInt("idProduto"));
+                produto.setTitulo(rs.getString("titulo"));
+                produto.setAutor(rs.getString("autor"));
+                produto.setPreco(rs.getDouble("preco"));
+                produto.setidImg(rs.getInt("idImg"));
+
+                Genero genero = new Genero();
+                genero.setIdGenero(rs.getInt("idGenero"));
+                genero.setNome(rs.getString("nomeGenero"));
+                produto.setGenero(genero);
+
+                Editora editora = new Editora();
+                editora.setIdEditora(rs.getInt("idEditora"));
+                editora.setNome(rs.getString("nomeEditora"));
+                produto.setEditora(editora);
+
                 listaProdutos.add(produto);
             }
             return listaProdutos;
@@ -325,7 +391,7 @@ public class ProdutoDAO {
         }
 
     }
-    
+
     public List<Produto> listarProdutosMaisVendidosAZ() throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
@@ -379,7 +445,7 @@ public class ProdutoDAO {
         }
 
     }
-    
+
     public List<Produto> listarProdutosMaisVendidosZA() throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
@@ -433,6 +499,7 @@ public class ProdutoDAO {
         }
 
     }
+
     public List<Produto> listarProdutosMaisVendidosAsc() throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
@@ -486,6 +553,7 @@ public class ProdutoDAO {
         }
 
     }
+
     public List<Produto> listarProdutosMaisVendidosDesc() throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
