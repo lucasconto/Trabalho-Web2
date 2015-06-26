@@ -1,6 +1,7 @@
 package br.com.magazine.servlet;
 
 import br.com.magazine.dao.EditoraDAO;
+import br.com.magazine.dao.GeneroDAO;
 import br.com.magazine.dao.ProdutoDAO;
 import br.com.magazine.entidade.Editora;
 import br.com.magazine.entidade.Genero;
@@ -26,6 +27,7 @@ import javax.servlet.http.Part;
 
 import java.sql.*;
 import java.util.*;
+import javax.servlet.RequestDispatcher;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.util.*;
 import net.sf.jasperreports.view.JasperViewer;
@@ -40,12 +42,12 @@ import net.sf.jasperreports.view.JasperViewer;
  *
  * @author Anonymous-pc
  */
-@WebServlet(name = "Produtos", urlPatterns = {"/Produtos"})
+@WebServlet(name = "Produtos", urlPatterns = {"/administrador/Produtos"})
 @MultipartConfig
 public class Produtos extends HttpServlet{
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException, ParseException, ClassNotFoundException {
+        throws ServletException, IOException, ParseException, ClassNotFoundException, SQLException {
     response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             if ("cadastrar".equals(request.getParameter("action"))) {
@@ -54,67 +56,92 @@ public class Produtos extends HttpServlet{
                 ProdutoDAO dao = new ProdutoDAO();
                 Produto produto = new Produto();
                 Genero genero = new Genero();
-                genero.setIdGenero(Integer.parseInt(request.getParameter("genero")));
-                produto.setGenero(genero);
                 Editora editora = new Editora();
+                
+                produto.setTitulo(request.getParameter("titulo"));
+                produto.setAutor(request.getParameter("autor"));
                 editora.setIdEditora(Integer.parseInt(request.getParameter("editora")));
                 produto.setEditora(editora);
-                produto.setTitulo("teste");            
-               
-                             
-//                ----Salvando em um diretorio no servidor----
-                String nomeArquivo = dao.cadastrarProduto(produto)+ ".jpg";           
-                File homedir = new File(System.getProperty("user.home"));
-                File file = new File(homedir+"\\teste", nomeArquivo); 
-                
-                //----Salvando no projeto do servidor--------
-//                String nomeArquivo = dao.cadastrarProduto(produto)+ ".jpg";     
-//                String caminho = request.getServletContext().getRealPath("");
-//                String caminhoSalvar = caminho + File.separator + "imagemLivros";
-//                File uploads = new File("/imagemLivros");
-//                File file = new File(caminhoSalvar, nomeArquivo); 
-                
+                produto.setPreco(Double.parseDouble(request.getParameter("preco")));
+                genero.setIdGenero(Integer.parseInt(request.getParameter("genero")));  
+                produto.setGenero(genero);
 
+//                ----Salvando em um diretorio no servidor----
+                String nomeArquivo = dao.cadastrarProduto(produto)+ ".jpg"; 
+                File homedir = new File(System.getProperty("user.home"));
+                File file = new File(homedir+"/teste", nomeArquivo); 
                 
-                
-                
-                
+               
                 try (InputStream input = filePart.getInputStream()) {  // How to obtain part is answered in http://stackoverflow.com/a/2424824
                     Files.copy(input, file.toPath());
                 }
                 
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet Produtos</title>");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h1>Servlet Produtos at " + request.getContextPath() + "</h1>");
-                out.println("</body>");
-                out.println("</html>");
-              //  Produto produto = new Produto();
-              //  Genero genero = new Genero();
-//                Editora editora = new Editora();
-//                EditoraDAO editoraDAO = new EditoraDAO();
-//                editora = editoraDAO.buscarIdEditora(editora);
-//                
-//                editora.setNome(request.getParameter("editora"));
-//                genero.setNome(request.getParameter("genero"));
-                
-
-                produto.setTitulo(request.getParameter("titulo"));
-                produto.setAutor(request.getParameter("autor"));
-//                produto.setEditora(editora);
-                produto.setGenero(genero);
-                produto.setPreco(Double.parseDouble(request.getParameter("preco")));
-                
-               
-                //sem imagem
-                //produto.setidImg(Integer.parseInt(request.getParameter("idImg")));                
-                
+                response.sendRedirect("./administrador/cadastrarProduto.jsp");
+                return;
+    
                 
       
             }
+            
+                if ("cadastrarProduto".equals(request.getParameter("action"))) {
+                List<Editora> listaEditoras = new ArrayList();
+                EditoraDAO editoraDAO = new EditoraDAO();
+                listaEditoras = editoraDAO.listarEditoras();
+                request.setAttribute("editoraLista", listaEditoras);
+                
+                
+                List<Genero> listaGeneros = new ArrayList();
+                GeneroDAO generoDAO = new GeneroDAO();
+                listaGeneros = generoDAO.listarGeneros();
+                
+                request.setAttribute("generoLista", listaGeneros);
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/administrador/cadastrarProduto.jsp");
+                rd.forward(request,response);
+                
+                
+                }
+            
+            
+            if ("buscarp".equals(request.getParameter("action"))) {
+                List<Produto> listaProdutos = new ArrayList();
+                ProdutoDAO produtoDAO = new ProdutoDAO();
+                String escolha = request.getParameter("escolha");
+                String str = request.getParameter("str");
+                   
+                if("titulo".equals(escolha)){
+                    out.println(str);
+         //           listaProdutos = produtoDAO.listarProdutoPorNome(str);
+
+                
+                }
+                request.setAttribute("listaProdutos", listaProdutos);
+                request.setAttribute("escolha", escolha);
+                request.setAttribute("str", str);
+              //  RequestDispatcher rd = getServletContext().getRequestDispatcher("/administrador/listarProduto.jsp");
+             //   rd.forward(request,response);
+            
+            }
+            
+            if ("buscarpp".equals(request.getParameter("action"))) {
+                List<Produto> listaProdutos = new ArrayList();
+                ProdutoDAO produtoDAO = new ProdutoDAO();
+                String escolha = request.getParameter("escolha");
+                String str = request.getParameter("str");
+                   
+                if("titulo".equals(escolha)){
+                    out.println(str);
+               //     listaProdutos = produtoDAO.listarProdutoPorNome(str);
+
+                
+                }
+                request.setAttribute("listaProdutos", listaProdutos);
+                request.setAttribute("escolha", escolha);
+                request.setAttribute("str", str);
+           //     RequestDispatcher rd = getServletContext().getRequestDispatcher("/administrador/visualizarProduto.jsp");
+            //    rd.forward(request,response);
+            
+            }
+            
         }
     }
     
@@ -125,6 +152,8 @@ public class Produtos extends HttpServlet{
             throws ServletException, IOException {
         try {
             processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(Produto.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
             Logger.getLogger(Produto.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -137,6 +166,8 @@ public class Produtos extends HttpServlet{
             throws ServletException, IOException {
         try {
             processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(Produto.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
             Logger.getLogger(Produto.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

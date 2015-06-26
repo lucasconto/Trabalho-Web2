@@ -56,13 +56,25 @@ public class TesteClienteDAO {
         
         
 //        Listar por nome
-        List<Cliente> listaClientes = new ArrayList();
-        ClienteDAO clienteDAO = new ClienteDAO();
-        listaClientes = clienteDAO.buscarFuncionarioNome("R");
+     //   List<Cliente> listaClientes = new ArrayList();
+//        ClienteDAO clienteDAO = new ClienteDAO();
+
+//        listaClientes = clienteDAO.buscarFuncionarioNome("R");
 //        listaClientes = clienteDAO.buscarClienteCPF("8");
 //        listaClientes = clienteDAO.buscarFuncionarioEmail("5");
-         for(Cliente teste : listaClientes){
-            System.out.println(teste.getNome());
+        ClienteDAO clienteDAO = new ClienteDAO();
+        Cliente cliente = new Cliente();
+        cliente.setIdCliente(1);
+        int idUltimoCliente = cliente.getIdCliente();
+ //       Cliente cliente = clienteDAO.buscarClienteId(i);
+         
+         for(int i = 0 ;i < 31 ; i++){
+       // ClienteDAO clienteDAO = new ClienteDAO();
+      //  cliente = clienteDAO.buscarClienteId(i);
+        System.out.print("Nome: "+cliente.getNome()+"   ");
+        System.out.print("Sexo: "+cliente.getSexo()+"   ");
+        System.out.println("Telefone: "+cliente.getCpf());
+
         }
         
     }

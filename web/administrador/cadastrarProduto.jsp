@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -57,7 +58,7 @@
                     <div class="form-group">
                         <label  class="col-sm-4 control-label">Autor</label>
                         <div class="col-sm-8">
-                            <input name="autor" id="autor" type="text" class="form-control" id="" placeholder="">
+                            <input name="autor" id="autor" type="text" class="form-control"  placeholder="">
                         </div>
                     </div>
                     <div class="form-group">
@@ -65,8 +66,10 @@
                         <div class="col-sm-8">
                             <select name="editora" id="editora" class="form-control">
                                 <option>Selecione</option>
-                                <option value="1">Editora 1</option>
-                                <option value="2">Editora 2</option>
+                                <c:forEach items="${listaEditoras}" var="editora">
+                                <option value="${editora.idEditora}"> ${editora.nome}</option>
+                                </c:forEach>
+
                             </select>
                         </div>
                     </div>
