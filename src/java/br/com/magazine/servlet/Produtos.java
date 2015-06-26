@@ -108,11 +108,11 @@ public class Produtos extends HttpServlet{
                     String escolha = request.getParameter("escolha");
                     String str = request.getParameter("str");
                     if("editora".equals(escolha)){
-                        listaProdutos = produtoDAO.buscarClienteNome(str);
+       //                 listaProdutos = produtoDAO.buscarClienteNome(str);
                     } else if("titulo".equals(escolha)){
-                        listaProdutos = produtoDAO.buscarClienteNome(str);
+         //               listaProdutos = produtoDAO.buscarClienteNome(str);
                     } else if("genero".equals(escolha)){
-                        listaProdutos = produtoDAO.buscarClienteNome(str);
+           //             listaProdutos = produtoDAO.buscarClienteNome(str);
                     }
                     request.setAttribute("listaProdutos", listaProdutos);
                     request.setAttribute("escolha", escolha);

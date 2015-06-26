@@ -243,6 +243,7 @@ public class Clientes extends HttpServlet {
                     }
                     request.setAttribute("escolha", escolha);
                     request.setAttribute("str", str);
+                    request.setAttribute("listaProdutos", listaProdutos);
                     RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/pesquisarProduto.jsp");
                     rd.forward(request,response);
                     return;
