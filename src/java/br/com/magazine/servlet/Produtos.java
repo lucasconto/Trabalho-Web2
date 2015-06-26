@@ -102,25 +102,27 @@ public class Produtos extends HttpServlet{
                 }
             
             
-            if ("buscarp".equals(request.getParameter("action"))) {
-                List<Produto> listaProdutos = new ArrayList();
-                ProdutoDAO produtoDAO = new ProdutoDAO();
-                String escolha = request.getParameter("escolha");
-                String str = request.getParameter("str");
-                   
-                if("titulo".equals(escolha)){
-                    out.println(str);
-         //           listaProdutos = produtoDAO.listarProdutoPorNome(str);
-
-                
+                if ("buscarp".equals(request.getParameter("action"))) {
+                    List<Produto> listaProdutos = new ArrayList();
+                    ProdutoDAO produtoDAO = new ProdutoDAO();
+                    String escolha = request.getParameter("escolha");
+                    String str = request.getParameter("str");
+                    if("editora".equals(escolha)){
+                        listaProdutos = produtoDAO.buscarClienteNome(str);
+                    } else if("titulo".equals(escolha)){
+                        listaProdutos = produtoDAO.buscarClienteNome(str);
+                    } else if("genero".equals(escolha)){
+                        listaProdutos = produtoDAO.buscarClienteNome(str);
+                    }
+                    request.setAttribute("listaProdutos", listaProdutos);
+                    request.setAttribute("escolha", escolha);
+                    request.setAttribute("str", str);
+                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/administrador/listarProduto.jsp");
+                    rd.forward(request,response);
                 }
-                request.setAttribute("listaProdutos", listaProdutos);
-                request.setAttribute("escolha", escolha);
-                request.setAttribute("str", str);
-              //  RequestDispatcher rd = getServletContext().getRequestDispatcher("/administrador/listarProduto.jsp");
-             //   rd.forward(request,response);
+                
+
             
-            }
             
             if ("buscarpp".equals(request.getParameter("action"))) {
                 List<Produto> listaProdutos = new ArrayList();
