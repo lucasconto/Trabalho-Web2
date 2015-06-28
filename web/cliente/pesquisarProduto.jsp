@@ -61,13 +61,15 @@
                         <div class="row">
                             <form action="./Clientes?action=pesquisar" method="post" class="form-horizontal">
                                 <div class="col-md-5 col-md-offset-2" style="padding: 0px">
-                                    <input type="text" name="str" class="form-control" placeholder="Pesquisar por..." />
+                                    <input type="text" name="str" value="${str}" class="form-control" placeholder="Pesquisar por..." />
                                 </div>
                                 <div class="col-md-2" style="padding: 0px">
                                     <select name="escolha" id="escolha" class="form-control " >
-                                        <option value="titulo" required>Título</option>
-                                        <option value="genero" required>Gênero</option>
-                                        <option value="autor" required>Autor</option>
+                                        <option value="titulo" ${escolha == 'titulo' ? 'selected' : ''} required>Título</option>
+                                        <option value="genero" ${escolha == 'genero' ? 'selected' : ''} required>Gênero</option>
+                                        <option value="autor" ${escolha == 'autor' ? 'selected' : ''} required>Autor</option>
+                                        <select name="escolha" class="form-control">
+                                        </select>
                                     </select>
                                 </div>
                                 <div class="col-md-1" style="padding: 0px">
@@ -77,66 +79,82 @@
                                 </div>
                             </form>
                         </div>
-                        <c:if test="${not empty escolha || not empty str || not empty id}">
+                        <c:if test="${not empty escolha || not empty str || not empty genero}">
 
                             <br/>
-                            <div class="row">
-                                <div class="panel pull-right" >
-                                    Ordenar por:
-                                    <c:if test="${ordem != 'AZ'}">
-                                        <a href="./Clientes?action=nomeAZ">
-                                            Nome 
-                                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                                        </c:if>
-                                        <c:if test="${ordem == 'AZ'}">
-                                            <a href="./Clientes?action=nomeZA">
-                                                Nome 
-                                                <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>
-                                            </c:if>
-                                        </a> 
-                                        <c:if test="${ordem != 'Asc'}">
-                                            <a href="./Clientes?action=Asc"> 
-                                                Preço 
-                                                <span class="glyphicon glyphicon-sort-by-attributes"></span>
-                                            </a>
-                                        </c:if>
-                                        <c:if test="${ordem == 'Asc'}">
-                                            <a href="./Clientes?action=Desc"> 
-                                                Preço 
-                                                <span class="glyphicon glyphicon-sort-by-attributes-alt"></span>
-                                            </a>
-                                        </c:if>
-                                </div>
-                            </div>
+                            <c:choose>
 
 
-                            <div class="row">
-                                <c:forEach var="produto" items="${listaProdutos}">
-                                    <div class="col-sm-4 col-lg-4 col-md-4">
-                                        <div class="thumbnail">
-                                            <img src="${pageContext.request.contextPath}/Imagens/${produto.idImg}.jpg" style="width: 120px;height: 120px" class="media-object" alt="">
-                                            <div class="caption">
-                                                <h4>
-                                                    <a href="verProduto.jsp">
-                                                        ${produto.titulo}
+                                <c:when test="${not empty listaProdutos}" >
+
+                                    <div class="row">
+                                        <div class="panel pull-right" >
+                                            Ordenar por:
+                                            <c:if test="${ordem != 'AZ'}">
+                                                <a href="./Clientes?action=nomeAZ">
+                                                    Nome 
+                                                    <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                                                </c:if>
+                                                <c:if test="${ordem == 'AZ'}">
+                                                    <a href="./Clientes?action=nomeZA">
+                                                        Nome 
+                                                        <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>
+                                                    </c:if>
+                                                </a> 
+                                                <c:if test="${ordem != 'Asc'}">
+                                                    <a href="./Clientes?action=Asc"> 
+                                                        Preço 
+                                                        <span class="glyphicon glyphicon-sort-by-attributes"></span>
                                                     </a>
-                                                </h4>
-                                                <p>
-                                                    Gênero: ${produto.genero.nome}<br/>
-                                                    Editora: ${produto.editora.nome}<br/>
-                                                    Autor: ${produto.autor}<br/>
-                                                <h4 class="pull-left"><fmt:formatNumber value="${produto.preco}" minFractionDigits="2" type="currency"/></h4>
-                                                <br/>
-                                                <a href="../Carrinhos?action=addCarrinho&id=${produto.idProduto}" class="pull-right">
-                                                    Adicionar ao Carrinho
-                                                    <span class="glyphicon glyphicon-shopping-cart"></span></a>
-                                                </p>
-                                            </div>
+                                                </c:if>
+                                                <c:if test="${ordem == 'Asc'}">
+                                                    <a href="./Clientes?action=Desc"> 
+                                                        Preço 
+                                                        <span class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+                                                    </a>
+                                                </c:if>
                                         </div>
                                     </div>
 
-                                </c:forEach>
-                            </div>
+
+                                    <div class="row">
+                                        <c:forEach var="produto" items="${listaProdutos}">
+                                            <div class="col-sm-4 col-lg-4 col-md-4">
+                                                <div class="thumbnail">
+                                                    <img src="${pageContext.request.contextPath}/Imagens/${produto.idImg}.jpg" style="width: 120px;height: 120px" class="media-object" alt="">
+                                                    <div class="caption">
+                                                        <form action="Clientes?action=visualizarProduto&id=${produto.idProduto}" method="post" style="display: inline">
+                                                            <a href="#" onclick="this.parentNode.submit();">
+                                                                <h4>
+                                                                    ${produto.titulo}
+                                                                </h4>
+                                                                <input type="hidden" value="${genero}" name="genero"/>
+                                                                <input type="hidden" value="${escolha}" name="escolha"/>
+                                                                <input type="hidden" value="${str}" name="str"/>
+                                                            </a>
+                                                        </form>                                                        
+                                                        <p>
+                                                            Gênero: ${produto.genero.nome}<br/>
+                                                            Editora: ${produto.editora.nome}<br/>
+                                                            Autor: ${produto.autor}<br/>
+                                                        <h4 class="pull-left"><fmt:formatNumber value="${produto.preco}" minFractionDigits="2" type="currency"/></h4>
+                                                        <br/>
+                                                        <a href="../Carrinhos?action=addCarrinho&id=${produto.idProduto}" class="pull-right">
+                                                            Adicionar ao Carrinho
+                                                            <span class="glyphicon glyphicon-shopping-cart"></span></a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </c:forEach>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    Nenhum Resultado Encontrado.
+                                </c:otherwise>
+                            </c:choose>
+
 
                         </c:if>
                     </div>

@@ -18,6 +18,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -49,7 +50,6 @@ public class Carrinhos extends HttpServlet {
                 int idProduto = Integer.parseInt(request.getParameter("id"));
                 HttpSession session = request.getSession();
                 Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
-
                 ProdutoDAO produtoDAO = new ProdutoDAO();
                 Produto produto = new Produto();
                 produto = produtoDAO.listarProdutoPorId(idProduto);
@@ -65,12 +65,28 @@ public class Carrinhos extends HttpServlet {
                 carrinho.adicionarItem(itemPedido);
                 session.setAttribute("carrinho", carrinho);
 //                    if (session.getAttribute("logado") == null) {
-                response.sendRedirect("cliente/Clientes");
+//                response.sendRedirect("cliente/Clientes");
 //                    } else {
 //                        response.sendRedirect("comum/index.jsp");
 //                    }
 
 //                }
+                if ("produto".equals(request.getParameter("pagina"))) {
+                    if (request.getParameter("escolha") == null && request.getParameter("genero") == null && request.getParameter("str") == null) {
+                        request.setAttribute("id", idProduto);
+                        RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/Clientes?action=visualizarProduto.jsp");
+//                response.sendRedirect("cliente/Clientes");
+                        rd.forward(request, response);
+                        return;
+                    } else if (request.getParameter("genero") != null) {
+                        String idGenero = request.getParameter("genero");
+                        request.setAttribute("genero", idGenero);
+                        request.setAttribute("id", idProduto);
+                        RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/Clientes?action=visualizarProduto.jsp");
+                        rd.forward(request, response);
+                        return;
+                    }
+                }
             }
             if ("comprar".equals(request.getParameter("action"))) {
                 HttpSession session = request.getSession();

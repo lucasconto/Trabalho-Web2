@@ -61,6 +61,7 @@ public class Carrinho {
                 break;
             }
         }
+        this.incrementaTotal();
     }
 
     public void diminuiQuantidade(int id) {
@@ -72,6 +73,7 @@ public class Carrinho {
                 break;
             }
         }
+        this.incrementaTotal();
     }
 
     public int getNumeroItens() {

@@ -208,6 +208,12 @@ public class Clientes extends HttpServlet {
                 ProdutoDAO produtoDAO = new ProdutoDAO();
                 int id = Integer.parseInt(request.getParameter("id"));
                 Produto produto = produtoDAO.listarProdutoPorId(id);
+                String escolha = request.getParameter("escolha");
+                String str = request.getParameter("str");
+                String idGenero = request.getParameter("genero");
+                request.setAttribute("escolha", escolha);
+                request.setAttribute("str", str);
+                request.setAttribute("genero", idGenero);
                 request.setAttribute("produto", produto);
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/visualizarProduto.jsp");
                 rd.forward(request, response);
@@ -226,26 +232,26 @@ public class Clientes extends HttpServlet {
                 request.setAttribute("listaGeneros", listaGeneros);
                 ProdutoDAO produtoDAO = new ProdutoDAO();
                 if (request.getParameter("genero") != null) {
-                    int id = Integer.parseInt(request.getParameter("genero"));
-                    List<Produto> listaProdutos = produtoDAO.listarProdutoPorGenero(id);
-                    request.setAttribute("id", id);
+                    int idGenero = Integer.parseInt(request.getParameter("genero"));
+                    List<Produto> listaProdutos = produtoDAO.listarProdutoPorGenero(idGenero);
+                    request.setAttribute("genero", idGenero);
                     request.setAttribute("listaProdutos", listaProdutos);
-                }else if(request.getParameter("str")!= null){
-                    List<Produto> listaProdutos =new ArrayList();
+                } else if (request.getParameter("str") != null) {
+                    List<Produto> listaProdutos = new ArrayList();
                     String escolha = request.getParameter("escolha");
                     String str = request.getParameter("str");
-                    if("titulo".equals(escolha)){
+                    if ("titulo".equals(escolha)) {
                         listaProdutos = produtoDAO.buscarTituloProduto(str);
-                    } else if("genero".equals(escolha)){
+                    } else if ("genero".equals(escolha)) {
                         listaProdutos = produtoDAO.buscarGeneroProduto(str);
-                    } else if("autor".equals(escolha)){
+                    } else if ("autor".equals(escolha)) {
                         listaProdutos = produtoDAO.buscarAutorProduto(str);
                     }
                     request.setAttribute("escolha", escolha);
                     request.setAttribute("str", str);
                     request.setAttribute("listaProdutos", listaProdutos);
                     RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/pesquisarProduto.jsp");
-                    rd.forward(request,response);
+                    rd.forward(request, response);
                     return;
                 }
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/pesquisarProduto.jsp");

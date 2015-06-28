@@ -44,9 +44,7 @@
                         <div class="col-md-offset-2">
                             <img src="${pageContext.request.contextPath}/Imagens/${produto.idImg}.jpg" style="width: 300px;height: 400px" class="media-object" alt="">
                             <h4>
-                                <a href="verProduto.jsp">
-                                    ${produto.titulo}
-                                </a>
+                                ${produto.titulo}
                             </h4>
                             Gênero: ${produto.genero.nome}<br/>
                             Editora: ${produto.editora.nome}<br/>
@@ -58,31 +56,77 @@
                         <div class="col-md-1">
 
                             <c:choose>
-                                <c:when test="${empty idproduto}">
+                                <c:when test="${empty genero && empty escolha && empty str}">
                                     <a href="./Clientes">
                                         <button class="btn btn-default">
                                             Voltar
                                         </button>
                                     </a>
                                 </c:when>
-                                <c:when test="${ idproduto}">
-                                    <a href="../Carrinhos?action=addCarrinho&id=${produto.idProduto}">
+                                <c:when test="${empty escolha && empty str}">
+                                    <a href="./Clientes?action=pesquisar&genero=${genero}">
                                         <button class="btn btn-default">
                                             Voltar
                                         </button>
                                     </a>
                                 </c:when>
+                                <c:otherwise>
+                                    <a href="./Clientes?action=pesquisar">
+                                        <form action="Clientes?action=pesquisar" method="post" style="display: inline">
+                                            <button type="submit" class="btn btn-default">
+                                                Voltar
+                                            </button>
+                                            <input type="hidden" value="${escolha}" name="escolha"/>
+                                            <input type="hidden" value="${str}" name="str"/>
+                                        </form>                
+                                    </a>
+                                </c:otherwise>
 
                             </c:choose>
                         </div>
                         <div class="col-md-2 col-md-offset-4">
+                            <c:choose>
+                                <c:when test="${empty genero && empty escolha && empty str}">
+                                    <form action="../Carrinhos?action=addCarrinho&id=${produto.idProduto}" method="post" style="display: inline">
+                                        <a href="#" onclick="this.parentNode.submit();">
+                                            <button class="btn btn-primary">
+                                                Adicionar ao Carrinho
+                                                <span class="glyphicon glyphicon-shopping-cart"></span>
+                                            </button>
+                                        </a>
+                                            <input type="hidden" value="produto" name="pagina"/>
+<!--                                            <input type="hidden" value="${genero}" name="genero"/>
+                                            <input type="hidden" value="${escolha}" name="escolha"/>
+                                            <input type="hidden" value="${str}" name="str"/>-->
+                                    </form>  
+                                    </c:when>
+                                    <c:when test="${empty escolha && empty str}">
+                                    <form action="../Carrinhos?action=addCarrinho&id=${produto.idProduto}" method="post" style="display: inline">
+                                        <a href="#" onclick="this.parentNode.submit();">
+                                            <button class="btn btn-primary">
+                                                Adicionar ao Carrinho
+                                                <span class="glyphicon glyphicon-shopping-cart"></span>
+                                            </button>
+                                        </a>
+                                            <input type="hidden" value="produto" name="pagina"/>
+                                            <input type="hidden" value="${genero}" name="genero"/>
+<!--                                            <input type="hidden" value="${escolha}" name="escolha"/>
+                                            <input type="hidden" value="${str}" name="str"/>-->
+                                    </form>  
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="./Clientes?action=pesquisar">
+                                            <form action="Clientes?action=pesquisar" method="post" style="display: inline">
+                                                <button type="submit" class="btn btn-default">
+                                                    Voltar
+                                                </button>
+                                                <input type="hidden" value="${escolha}" name="escolha"/>
+                                                <input type="hidden" value="${str}" name="str"/>
+                                            </form>                
+                                        </a>
+                                    </c:otherwise>
 
-                            <a href="../Carrinhos?action=addCarrinho&id=${produto.idProduto}">
-                                <button class="btn btn-primary">
-                                    Adicionar ao Carrinho
-                                    <span class="glyphicon glyphicon-shopping-cart"></span>
-                                </button>
-                            </a>
+                                </c:choose>
                         </div>
                     </div>
                 </div>
@@ -94,7 +138,7 @@
     </div>
 
 </div>
-<!-- /.container -->
+<!-- /.container 
 
 <!--Inclui Rodapé-->
 <jsp:include page="../comum/rodape.jsp"/>
