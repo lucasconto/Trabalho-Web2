@@ -46,6 +46,7 @@
                         <th>Quantidade</th>
                         <th>Valor Unitário</th>
                         <th>Valor Total</th>
+                        <th></th>
                     </tr>
                     <c:forEach var="itemCarrinho" items="${sessionScope.carrinho.listaItens}">
                         <tr>
@@ -57,7 +58,7 @@
                                         
                                         <a class="btn btn-default" href="../Carrinhos?action=diminuiQuantidade&id=${itemCarrinho.produto.idProduto}">
                                             <span class="glyphicon glyphicon-minus"></span></a> 
-                                        <input type="text" class="form-control" value="${itemCarrinho.quantidade}" style="width: 50px; display: inline;"/> 
+                                        <input type="text" class="form-control"  value="${itemCarrinho.quantidade}" style="width: 50px; display: inline;"/> 
                                         <a class="btn btn-default" href="../Carrinhos?action=aumentaQuantidade&id=${itemCarrinho.produto.idProduto}">
                                             <span class="glyphicon glyphicon-plus"></span></a>
                                     </form>
@@ -65,6 +66,9 @@
                             </td>
                             <td><fmt:formatNumber value="${itemCarrinho.produto.preco}" minFractionDigits="2" type="currency"/></td>
                             <td><fmt:formatNumber value="${itemCarrinho.produto.preco * itemCarrinho.quantidade}" minFractionDigits="2" type="currency"/></td>
+                            <td><span class="glyphicon glyphicon-remove-circle"></span> 
+                                <a  href="../Carrinhos?action=removeProduto&id=${itemCarrinho.produto.idProduto}">
+                                remover</td>
                         </tr>
                     </c:forEach>
                     <tr class="warning text-info lead">
@@ -72,6 +76,7 @@
                         <td></td>
                         <td>Total: </td>
                         <td><fmt:formatNumber value="${sessionScope.carrinho.total}" minFractionDigits="2" type="currency"/></td>
+                        <td></td>
                     </tr>
                 </table>
             </div>
@@ -90,7 +95,7 @@
 
         <!-- Bootstrap Core JavaScript -->
         <script src="../js/bootstrap.min.js"></script>
-
+ 
     </body>
 
 </html>

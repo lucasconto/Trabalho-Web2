@@ -65,7 +65,7 @@ public class Carrinhos extends HttpServlet {
                 carrinho.adicionarItem(itemPedido);
                 session.setAttribute("carrinho", carrinho);
 //                    if (session.getAttribute("logado") == null) {
-//                response.sendRedirect("cliente/Clientes");
+                response.sendRedirect("cliente/Clientes");
 //                    } else {
 //                        response.sendRedirect("comum/index.jsp");
 //                    }
@@ -128,7 +128,17 @@ public class Carrinhos extends HttpServlet {
                 response.sendRedirect("cliente/carrinhoCompras.jsp");
 
             }
+            if ("removeProduto".equals(request.getParameter("action"))) {
+                int idProduto = Integer.parseInt(request.getParameter("id"));
 
+                HttpSession session = request.getSession();
+                Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
+                carrinho.removerItem(idProduto);
+                session.setAttribute("carrinho", carrinho);
+                response.sendRedirect("cliente/carrinhoCompras.jsp");
+
+            }
+            
         }
     }
 

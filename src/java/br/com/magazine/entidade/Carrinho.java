@@ -15,7 +15,13 @@ public class Carrinho {
         }
         this.total = soma;
     }
-
+    public void decrementaTotal() {
+        double soma = 0;
+        for (ItemPedido item : this.listaItens) {
+            soma =+ item.getProduto().getPreco() * item.getQuantidade();
+        }
+        this.total = soma;
+    }
     public double getTotal() {
         return total;
     }
@@ -52,6 +58,17 @@ public class Carrinho {
             }
         }
         this.incrementaTotal();
+    }
+
+    public void removerItem(int id) {
+        boolean produtoExistente = false;
+        for (ItemPedido item : this.listaItens) {
+            if (item.getProduto().getIdProduto() == id) {
+                listaItens.remove(item);
+                this.decrementaTotal();
+                break;
+            }
+        }
     }
 
     public void aumentaQuantidade(int id) {
