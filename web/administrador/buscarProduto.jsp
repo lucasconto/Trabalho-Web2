@@ -46,7 +46,7 @@
                            <div class="col-md-2">
                             <select name="escolha" class="form-control">
                                 <option value="titulo">Titulo</option>
-                                <option value="editora">Editora</option>
+                                <option value="autor">Autor</option>
                                 <option value="genero">Genero</option>
                             </select>
                         </div>

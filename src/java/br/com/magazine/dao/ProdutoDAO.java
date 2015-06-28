@@ -34,9 +34,10 @@ public class ProdutoDAO {
     private final String stmtListaProdutosMaisVendidosZA = "select * from(select itempedido.idproduto,sum(quantidade) as soma, preco, titulo, autor, idimg, fkgenero, fkeditora, genero.nome as generonome, editora.nome as editoranome from itempedido left join produto on (produto.idproduto = itempedido.idproduto) inner join genero on (produto.fkgenero = genero.idgenero) inner join editora on (produto.fkeditora = editora.ideditora) where produto.inativo = false group by itempedido.idproduto, autor, produto.titulo,preco,idimg,fkgenero, fkeditora,generonome, editoranome order by soma desc limit 12) as tabela order by titulo desc";
     private final String stmtListaProdutosMaisVendidosAsc = "select * from(select itempedido.idproduto,sum(quantidade) as soma, preco, titulo, autor, idimg, fkgenero, fkeditora, genero.nome as generonome, editora.nome as editoranome from itempedido left join produto on (produto.idproduto = itempedido.idproduto) inner join genero on (produto.fkgenero = genero.idgenero) inner join editora on (produto.fkeditora = editora.ideditora) where produto.inativo = false group by itempedido.idproduto, autor, produto.titulo,preco,idimg,fkgenero, fkeditora,generonome, editoranome order by soma desc limit 12) as tabela order by preco asc";
     private final String stmtListaProdutosMaisVendidosDesc = "select * from(select itempedido.idproduto,sum(quantidade) as soma, preco, titulo, autor, idimg, fkgenero, fkeditora, genero.nome as generonome, editora.nome as editoranome from itempedido left join produto on (produto.idproduto = itempedido.idproduto) inner join genero on (produto.fkgenero = genero.idgenero) inner join editora on (produto.fkeditora = editora.ideditora) where produto.inativo = false group by itempedido.idproduto, autor, produto.titulo,preco,idimg,fkgenero, fkeditora,generonome, editoranome order by soma desc limit 12) as tabela order by preco desc";
-    private final String stmtBuscarTituloProduto = "select idproduto, idgenero, ideditora, idimg, titulo, editora.nome as nomeEditora, genero.nome as nomeGenero, preco, autor from produto join genero on genero.idgenero = produto.fkgenero join editora on editora.ideditora = produto.fkeditora where titulo ilike ? order by titulo asc";
-    private final String stmtBuscarGeneroProduto = "select idproduto, idgenero, ideditora, idimg, titulo, editora.nome as nomeEditora, genero.nome as nomeGenero, preco, autor from produto join genero on genero.idgenero = produto.fkgenero join editora on editora.ideditora = produto.fkeditora where genero.nome ilike ? order by titulo asc";
-    private final String stmtBuscarAutorProduto = "select idproduto, idgenero, ideditora, idimg, titulo, editora.nome as nomeEditora, genero.nome as nomeGenero, preco, autor from produto join genero on genero.idgenero = produto.fkgenero join editora on editora.ideditora = produto.fkeditora where autor ilike ? order by titulo asc";
+    private final String stmtBuscarTituloProduto = "select idproduto, idgenero, ideditora, idimg, titulo, editora.nome as nomeEditora, genero.nome as nomeGenero, preco, autor from produto join genero on genero.idgenero = produto.fkgenero join editora on editora.ideditora = produto.fkeditora where titulo ilike ? and produto.inativo = false order by titulo asc";
+    private final String stmtBuscarGeneroProduto = "select idproduto, idgenero, ideditora, idimg, titulo, editora.nome as nomeEditora, genero.nome as nomeGenero, preco, autor from produto join genero on genero.idgenero = produto.fkgenero join editora on editora.ideditora = produto.fkeditora where genero.nome ilike ? and produto.inativo = false order by titulo asc";
+    private final String stmtBuscarAutorProduto = "select idproduto, idgenero, ideditora, idimg, titulo, editora.nome as nomeEditora, genero.nome as nomeGenero, preco, autor from produto join genero on genero.idgenero = produto.fkgenero join editora on editora.ideditora = produto.fkeditora where autor ilike ? and produto.inativo = false order by titulo asc";
+    private final String stmtBuscarProdutoPorId = "select idproduto, idgenero, ideditora, idimg, titulo, editora.nome as nomeEditora, genero.nome as nomeGenero, preco, autor from produto join genero on genero.idgenero = produto.fkgenero join editora on editora.ideditora = produto.fkeditora where idProduto = ? and produto.inativo = false order by titulo asc";
 
     public int cadastrarProduto(Produto p) throws ClassNotFoundException {
         Connection con = null;
@@ -716,5 +717,58 @@ public class ProdutoDAO {
         }
 
     }
+    
+    public Produto buscarProdutoPorId(int id) throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(stmtBuscarProdutoPorId);
+            stmt.setInt(1, id);
+            rs = stmt.executeQuery();
+            rs.next();
+                Produto produto = new Produto();
+                produto.setIdProduto(rs.getInt("idProduto"));
+                produto.setTitulo(rs.getString("titulo"));
+                produto.setAutor(rs.getString("autor"));
+                produto.setPreco(rs.getDouble("preco"));
+                produto.setidImg(rs.getInt("idImg"));
+
+                Genero genero = new Genero();
+                genero.setIdGenero(rs.getInt("idGenero"));
+                genero.setNome(rs.getString("nomeGenero"));
+                produto.setGenero(genero);
+
+                Editora editora = new Editora();
+                editora.setIdEditora(rs.getInt("idEditora"));
+                editora.setNome(rs.getString("nomeEditora"));
+                produto.setEditora(editora);
+            
+            return produto;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                rs.close();
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar result set.Erro: " + ex.getMessage());
+            }
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar statement. Ex = " + ex.getMessage());
+            }
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar a conexao. Ex = " + ex.getMessage());
+            }
+        }
+
+    }
+    
+    
 
 }

@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-        <title>Cadastro de Cliente</title>
+        <title>Visualizar Cliente</title>
 
         <!--JQuery CSS-->
         <link rel="stylesheet" href="../js/jquery-ui.css">
@@ -41,22 +41,22 @@
                 <h1>Dados Cadastrais</h1>
                 <form class="form-horizontal" id="form" action="./Gerentes?action=buscarc" method="post">
                     <div class="form-group">
-                        <label for="" class="col-sm-4 control-label">Nome Completo</label>
+                        <label  class="col-sm-4 control-label">Nome Completo</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="" placeholder="" value="${cliente.nome}" disabled="disabled">
+                            <input type="text" class="form-control" placeholder="" value="${cliente.nome}" disabled="disabled">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="" class="col-sm-4 control-label">Sexo</label>
+                        <label  class="col-sm-4 control-label">Sexo</label>
                         <div class="col-sm-8">
-                            <select name="sexo" id="sexo" class="form-control" disabled="disabled">
-                                <option value="m" ${cliente.sexo == 'm' ? 'selected' : ''} required>Masculino</option>
-                                <option value="f" ${cliente.sexo == 'f' ? 'selected' : ''} required>Feminino</option>
+                            <select name="sexo" id="sexo" class="form-control" disabled="disabled" required="">
+                                <option value="m" ${cliente.sexo == 'm' ? 'selected' : ''} >Masculino</option>
+                                <option value="f" ${cliente.sexo == 'f' ? 'selected' : ''} >Feminino</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="" class="col-sm-4 control-label">CPF</label>
+                        <label  class="col-sm-4 control-label">CPF</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" maxlength="14" id="cpf" value="${cliente.cpf}" placeholder="000.000.000-00"  disabled="disabled"/>
                         </div>

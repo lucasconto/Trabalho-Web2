@@ -107,12 +107,12 @@ public class Produtos extends HttpServlet{
                     ProdutoDAO produtoDAO = new ProdutoDAO();
                     String escolha = request.getParameter("escolha");
                     String str = request.getParameter("str");
-                    if("editora".equals(escolha)){
-       //                 listaProdutos = produtoDAO.buscarClienteNome(str);
+                    if("autor".equals(escolha)){
+                        listaProdutos = produtoDAO.buscarAutorProduto(str);
                     } else if("titulo".equals(escolha)){
-         //               listaProdutos = produtoDAO.buscarClienteNome(str);
+                        listaProdutos = produtoDAO.buscarTituloProduto(str);
                     } else if("genero".equals(escolha)){
-           //             listaProdutos = produtoDAO.buscarClienteNome(str);
+                        listaProdutos = produtoDAO.buscarGeneroProduto(str);
                     }
                     request.setAttribute("listaProdutos", listaProdutos);
                     request.setAttribute("escolha", escolha);
@@ -123,27 +123,31 @@ public class Produtos extends HttpServlet{
                 
 
             
-            
-            if ("buscarpp".equals(request.getParameter("action"))) {
-                List<Produto> listaProdutos = new ArrayList();
-                ProdutoDAO produtoDAO = new ProdutoDAO();
-                String escolha = request.getParameter("escolha");
-                String str = request.getParameter("str");
-                   
-                if("titulo".equals(escolha)){
-                    out.println(str);
-               //     listaProdutos = produtoDAO.listarProdutoPorNome(str);
-
-                
+                if ("excluirp".equals(request.getParameter("action"))) {
+                    String escolha = request.getParameter("escolha");
+                    String str = request.getParameter("str");
+                    Produto produto = new Produto();
+                    produto.setIdProduto(Integer.parseInt(request.getParameter("id")));
+                    ProdutoDAO produtoDAO = new ProdutoDAO();
+                    produtoDAO.removerProduto(produto);
+                    request.setAttribute("escolha", escolha);
+                    request.setAttribute("str", str);
+                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/administrador/Produtos?action=buscarp");
+                    rd.forward(request,response);
                 }
-                request.setAttribute("listaProdutos", listaProdutos);
-                request.setAttribute("escolha", escolha);
-                request.setAttribute("str", str);
-           //     RequestDispatcher rd = getServletContext().getRequestDispatcher("/administrador/visualizarProduto.jsp");
-            //    rd.forward(request,response);
-            
-            }
-            
+                
+                if ("visualizarp".equals(request.getParameter("action"))) {
+                    String escolha = request.getParameter("escolha");
+                    String str = request.getParameter("str");
+                    ProdutoDAO produtoDAO = new ProdutoDAO();
+                    int id = Integer.parseInt(request.getParameter("id"));
+                    Produto produto = produtoDAO.buscarProdutoPorId(id);
+                    request.setAttribute("produto", produto);
+                    request.setAttribute("escolha", escolha);
+                    request.setAttribute("str", str);
+                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/administrador/visualizarProduto.jsp");
+                    rd.forward(request,response);
+                }
         }
     }
     

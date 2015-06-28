@@ -70,7 +70,7 @@
                     <form action="./Gerentes?action=buscarc" method="post" class="form-horizontal">
                         <div class="form-group">
                             <div class="row">
-                                <label class="col-md-2 control-label pull-left clearfix" for="">Buscar por:</label>
+                                <label class="col-md-2 control-label pull-left clearfix" >Buscar por:</label>
                             </div>
                             <div class="col-md-2">
                                 <select name="escolha" class="form-control">
@@ -80,7 +80,7 @@
                                 </select>
                             </div>
                             <div class="col-md-7">
-                                <input type="text" name="str" id="" class="form-control" placeholder="1234" value="${str}">
+                                <input type="text" name="str" class="form-control" placeholder="1234" value="${str}">
                             </div>
                             <div class="col-md-2">
                                 <button type="submit" class="btn btn-success  btn-block ">Buscar</button>
@@ -115,7 +115,7 @@
                                     </form>
                                     <form action="./Gerentes?action=visualizarc&id=${cliente.idCliente}" method="post" style="display: inline">
                                         <a href="#" onclick="this.parentNode.submit();">
-                                            <span title="Editar" class="glyphicon glyphicon-eye-open" style="font-size: 20px"></span>
+                                            <span title="Visualizar" class="glyphicon glyphicon-eye-open" style="font-size: 20px"></span>
                                             <input type="hidden" value="${escolha}" name="escolha"/>
                                             <input type="hidden" value="${str}" name="str"/>
                                         </a>
@@ -147,7 +147,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">Exclusao de Conta</h4>
+                <h4 class="modal-title" id="exampleModalLabel">Exclusao de Cliente</h4>
             </div>
             <div class="modal-body">
                 <form action="Gerentes?action=excluirc" method="post">
@@ -170,6 +170,8 @@
     </div>
             </div>
         </div>
+        </div>
+                            
         <!--Inclui Rodapé-->
         <jsp:include page="../comum/rodape.jsp"/>
 
