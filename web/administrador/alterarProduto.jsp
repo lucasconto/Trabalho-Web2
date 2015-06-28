@@ -48,33 +48,37 @@
             <div class="row">
                 <jsp:include page="menuAdministrador.jsp"/>
             <div class=" col-sm-6">
-                <h1>Vizualizar Produto</h1>
-                <form class="form-horizontal" id="form" method="POST" action="./Produtos?action=buscarp" onsubmit="//return valida(this);"  enctype="multipart/form-data">
+                <h1>Alterar Produto</h1>
+                <form class="form-horizontal" id="form" method="POST" action="./Produtos?action=alterarp" onsubmit="//return valida(this);"  enctype="multipart/form-data">
                     <div class="form-group">
                         <label  class="col-sm-4 control-label">Título</label>
                         <div class="col-sm-8">
-                            <input name="titulo" id="titulo" type="text" value = "${produto.titulo}" disabled ="disabled" class="form-control" placeholder="">
+                            <input name="titulo" id="titulo" type="text" value = "${produto.titulo}"  class="form-control" placeholder="">
                         </div>
                     </div>
                     <div class="form-group">
                         <label  class="col-sm-4 control-label">Autor</label>
                         <div class="col-sm-8">
-                            <input name="autor" id="autor" value = "${produto.autor}" disabled ="disabled" type="text" class="form-control"  placeholder="">
+                            <input name="autor" id="autor" value = "${produto.autor}" type="text" class="form-control"  placeholder="">
                         </div>
                     </div>
                     <div class="form-group">
                         <label  class="col-sm-4 control-label">Editora</label>
                         <div class="col-sm-8">
-                            <select name="editora" id="editora" class="form-control" disabled ="disabled">
-                                <option value="${produto.editora.nome}"> ${produto.editora.nome}</option>
+                            <select name="editora" id="editora" class="form-control" >
+                                <c:forEach items="${listaEditoras}" var="editora">
+                                <option value="${editora.idEditora}"${editora.idEditora == produto.editora.idEditora ? 'selected' : ''} > ${editora.nome}</option>
+                                </c:forEach>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label  class="col-sm-4 control-label">Categoria</label>
                         <div class="col-sm-8">
-                            <select name="genero" id="categoria" class="form-control" disabled = "disabled">
-                                <option value="${produto.genero.idGenero}"> ${produto.genero.nome}</option>
+                            <select name="genero" id="categoria" class="form-control">
+                                <c:forEach items="${listaGeneros}" var="genero">
+                                <option value="${genero.idGenero}" ${genero.idGenero == produto.genero.idGenero ? 'selected' : ''}> ${genero.nome}</option>
+                                </c:forEach>
                             </select>
                         </div>
                     </div> 
@@ -83,7 +87,7 @@
                         <div class="col-sm-8">
                             <div class="input-group">
                             <span class="input-group-addon">R$</span>
-                            <input name="preco" id="preco" value = "<fmt:formatNumber value="${produto.preco}" minFractionDigits="2" type="number"/>" disabled ="disabled" type="text" class="form-control" placeholder="">
+                            <input name="preco" id="preco" value = "<fmt:formatNumber value="${produto.preco}" minFractionDigits="2" type="number"/>" type="text" class="form-control" placeholder="">
 
                             
                             </div>
@@ -92,12 +96,13 @@
                     <div class="form-group">
                             <input type="hidden" value="${escolha}" name="escolha"/>
                             <input type="hidden" value="${str}" name="str"/>
-                            <div class="col-sm-offset-4 col-sm-8">
-                            <button type="submit" class="btn btn-success btn-lg btn-block ">Voltar</button>
-                    </div>
+                            <input type="hidden" value="${produto.idProduto}" name="idProduto"/>
 
+                            <div class="col-sm-offset-4 col-sm-8">
+                            <button type="submit" class="btn btn-success btn-lg btn-block ">Salvar</button>
+                    </div>
+                    </div>
                 </form>
-            </div>
         </div>
         </div>
         

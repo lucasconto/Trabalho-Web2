@@ -53,7 +53,7 @@ public class Produtos extends HttpServlet{
             if ("cadastrar".equals(request.getParameter("action"))) {
                 Part filePart = request.getPart("idImg"); // Retrieves <input type="file" name="file">
                 
-                ProdutoDAO dao = new ProdutoDAO();
+                ProdutoDAO produtoDAO = new ProdutoDAO();
                 Produto produto = new Produto();
                 Genero genero = new Genero();
                 Editora editora = new Editora();
@@ -67,7 +67,7 @@ public class Produtos extends HttpServlet{
                 produto.setGenero(genero);
 
 //                ----Salvando em um diretorio no servidor----
-                String nomeArquivo = dao.cadastrarProduto(produto)+ ".jpg"; 
+                String nomeArquivo = produtoDAO.cadastrarProduto(produto)+ ".jpg"; 
                 File homedir = new File(System.getProperty("user.home"));
                 File file = new File(homedir+"/teste", nomeArquivo); 
                 
@@ -146,6 +146,48 @@ public class Produtos extends HttpServlet{
                     request.setAttribute("escolha", escolha);
                     request.setAttribute("str", str);
                     RequestDispatcher rd = getServletContext().getRequestDispatcher("/administrador/visualizarProduto.jsp");
+                    rd.forward(request,response);
+                }
+                if ("valterarp".equals(request.getParameter("action"))) {
+                    String escolha = request.getParameter("escolha");
+                    String str = request.getParameter("str");
+                    ProdutoDAO produtoDAO = new ProdutoDAO();
+                    int id = Integer.parseInt(request.getParameter("id"));
+                    Produto produto = produtoDAO.buscarProdutoPorId(id);
+                    request.setAttribute("produto", produto);
+                    request.setAttribute("escolha", escolha);
+                    request.setAttribute("str", str);    
+                    List<Editora> listaEditoras = new ArrayList();
+                    EditoraDAO editoraDAO = new EditoraDAO();
+                    listaEditoras = editoraDAO.listarEditoras();
+                    request.setAttribute("listaEditoras", listaEditoras);
+                    List<Genero> listaGeneros = new ArrayList();
+                    GeneroDAO generoDAO = new GeneroDAO();
+                    listaGeneros = generoDAO.listarGeneros();
+                    request.setAttribute("listaGeneros", listaGeneros);
+                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/administrador/alterarProduto.jsp");
+                    rd.forward(request,response);
+                }
+                if ("alterarp".equals(request.getParameter("action"))) {
+                    String escolha = request.getParameter("escolha");
+                    String str = request.getParameter("str");
+
+                    ProdutoDAO produtoDAO = new ProdutoDAO();
+                    Produto produto = new Produto();
+                    Genero genero = new Genero();
+                    Editora editora = new Editora();
+                    produto.setTitulo(request.getParameter("titulo"));
+                    produto.setAutor(request.getParameter("autor"));
+                    editora.setIdEditora(Integer.parseInt(request.getParameter("editora")));
+                    produto.setEditora(editora);
+                    produto.setPreco(Double.parseDouble(request.getParameter("preco")));
+                    genero.setIdGenero(Integer.parseInt(request.getParameter("genero")));  
+                    produto.setGenero(genero);
+                    produto.setIdProduto(Integer.parseInt(request.getParameter("idProduto")));
+                    produtoDAO.atualizarProduto(produto);
+                    request.setAttribute("escolha", escolha);
+                    request.setAttribute("str", str);
+                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/administrador/Produtos?action=buscarp");
                     rd.forward(request,response);
                 }
         }

@@ -89,7 +89,7 @@ public class ProdutoDAO {
             stmt.setString(2, p.getAutor());
             stmt.setInt(3, p.getEditora().getIdEditora());
             stmt.setDouble(4, p.getPreco());
-            stmt.setString(5, p.getGenero().getNome());
+            stmt.setInt(5, p.getGenero().getIdGenero());
             stmt.setInt(6, p.getIdProduto());
             stmt.executeUpdate();
             con.commit();

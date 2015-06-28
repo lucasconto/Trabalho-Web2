@@ -92,6 +92,8 @@
                             <th>Titulo</th>
                             <th>Genero</th>
                             <th>Preço</th>
+                            <th>Ações</th>
+                            
                         </tr>
                         <c:forEach var="produto" items="${listaProdutos}">
                             <tr>
@@ -133,9 +135,9 @@
                             <div class="modal-body">
                                 <form action="Produtos?action=excluirp" method="post">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="produto-id" name="id"/>
-                                        <input type="text" class="form-control" id="escolha-id" name="escolha"/>
-                                        <input type="text" class="form-control" id="str-id" name="str"/>
+                                        <input type="hidden" class="form-control" id="produto-id" name="id"/>
+                                        <input type="hidden" class="form-control" id="escolha-id" name="escolha"/>
+                                        <input type="hidden" class="form-control" id="str-id" name="str"/>
                                     </div>                            
                                     <div class="form-group">
                                         <label for="genero-nome" class="control-label">Tem certeza de que deseja excluir este produto?</label>
