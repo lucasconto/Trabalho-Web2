@@ -85,48 +85,12 @@
                             </c:choose>
                         </div>
                         <div class="col-md-2 col-md-offset-4">
-                            <c:choose>
-                                <c:when test="${empty genero && empty escolha && empty str}">
-                                    <form action="../Carrinhos?action=addCarrinho&id=${produto.idProduto}" method="post" style="display: inline">
-                                        <a href="#" onclick="this.parentNode.submit();">
-                                            <button class="btn btn-primary">
-                                                Adicionar ao Carrinho
-                                                <span class="glyphicon glyphicon-shopping-cart"></span>
-                                            </button>
-                                        </a>
-                                            <input type="hidden" value="produto" name="pagina"/>
-<!--                                            <input type="hidden" value="${genero}" name="genero"/>
-                                            <input type="hidden" value="${escolha}" name="escolha"/>
-                                            <input type="hidden" value="${str}" name="str"/>-->
-                                    </form>  
-                                    </c:when>
-                                    <c:when test="${empty escolha && empty str}">
-                                    <form action="../Carrinhos?action=addCarrinho&id=${produto.idProduto}" method="post" style="display: inline">
-                                        <a href="#" onclick="this.parentNode.submit();">
-                                            <button class="btn btn-primary">
-                                                Adicionar ao Carrinho
-                                                <span class="glyphicon glyphicon-shopping-cart"></span>
-                                            </button>
-                                        </a>
-                                            <input type="hidden" value="produto" name="pagina"/>
-                                            <input type="hidden" value="${genero}" name="genero"/>
-<!--                                            <input type="hidden" value="${escolha}" name="escolha"/>
-                                            <input type="hidden" value="${str}" name="str"/>-->
-                                    </form>  
-                                    </c:when>
-                                    <c:otherwise>
-                                        <a href="./Clientes?action=pesquisar">
-                                            <form action="Clientes?action=pesquisar" method="post" style="display: inline">
-                                                <button type="submit" class="btn btn-default">
-                                                    Voltar
-                                                </button>
-                                                <input type="hidden" value="${escolha}" name="escolha"/>
-                                                <input type="hidden" value="${str}" name="str"/>
-                                            </form>                
-                                        </a>
-                                    </c:otherwise>
-
-                                </c:choose>
+                            <a href="../Carrinhos?action=addCarrinho&id=${produto.idProduto}">
+                                <button class="btn btn-primary">
+                                    Adicionar ao Carrinho
+                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                </button>
+                            </a>
                         </div>
                     </div>
                 </div>

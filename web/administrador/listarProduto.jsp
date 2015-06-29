@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -99,7 +100,7 @@
                             <tr>
                                 <td>${produto.titulo}</td>
                                 <td>${produto.genero.nome}</td>
-                                <td>${produto.preco}</td>
+                                <td><fmt:formatNumber value="${produto.preco}" minFractionDigits="2" type="currency"/></td>
                                 <td>
                                     <div class="text-center">
                                         <form action="./Produtos?action=visualizarp&id=${produto.idProduto}" method="post" style="display: inline">

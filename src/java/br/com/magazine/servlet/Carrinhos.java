@@ -65,7 +65,7 @@ public class Carrinhos extends HttpServlet {
                 carrinho.adicionarItem(itemPedido);
                 session.setAttribute("carrinho", carrinho);
 //                    if (session.getAttribute("logado") == null) {
-                response.sendRedirect("cliente/Clientes");
+                response.sendRedirect("./cliente/carrinhoCompras.jsp");
 //                    } else {
 //                        response.sendRedirect("comum/index.jsp");
 //                    }

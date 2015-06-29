@@ -49,6 +49,7 @@ public class Produtos extends HttpServlet{
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException, ParseException, ClassNotFoundException, SQLException {
     response.setContentType("text/html;charset=UTF-8");
+    request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             if ("cadastrar".equals(request.getParameter("action"))) {
                 Part filePart = request.getPart("idImg"); // Retrieves <input type="file" name="file">
