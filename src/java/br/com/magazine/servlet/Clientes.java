@@ -22,6 +22,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +32,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -164,19 +166,33 @@ public class Clientes extends HttpServlet {
                 rd.forward(request, response);
             }
             if ("pedidos".equals(request.getParameter("action"))) {
-                Cliente cliente = new Cliente();
-                cliente.setIdCliente(3);
 
-                PedidoDAO pedidoDAO = new PedidoDAO();
-                List<Pedido> listaPedidosAbertos = pedidoDAO.listaPedidosAbertosCliente(cliente);
-                List<Pedido> listaPedidosFinalizados = pedidoDAO.listaPedidosFinalizadosCliente(cliente);
+                HttpSession session = request.getSession();
+                Integer logado;
+                try {
+                    logado = (int) session.getAttribute("logado");
+                } catch (Exception f) {
+                    logado = 0;
+                }
+                if (logado > 0) {
+                    Cliente cliente = new Cliente();
+                    cliente.setIdCliente((int)session.getAttribute("idcliente"));
+                    PedidoDAO pedidoDAO = new PedidoDAO();
+                    List<Pedido> listaPedidosAbertos = pedidoDAO.listaPedidosAbertosCliente(cliente);
+                    List<Pedido> listaPedidosFinalizados = pedidoDAO.listaPedidosFinalizadosCliente(cliente);
 
-                request.setAttribute("listaPedidosAbertos", listaPedidosAbertos);
-                request.setAttribute("listaPedidosFinalizados", listaPedidosFinalizados);
+                    request.setAttribute("listaPedidosAbertos", listaPedidosAbertos);
+                    request.setAttribute("listaPedidosFinalizados", listaPedidosFinalizados);
 
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/visualizarCompra.jsp");
-                rd.forward(request, response);
-                return;
+                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/visualizarCompra.jsp");
+                    rd.forward(request, response);
+                    return;
+                } else {
+                    request.setAttribute("mensagem", "Para continuar é necessário fazer login");
+                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/comum/login.jsp");
+                    rd.forward(request, response);
+                }
+
             }
             if ("confirmarRecebimento".equals(request.getParameter("action"))) {
 
@@ -269,7 +285,7 @@ public class Clientes extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -283,12 +299,16 @@ public class Clientes extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
+
         } catch (ParseException ex) {
-            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Clientes.class
+                    .getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Clientes.class
+                    .getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Clientes.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -305,12 +325,16 @@ public class Clientes extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
+
         } catch (ParseException ex) {
-            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Clientes.class
+                    .getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Clientes.class
+                    .getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Clientes.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 

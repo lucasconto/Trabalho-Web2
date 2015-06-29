@@ -72,7 +72,7 @@ public class Login extends HttpServlet {
                         session.setAttribute("cliente", cliente);
                         session.setAttribute("nome", cliente.getNome());
                         session.setAttribute("idcliente", cliente.getIdCliente());
-                        session.setAttribute("logado", true);
+                        session.setAttribute("logado", 1);
                         response.sendRedirect("../cliente/Clientes");
 //                        RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
 //                        rd.forward(request, response);
@@ -85,12 +85,11 @@ public class Login extends HttpServlet {
                 }
             }
             if ("logout".equals(request.getParameter("action"))) {
-                HttpSession session = request.getSession(false);
-                if (session != null) {
-                    session.invalidate();
-                }
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
-                rd.forward(request, response);
+                HttpSession session = request.getSession();
+                //if (session != null) {
+                session.invalidate();
+                //}
+                response.sendRedirect("../cliente/Clientes");
             }
 
         }
