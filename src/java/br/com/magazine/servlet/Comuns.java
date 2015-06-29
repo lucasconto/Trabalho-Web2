@@ -146,7 +146,7 @@ public class Comuns extends HttpServlet {
                 List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidosAZ();
                 request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
                 request.setAttribute("ordem", "AZ");
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/comum/index.jsp");
                 rd.forward(request, response);
             }
             if ("nomeZA".equals(request.getParameter("action"))) {
@@ -155,7 +155,7 @@ public class Comuns extends HttpServlet {
                 List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidosZA();
                 request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
                 request.setAttribute("ordem", "ZA");
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/comum/index.jsp");
                 rd.forward(request, response);
             }
             if ("Asc".equals(request.getParameter("action"))) {
@@ -164,7 +164,7 @@ public class Comuns extends HttpServlet {
                 List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidosAsc();
                 request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
                 request.setAttribute("ordem", "Asc");
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/comum/index.jsp");
                 rd.forward(request, response);
             }
             if ("Desc".equals(request.getParameter("action"))) {
@@ -173,65 +173,10 @@ public class Comuns extends HttpServlet {
                 List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidosDesc();
                 request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
                 request.setAttribute("ordem", "Desc");
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/comum/index.jsp");
                 rd.forward(request, response);
             }
-            if ("pedidos".equals(request.getParameter("action"))) {
-
-                HttpSession session = request.getSession();
-                Integer logado;
-                try {
-                    logado = (int) session.getAttribute("logado");
-                } catch (Exception f) {
-                    logado = 0;
-                }
-                if (logado > 0) {
-                    Cliente cliente = new Cliente();
-                    cliente.setIdCliente((int)session.getAttribute("idcliente"));
-                    PedidoDAO pedidoDAO = new PedidoDAO();
-                    List<Pedido> listaPedidosAbertos = pedidoDAO.listaPedidosAbertosCliente(cliente);
-                    List<Pedido> listaPedidosFinalizados = pedidoDAO.listaPedidosFinalizadosCliente(cliente);
-
-                    request.setAttribute("listaPedidosAbertos", listaPedidosAbertos);
-                    request.setAttribute("listaPedidosFinalizados", listaPedidosFinalizados);
-
-                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/visualizarCompra.jsp");
-                    rd.forward(request, response);
-                    return;
-                } else {
-                    request.setAttribute("mensagem", "Para continuar é necessário fazer login");
-                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/comum/login.jsp");
-                    rd.forward(request, response);
-                }
-
-            }
-            if ("confirmarRecebimento".equals(request.getParameter("action"))) {
-
-                Pedido pedido = new Pedido();
-                pedido.setIdPedido(Integer.parseInt(request.getParameter("id")));
-                StatusPedido statusPedido = new StatusPedido();
-                statusPedido.setIdStatusPedido(2);
-                pedido.setStatusPedido(statusPedido);
-                PedidoDAO pedidoDAO = new PedidoDAO();
-                pedidoDAO.atualizarStatusPedido(pedido);
-
-                response.sendRedirect("./Clientes?action=pedidos");
-                return;
-            }
-            if ("cancelar".equals(request.getParameter("action"))) {
-
-                Pedido pedido = new Pedido();
-                pedido.setIdPedido(Integer.parseInt(request.getParameter("id")));
-                StatusPedido statusPedido = new StatusPedido();
-                statusPedido.setIdStatusPedido(0);
-                pedido.setStatusPedido(statusPedido);
-                PedidoDAO pedidoDAO = new PedidoDAO();
-                pedidoDAO.atualizarStatusPedido(pedido);
-
-                response.sendRedirect("./Clientes?action=pedidos");
-                return;
-            }
-            if ("visualizarProduto".equals(request.getParameter("action"))) {
+             if ("visualizarProduto".equals(request.getParameter("action"))) {
                 ProdutoDAO produtoDAO = new ProdutoDAO();
                 int id = Integer.parseInt(request.getParameter("id"));
                 Produto produto = produtoDAO.listarProdutoPorId(id);
