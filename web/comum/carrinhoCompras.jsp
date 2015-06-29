@@ -1,4 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -29,7 +31,7 @@
 
     <body>
         <!--Inclui cabeçalho-->
-        <jsp:include page="navAnonimo.jsp"/>
+        <jsp:include page="navCliente.jsp"/>
 
         <!-- Navigation -->
         <!-- Page Content -->
@@ -44,64 +46,56 @@
                         <th>Quantidade</th>
                         <th>Valor Unitário</th>
                         <th>Valor Total</th>
+                        <th></th>
                     </tr>
-                    <tr>
-                        <td><img src="http://placehold.it/50x50" alt="" /> Turma da Monica Ed.50</td>
-                        <td>2</td>
-                        <td>R$ 109,90</td>
-                        <td>R$ 218,80</td>
-                    </tr>
-                    <tr>
-                        <td><img src="http://placehold.it/50x50" alt="" /> Wolverine Aniversário</td>
-                        <td>1</td>
-                        <td>R$ 85,60</td>
-                        <td>R$ 85,60</td>
-                    </tr>
-                    <tr>
-                        <td><img src="http://placehold.it/50x50" alt="" /> Casa e Construção maio/2015</td>
-                        <td>1</td>
-                        <td>R$ 10,99</td>
-                        <td>R$ 10,99</td>
-                    </tr>
+                    <c:forEach var="itemCarrinho" items="${sessionScope.carrinho.listaItens}">
+                        <tr>
+                            <td><img src="${pageContext.request.contextPath}/Imagens/${itemCarrinho.produto.idImg}.jpg" style="width: 50px;height: 50px" alt="">${itemCarrinho.produto.titulo}</td>
+                            <td>
+                                
+                                <div class="qnt-count">
+                                    <form class="form-horizontal" id="form" method="POST" action="Clientes?action=cadastrar" onsubmit="//return valida(this);">
+                                        
+                                        <a class="btn btn-default" href="../Carrinhos?action=diminuiQuantidade&id=${itemCarrinho.produto.idProduto}">
+                                            <span class="glyphicon glyphicon-minus"></span></a> 
+                                        <input type="text" class="form-control"  value="${itemCarrinho.quantidade}" style="width: 50px; display: inline;" disabled="disabled"/> 
+                                        <a class="btn btn-default" href="../Carrinhos?action=aumentaQuantidade&id=${itemCarrinho.produto.idProduto}">
+                                            <span class="glyphicon glyphicon-plus"></span></a>
+                                    </form>
+                                </div>
+                            </td>
+                            <td><fmt:formatNumber value="${itemCarrinho.produto.preco}" minFractionDigits="2" type="currency"/></td>
+                            <td><fmt:formatNumber value="${itemCarrinho.produto.preco * itemCarrinho.quantidade}" minFractionDigits="2" type="currency"/></td>
+                            <td><span class="glyphicon glyphicon-remove-circle"></span> 
+                                <a  href="../Carrinhos?action=removeProduto&id=${itemCarrinho.produto.idProduto}">
+                                remover</td>
+                        </tr>
+                    </c:forEach>
                     <tr class="warning text-info lead">
                         <td></td>
                         <td></td>
                         <td>Total: </td>
-                        <td>R$ 340,00</td>
+                        <td><fmt:formatNumber value="${sessionScope.carrinho.total}" minFractionDigits="2" type="currency"/></td>
+                        <td></td>
                     </tr>
                 </table>
             </div>
             <div class="row">
-            <button class="btn btn-success btn-lg col-sm-3 col-sm-push-9">Finalizar Compra</button>
+                <a href="../Carrinhos?action=comprar">
+                    <button class="btn btn-success btn-lg col-sm-3 col-sm-push-9">Finalizar Compra</button>
+                </a>
             </div>
 
-            <div class="row">
-
-
-                <div class="container">
-
-                    <hr>
-
-                    <!-- Footer -->
-                    <footer>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <p>Site desenvolvido por Bruno R. Sella, Evandro Luís Machado e Yuri Jungles para aprovação nas matérias de Web 2 e DAC.</p>
-                            </div>
-                        </div>
-                    </footer>
-
-                </div>
-            </div>
         </div>
-                <!-- /.container -->
+        <!-- /.container -->
+        <jsp:include page="../comum/rodape.jsp"/>  
 
-                <!-- jQuery -->
-                <script src="../js/jquery.min.js"></script>
+        <!-- jQuery -->
+        <script src="../js/jquery.min.js"></script>
 
-                <!-- Bootstrap Core JavaScript -->
-                <script src="../js/bootstrap.min.js"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="../js/bootstrap.min.js"></script>
+ 
+    </body>
 
-                </body>
-
-                </html>
+</html>

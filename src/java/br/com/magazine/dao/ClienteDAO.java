@@ -44,7 +44,7 @@ public class ClienteDAO {
 //    private final String stmtProcuraSobreNome = "select * from Cliente where sobrenome like ";
 //    private final String stmtProcuraCPF = "select * from Cliente where cpf like ";
 
-    public void cadastrarCliente(Cliente cliente) throws ClassNotFoundException {
+    public int cadastrarCliente(Cliente cliente) throws ClassNotFoundException {
         Connection con = null;
         PreparedStatement stmt = null;
         try {
@@ -68,7 +68,13 @@ public class ClienteDAO {
             stmt.setBoolean(15, cliente.isInativo());
             stmt.setInt(16, cliente.getPerfil());
             stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            int idCliente = 0;
+            if (rs != null && rs.next()) {
+                idCliente = rs.getInt(1);
+            }
             con.commit();
+            return idCliente;
 
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao inserir um cliente no banco de dados. Origem: " + e.getMessage());

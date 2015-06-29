@@ -5,11 +5,14 @@
  */
 package br.com.magazine.entidade;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+
 public class Log {
     private int idLog;
     private int idCliente;
     private int idProduto; 
-    private String data;
+    private Timestamp data;
     private String pagina;
     private String acao;
 
@@ -37,13 +40,6 @@ public class Log {
         this.idProduto = idProduto;
     }
 
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
-    }
 
     public String getPagina() {
         return pagina;
@@ -59,6 +55,20 @@ public class Log {
 
     public void setAcao(String acao) {
         this.acao = acao;
+    }
+
+    /**
+     * @return the data
+     */
+    public Timestamp getData() {
+        return data;
+    }
+
+    /**
+     * @param data the data to set
+     */
+    public void setData(Timestamp data) {
+        this.data = data;
     }
 
     

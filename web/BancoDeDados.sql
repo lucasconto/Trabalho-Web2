@@ -60,9 +60,18 @@ create table statusPedido(
 );
 
 create table itemPedido(
-idItemPedido serial,
-idPedido int,
-idProduto int,
-quantidade int,
-valorUnitario real
+    idItemPedido serial,
+    idPedido int,
+    idProduto int,
+    quantidade int,
+    valorUnitario real
+);
+
+create table log(
+    idLog serial,
+    fkCliente int,
+    fkProduto int,
+    data timeStamp,
+    pagina varchar(50),
+    acao varchar(50)
 );

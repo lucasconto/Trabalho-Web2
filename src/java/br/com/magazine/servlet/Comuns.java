@@ -41,8 +41,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Evandro-PC
  */
-@WebServlet(name = "Clientes", urlPatterns = {"/cliente/Clientes"})
-public class Clientes extends HttpServlet {
+@WebServlet(name = "Comun", urlPatterns = {"/comum/Comuns"})
+public class Comuns extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -102,7 +102,6 @@ public class Clientes extends HttpServlet {
                 request.setAttribute("cliente", cliente);
 //                response.sendRedirect("./alterarCliente.jsp");
 //                return;
-                
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/alterarCliente.jsp");
                 rd.forward(request, response);
             }
@@ -132,16 +131,6 @@ public class Clientes extends HttpServlet {
                 cliente.setEstado(request.getParameter("estado"));
                 cliente.setInativo(false);
                 cliente.setPerfil(1);
-                
-                Log log = new Log();
-                log.setAcao("Perfil do cliente alterado.");
-                log.setPagina("/cliente/alterarPerfil.jsp");
-                Timestamp dataLog = new Timestamp(System.currentTimeMillis());
-                log.setData(dataLog);
-                log.setIdCliente(3);
-                LogDAO logDAO = new LogDAO();
-                logDAO.insereLog(log);
-                
                 ClienteDAO clienteDAO = new ClienteDAO();
                 clienteDAO.atualizarCliente(cliente);
             }
@@ -150,16 +139,6 @@ public class Clientes extends HttpServlet {
                 ClienteDAO clienteDAO = new ClienteDAO();
                 cliente.setIdCliente(Integer.parseInt(request.getParameter("cliente-id")));
                 System.out.println(Integer.parseInt(request.getParameter("cliente-id")));
-                
-                Log log = new Log();
-                log.setAcao("Conta excluida pelo cliente.");
-                log.setPagina("/cliente/menuCliente.jsp");
-                Timestamp dataLog = new Timestamp(System.currentTimeMillis());
-                log.setData(dataLog);
-                log.setIdCliente(3);
-                LogDAO logDAO = new LogDAO();
-                logDAO.insereLog(log);
-                
                 clienteDAO.removerCliente(cliente);
             }
             if ("nomeAZ".equals(request.getParameter("action"))) {
@@ -235,15 +214,6 @@ public class Clientes extends HttpServlet {
                 pedido.setStatusPedido(statusPedido);
                 PedidoDAO pedidoDAO = new PedidoDAO();
                 pedidoDAO.atualizarStatusPedido(pedido);
-                
-                Log log = new Log();
-                log.setAcao("Pedido confirmado.");
-                log.setPagina("/cliente/visualizarPedidos.jsp");
-                Timestamp dataLog = new Timestamp(System.currentTimeMillis());
-                log.setData(dataLog);
-                log.setIdCliente(3);
-                LogDAO logDAO = new LogDAO();
-                logDAO.insereLog(log);
 
                 response.sendRedirect("./Clientes?action=pedidos");
                 return;
@@ -258,15 +228,6 @@ public class Clientes extends HttpServlet {
                 PedidoDAO pedidoDAO = new PedidoDAO();
                 pedidoDAO.atualizarStatusPedido(pedido);
 
-                Log log = new Log();
-                log.setAcao("Pedido cancelado.");
-                log.setPagina("/cliente/visualizarPedidos.jsp");
-                Timestamp dataLog = new Timestamp(System.currentTimeMillis());
-                log.setData(dataLog);
-                log.setIdCliente(3);
-                LogDAO logDAO = new LogDAO();
-                logDAO.insereLog(log);
-                
                 response.sendRedirect("./Clientes?action=pedidos");
                 return;
             }
@@ -281,26 +242,14 @@ public class Clientes extends HttpServlet {
                 request.setAttribute("str", str);
                 request.setAttribute("genero", idGenero);
                 request.setAttribute("produto", produto);
-                
-                Log log = new Log();
-                log.setAcao("Item visualizado.");
-                log.setPagina("/cliente/visualizarProduto.jsp");
-                Timestamp dataLog = new Timestamp(System.currentTimeMillis());
-                log.setData(dataLog);
-                log.setIdProduto(id);
-                log.setIdCliente(3);
-                LogDAO logDAO = new LogDAO();
-                logDAO.insereLog(log);
-                
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/visualizarProduto.jsp");
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/comum/visualizarProduto.jsp");
                 rd.forward(request, response);
             }
             if ("pesquisarProduto".equals(request.getParameter("action"))) {
                 GeneroDAO generoDAO = new GeneroDAO();
                 List<Genero> listaGeneros = generoDAO.listarGeneros();
                 request.setAttribute("listaGeneros", listaGeneros);
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/pesquisarProduto.jsp");
-                
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/comum/pesquisarProduto.jsp");
                 rd.forward(request, response);
                 return;
             }
@@ -328,11 +277,11 @@ public class Clientes extends HttpServlet {
                     request.setAttribute("escolha", escolha);
                     request.setAttribute("str", str);
                     request.setAttribute("listaProdutos", listaProdutos);
-                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/pesquisarProduto.jsp");
+                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/comum/pesquisarProduto.jsp");
                     rd.forward(request, response);
                     return;
                 }
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/pesquisarProduto.jsp");
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/comum/pesquisarProduto.jsp");
                 rd.forward(request, response);
                 return;
             } else {
@@ -340,7 +289,7 @@ public class Clientes extends HttpServlet {
 
                 List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidos();
                 request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/comum/index.jsp");
                 rd.forward(request, response);
                 return;
             }
@@ -363,13 +312,13 @@ public class Clientes extends HttpServlet {
             processRequest(request, response);
 
         } catch (ParseException ex) {
-            Logger.getLogger(Clientes.class
+            Logger.getLogger(Comuns.class
                     .getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Clientes.class
+            Logger.getLogger(Comuns.class
                     .getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(Clientes.class
+            Logger.getLogger(Comuns.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -389,13 +338,13 @@ public class Clientes extends HttpServlet {
             processRequest(request, response);
 
         } catch (ParseException ex) {
-            Logger.getLogger(Clientes.class
+            Logger.getLogger(Comuns.class
                     .getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Clientes.class
+            Logger.getLogger(Comuns.class
                     .getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(Clientes.class
+            Logger.getLogger(Comuns.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }

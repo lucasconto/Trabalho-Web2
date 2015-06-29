@@ -5,10 +5,12 @@
  */
 package br.com.magazine.servlet;
 
+import br.com.magazine.dao.LogDAO;
 import br.com.magazine.dao.PedidoDAO;
 import br.com.magazine.dao.ProdutoDAO;
 import br.com.magazine.entidade.Carrinho;
 import br.com.magazine.entidade.ItemPedido;
+import br.com.magazine.entidade.Log;
 import br.com.magazine.entidade.Pedido;
 import br.com.magazine.entidade.Produto;
 import br.com.magazine.entidade.StatusPedido;
@@ -63,6 +65,17 @@ public class Carrinhos extends HttpServlet {
                     carrinho = new Carrinho();
                 }
                 carrinho.adicionarItem(itemPedido);
+                
+                Log log = new Log();
+                log.setAcao("Item adicionado ao carrinho.");
+                log.setPagina("/cliente/carrinhoCompras.jsp");
+                Timestamp dataLog = new Timestamp(System.currentTimeMillis());
+                log.setData(dataLog);
+                log.setIdProduto(idProduto);
+                log.setIdCliente(3);
+                LogDAO logDAO = new LogDAO();
+                logDAO.insereLog(log);
+
                 session.setAttribute("carrinho", carrinho);
 //                    if (session.getAttribute("logado") == null) {
                 response.sendRedirect("./cliente/carrinhoCompras.jsp");
@@ -71,22 +84,6 @@ public class Carrinhos extends HttpServlet {
 //                    }
 
 //                }
-                if ("produto".equals(request.getParameter("pagina"))) {
-                    if (request.getParameter("escolha") == null && request.getParameter("genero") == null && request.getParameter("str") == null) {
-                        request.setAttribute("id", idProduto);
-                        RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/Clientes?action=visualizarProduto.jsp");
-//                response.sendRedirect("cliente/Clientes");
-                        rd.forward(request, response);
-                        return;
-                    } else if (request.getParameter("genero") != null) {
-                        String idGenero = request.getParameter("genero");
-                        request.setAttribute("genero", idGenero);
-                        request.setAttribute("id", idProduto);
-                        RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/Clientes?action=visualizarProduto.jsp");
-                        rd.forward(request, response);
-                        return;
-                    }
-                }
             }
             if ("comprar".equals(request.getParameter("action"))) {
                 HttpSession session = request.getSession();
@@ -105,6 +102,15 @@ public class Carrinhos extends HttpServlet {
                 PedidoDAO pedidoDAO = new PedidoDAO();
                 pedidoDAO.cadastrarPedido(pedido);
 
+                Log log = new Log();
+                log.setAcao("Compra realizada.");
+                log.setPagina("/cliente/visualizarCompras.jsp");
+                Timestamp dataLog = new Timestamp(System.currentTimeMillis());
+                log.setData(dataLog);
+                log.setIdCliente(3);
+                LogDAO logDAO = new LogDAO();
+                logDAO.insereLog(log);
+                
                 carrinho = new Carrinho();
                 session.setAttribute("carrinho", carrinho);
                 response.sendRedirect("cliente/Clientes?action=pedidos");
@@ -116,6 +122,16 @@ public class Carrinhos extends HttpServlet {
                 carrinho.aumentaQuantidade(idProduto);
                 session.setAttribute("carrinho", carrinho);
                 response.sendRedirect("cliente/carrinhoCompras.jsp");
+                Log log = new Log();
+                log.setAcao("Quantidade incrementada no carrinho.");
+                log.setPagina("/cliente/carrinhoCompras.jsp");
+                Timestamp dataLog = new Timestamp(System.currentTimeMillis());
+                log.setData(dataLog);
+                log.setIdProduto(idProduto);
+                log.setIdCliente(3);
+                LogDAO logDAO = new LogDAO();
+                logDAO.insereLog(log);
+                
             }
             if ("diminuiQuantidade".equals(request.getParameter("action"))) {
                 int idProduto = Integer.parseInt(request.getParameter("id"));
@@ -124,6 +140,15 @@ public class Carrinhos extends HttpServlet {
                 Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
                 carrinho.diminuiQuantidade(idProduto);
                 session.setAttribute("carrinho", carrinho);
+                Log log = new Log();
+                log.setAcao("Quantidade decrementada no carrinho.");
+                log.setPagina("/cliente/carrinhoCompras.jsp");
+                Timestamp dataLog = new Timestamp(System.currentTimeMillis());
+                log.setData(dataLog);
+                log.setIdProduto(idProduto);
+                log.setIdCliente(3);
+                LogDAO logDAO = new LogDAO();
+                logDAO.insereLog(log);
 
                 response.sendRedirect("cliente/carrinhoCompras.jsp");
 
@@ -135,6 +160,16 @@ public class Carrinhos extends HttpServlet {
                 Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
                 carrinho.removerItem(idProduto);
                 session.setAttribute("carrinho", carrinho);
+                Log log = new Log();
+                log.setAcao("Produto removido do carrinho.");
+                log.setPagina("/cliente/carrinhoCompras.jsp");
+                Timestamp dataLog = new Timestamp(System.currentTimeMillis());
+                log.setData(dataLog);
+                log.setIdProduto(idProduto);
+                log.setIdCliente(3);
+                LogDAO logDAO = new LogDAO();
+                logDAO.insereLog(log);
+                
                 response.sendRedirect("cliente/carrinhoCompras.jsp");
 
             }

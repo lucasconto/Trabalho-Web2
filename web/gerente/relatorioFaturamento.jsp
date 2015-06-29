@@ -96,7 +96,7 @@
                                 <div class="col-md-4">
                                     <select name="ano" id="mes" class="form-control" required>
                                         <option value="">Selecione</option>
-                                       <c:forEach var="i" begin="2012" end="${year}">
+                                        <c:forEach var="i" begin="2012" end="${year}">
                                             <option value="${i}">${i}</option>
                                         </c:forEach>
                                     </select>
@@ -107,7 +107,7 @@
                             </div>
                         </form>
                     </div>
-                            <br/>
+                    <br/>
                     <div class="row">
                         <form class="form-inline" action="Gerentes?action=faturamentoAnual" method="post">
                             <div class="form-group">
@@ -119,9 +119,9 @@
                             <div class="form-group">
                                 <label class="control-label col-md-2">Ano: </label> 
                                 <div class="col-md-4">
-                                   <select name="ano" id="mes" class="form-control" required>
+                                    <select name="ano" id="mes" class="form-control" required>
                                         <option value="">Selecione</option>
-                                       <c:forEach var="i" begin="2012" end="${year}">
+                                        <c:forEach var="i" begin="2012" end="${year}">
                                             <option value="${i}">${i}</option>
                                         </c:forEach>
                                     </select>

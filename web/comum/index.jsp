@@ -1,4 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,22 +37,14 @@
 
             <div class="row">
 
-                <div class="col-md-3">
-
-
-                    <div class="list-group">
-
-                        <a href="#" class="list-group-item">Revistas</a>
-                        <a href="#" class="list-group-item">Revistas em Quadrinhos</a>
-                    </div>
-                </div>
+                <jsp:include page="menuAnonimo.jsp"/>
 
                 <div class="col-md-9">
 
 
                     <div class="row carousel-holder">
 
-                        <div class="col-md-12">
+                        <div class="col-md-5 col-md-offset-3">
                             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                                 <ol class="carousel-indicators">
                                     <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -59,13 +53,13 @@
                                 </ol>
                                 <div class="carousel-inner">
                                     <div class="item active">
-                                        <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                                        <img class="slide-image" src="${pageContext.request.contextPath}/Imagens/5.jpg" alt="" style="width: 400px; height: 300px;">
                                     </div>
                                     <div class="item">
-                                        <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                                        <img class="slide-image" src="${pageContext.request.contextPath}/Imagens/2.jpg" alt="" style="width: 400px; height: 300px;">
                                     </div>
                                     <div class="item">
-                                        <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                                        <img class="slide-image" src="${pageContext.request.contextPath}/Imagens/3.jpg" alt="" style="width: 400px; height: 300px;">
                                     </div>
                                 </div>
                                 <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
@@ -78,155 +72,81 @@
                         </div>
                     </div>
                     <div class="row">
+                        <form action="./Clientes?action=pesquisar" method="post" class="form-horizontal">
                         <div class="col-md-5 col-md-offset-1" style="padding: 0px">
-                            <input type="text" class="form-control" placeholder="Pesquisar por..." />
+                            <input type="text" name="str"  class="form-control" placeholder="Pesquisar por..." />
                         </div>
                         <div class="col-md-3" style="padding: 0px">
-                            <select name="sexo" id="sexo" class="form-control " >
-                                <option >Tudo</option>
-                                <option value="t" required>Título</option>
-                                <option value="g" required>Gênero</option>
-                                <option value="a" required>Autor</option>
-                            </select>
+                                    <select name="escolha" id="escolha" class="form-control " >
+                                        <option value="titulo" ${escolha == 'titulo' ? 'selected' : ''} required>Título</option>
+                                        <option value="genero" ${escolha == 'genero' ? 'selected' : ''} required>Gênero</option>
+                                        <option value="autor" ${escolha == 'autor' ? 'selected' : ''} required>Autor</option>
+                                    </select>
                         </div>
                         <div class="col-md-1" style="padding: 0px">
-                            <button class="btn btn-default form-control" type="text">
+                            <button class="btn btn-default form-control" type="submit">
                                 <span class="glyphicon glyphicon-search"></span>
                             </button>
                         </div>
+                            </form>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="panel pull-right" >
+                            Ordenar por:
+                                <c:if test="${ordem != 'AZ'}">
+                                <a href="./Clientes?action=nomeAZ">
+                                Nome 
+                                    <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                                </c:if>
+                                <c:if test="${ordem == 'AZ'}">
+                           <a href="./Clientes?action=nomeZA">
+                                Nome 
+                                    <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>
+                                </c:if>
+                            </a> 
+                                 <c:if test="${ordem != 'Asc'}">
+                             <a href="./Clientes?action=Asc"> 
+                                 Preço 
+                                     <span class="glyphicon glyphicon-sort-by-attributes"></span>
+                             </a>
+                                 </c:if>
+                                 <c:if test="${ordem == 'Asc'}">
+                             <a href="./Clientes?action=Desc"> 
+                                 Preço 
+                                     <span class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+                             </a>
+                                 </c:if>
+                        </div>
                     </div>
 
-                    <br/>
 
                     <div class="row">
-                        <div class="col-sm-4 col-lg-4 col-md-4">
-                            <div class="thumbnail">
-                                <img src="http://placehold.it/320x150" alt="">
-                                <div class="caption">
-                                    <h4><a href="../Carrinhos?action=addCarrinho&id=1">Monica Edição 1000</a>
-                                    </h4>
-                                    <p>
-                                        Gênero: Comédia<br/>
-                                        Número de Páginas: 55<br/>
-                                        Editora: Globo<br/>
-                                        Autor: Maurício de Souza<br/>
-                                    <h4 class="pull-left">R$24.99</h4>
-                                    <br/>
-                                    <a href="/Carrinhos/addCarrinho?id=1" class="pull-right">
-                                        Adicionar ao Carrinho
-                                        <span class="glyphicon glyphicon-shopping-cart"></span></a>
-                                    </p>
+                        <c:forEach var="produto" items="${listaProdutos}">
+                            <div class="col-sm-4 col-lg-4 col-md-4">
+                                <div class="thumbnail">
+                                            <img src="${pageContext.request.contextPath}/Imagens/${produto.idImg}.jpg" style="width: 100px;height: 120px" class="media-object" alt="">
+                                    <div class="caption">
+                                        <h4>
+                                            <a href="Clientes?action=visualizarProduto&id=${produto.idProduto}">
+                                                ${produto.titulo}
+                                            </a>
+                                        </h4>
+                                        <p>
+                                            Gênero: ${produto.genero.nome}<br/>
+                                            Editora: ${produto.editora.nome}<br/>
+                                            Autor: ${produto.autor}<br/>
+                                        <h4 class="pull-left"><fmt:formatNumber value="${produto.preco}" minFractionDigits="2" type="currency"/></h4>
+                                        <br/>
+                                        <a href="../Carrinhos?action=addCarrinho&id=${produto.idProduto}" class="pull-right">
+                                            Adicionar ao Carrinho
+                                            <span class="glyphicon glyphicon-shopping-cart"></span></a>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="col-sm-4 col-lg-4 col-md-4">
-                            <div class="thumbnail">
-                                <img src="http://placehold.it/320x150" alt="">
-                                <div class="caption">
-                                    <h4><a href="#">Wolverine Aniversário</a>
-                                    </h4>
-                                    <p>
-                                        Gênero: Ação<br/>
-                                        Número de Páginas: 203<br/>
-                                        Editora: Marvel<br/>
-                                        Autor: Marvel Comics<br/>
-                                    <h4 class="pull-left">R$204.99</h4>
-                                    <br/>
-                                    <a href="#" class="pull-right">
-                                        Adicionar ao Carrinho
-                                        <span class="glyphicon glyphicon-shopping-cart"></span></a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-4 col-lg-4 col-md-4">
-                            <div class="thumbnail">
-                                <img src="http://placehold.it/320x150" alt="">
-                                <div class="caption">
-                                    <h4><a href="#">Casa e Construção maio/2015</a>
-                                    </h4>
-                                    <p>
-                                        Gênero: Casa<br/>
-                                        Número de Páginas: 34<br/>
-                                        Editora: Minhateca<br/>
-                                        Autor: Joao do Pé de Feijão<br/>
-                                    <h4 class="pull-left">R$28.99</h4>
-                                    <br/>
-                                    <a href="#" class="pull-right">
-                                        Adicionar ao Carrinho
-                                        <span class="glyphicon glyphicon-shopping-cart"></span></a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-4 col-lg-4 col-md-4">
-                            <div class="thumbnail">
-                                <img src="http://placehold.it/320x150" alt="">
-                                <div class="caption">
-                                    <h4><a href="#">Monica Edição 1000</a>
-                                    </h4>
-                                    <p>
-                                        Gênero: Comédia<br/>
-                                        Número de Páginas: 55<br/>
-                                        Editora: Globo<br/>
-                                        Autor: Maurício de Souza<br/>
-                                    <h4 class="pull-left">R$24.99</h4>
-                                    <br/>
-                                    <a href="#" class="pull-right">
-                                        Adicionar ao Carrinho
-                                        <span class="glyphicon glyphicon-shopping-cart"></span></a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 col-lg-4 col-md-4">
-                            <div class="thumbnail">
-                                <img src="http://placehold.it/320x150" alt="">
-                                <div class="caption">
-                                    <h4><a href="#">Monica Edição 1000</a>
-                                    </h4>
-                                    <p>
-                                        Gênero: Comédia<br/>
-                                        Número de Páginas: 55<br/>
-                                        Editora: Globo<br/>
-                                        Autor: Maurício de Souza<br/>
-                                    <h4 class="pull-left">R$24.99</h4>
-                                    <br/>
-                                    <a href="#" class="pull-right">
-                                        Adicionar ao Carrinho
-                                        <span class="glyphicon glyphicon-shopping-cart"></span></a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-4 col-lg-4 col-md-4">
-                            <div class="thumbnail">
-                                <img src="http://placehold.it/320x150" alt="">
-                                <div class="caption">
-                                    <h4><a href="#">Monica Edição 1000</a>
-                                    </h4>
-                                    <p>
-                                        Gênero: Comédia<br/>
-                                        Número de Páginas: 55<br/>
-                                        Editora: Globo<br/>
-                                        Autor: Maurício de Souza<br/>
-                                    <h4 class="pull-left">R$24.99</h4>
-                                    <br/>
-                                    <a href="#" class="pull-right">
-                                        Adicionar ao Carrinho
-                                        <span class="glyphicon glyphicon-shopping-cart"></span></a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-4 col-lg-4 col-md-4">
-                        </div>
-
+                                        
+                        </c:forEach>
                     </div>
 
                 </div>
@@ -234,19 +154,21 @@
             </div>
 
         </div>
-        <!-- /.container -->
 
-        <!--Inclui Rodapé-->
-        <jsp:include page="rodape.jsp"/>
+    </div>
+    <!-- /.container -->
+
+    <!--Inclui Rodapé-->
+    <jsp:include page="../comum/rodape.jsp"/>
 
 
 
-        <!-- jQuery -->
-        <script src="../js/jquery.min.js"></script>
+    <!-- jQuery -->
+    <script src="../js/jquery.min.js"></script>
 
-        <!-- Bootstrap Core JavaScript -->
-        <script src="../js/bootstrap.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../js/bootstrap.min.js"></script>
 
-    </body>
+</body>
 
 </html>

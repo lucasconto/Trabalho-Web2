@@ -129,7 +129,7 @@
             <div class="container">
                 <div class=" col-sm-offset-3 col-sm-6">
                     <h1>Dados Cadastrais</h1>
-                    <form class="form-horizontal" id="form" method="POST" action="Clientes?action=cadastrar" onsubmit="//return valida(this);">
+                    <form class="form-horizontal" id="form" method="POST" action="../cliente/Clientes?action=cadastrar" onsubmit="//return valida(this);">
                         <div class="form-group">
                             <label for="" class="col-sm-4 control-label">Nome Completo</label>
                             <div class="col-sm-8">
