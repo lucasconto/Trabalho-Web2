@@ -65,7 +65,7 @@ public class Carrinhos extends HttpServlet {
                     carrinho = new Carrinho();
                 }
                 carrinho.adicionarItem(itemPedido);
-                
+
                 Log log = new Log();
                 log.setAcao("Item adicionado ao carrinho.");
                 log.setPagina("/cliente/carrinhoCompras.jsp");
@@ -77,43 +77,52 @@ public class Carrinhos extends HttpServlet {
                 logDAO.insereLog(log);
 
                 session.setAttribute("carrinho", carrinho);
-//                    if (session.getAttribute("logado") == null) {
                 response.sendRedirect("./cliente/carrinhoCompras.jsp");
-//                    } else {
-//                        response.sendRedirect("comum/index.jsp");
-//                    }
-
-//                }
             }
             if ("comprar".equals(request.getParameter("action"))) {
+
                 HttpSession session = request.getSession();
-                Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
-                Pedido pedido = new Pedido();
-                Timestamp dataPedido = new Timestamp(System.currentTimeMillis());
+                Integer logado;
+                try {
+                    logado = (int) session.getAttribute("logado");
+                } catch (Exception f) {
+                    logado = 0;
+                }
+                if (logado > 0) {
+                    Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
+                    Pedido pedido = new Pedido();
+                    Timestamp dataPedido = new Timestamp(System.currentTimeMillis());
 
-                pedido.setData(dataPedido);
-                pedido.setIdCliente(3);
-                pedido.setValorTotal(carrinho.getTotal());
-                pedido.setItens(carrinho.getListaItens());
-                StatusPedido statusPedido = new StatusPedido();
-                statusPedido.setIdStatusPedido(1);
-                pedido.setStatusPedido(statusPedido);
+                    pedido.setData(dataPedido);
+                    pedido.setIdCliente((int)session.getAttribute("idcliente"));
+                    pedido.setValorTotal(carrinho.getTotal());
+                    pedido.setItens(carrinho.getListaItens());
+                    StatusPedido statusPedido = new StatusPedido();
+                    statusPedido.setIdStatusPedido(1);
+                    pedido.setStatusPedido(statusPedido);
 
-                PedidoDAO pedidoDAO = new PedidoDAO();
-                pedidoDAO.cadastrarPedido(pedido);
+                    PedidoDAO pedidoDAO = new PedidoDAO();
+                    pedidoDAO.cadastrarPedido(pedido);
 
-                Log log = new Log();
-                log.setAcao("Compra realizada.");
-                log.setPagina("/cliente/visualizarCompras.jsp");
-                Timestamp dataLog = new Timestamp(System.currentTimeMillis());
-                log.setData(dataLog);
-                log.setIdCliente(3);
-                LogDAO logDAO = new LogDAO();
-                logDAO.insereLog(log);
-                
-                carrinho = new Carrinho();
-                session.setAttribute("carrinho", carrinho);
-                response.sendRedirect("cliente/Clientes?action=pedidos");
+                    Log log = new Log();
+                    log.setAcao("Compra realizada.");
+                    log.setPagina("/cliente/visualizarCompras.jsp");
+                    Timestamp dataLog = new Timestamp(System.currentTimeMillis());
+                    log.setData(dataLog);
+                    log.setIdCliente((int)session.getAttribute("idcliente"));
+                    LogDAO logDAO = new LogDAO();
+                    logDAO.insereLog(log);
+
+                    carrinho = new Carrinho();
+                    session.setAttribute("carrinho", carrinho);
+                    response.sendRedirect("cliente/Clientes?action=pedidos");
+
+                } else {
+                    response.sendRedirect("./comum/login.jsp");
+//                    request.setAttribute("mensagem", "Para continuar é necessário fazer login");
+//                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/comum/login.jsp");
+//                    rd.forward(request, response);
+                }
             }
             if ("aumentaQuantidade".equals(request.getParameter("action"))) {
                 int idProduto = Integer.parseInt(request.getParameter("id"));
@@ -131,7 +140,7 @@ public class Carrinhos extends HttpServlet {
                 log.setIdCliente(3);
                 LogDAO logDAO = new LogDAO();
                 logDAO.insereLog(log);
-                
+
             }
             if ("diminuiQuantidade".equals(request.getParameter("action"))) {
                 int idProduto = Integer.parseInt(request.getParameter("id"));
@@ -169,15 +178,15 @@ public class Carrinhos extends HttpServlet {
                 log.setIdCliente(3);
                 LogDAO logDAO = new LogDAO();
                 logDAO.insereLog(log);
-                
+
                 response.sendRedirect("cliente/carrinhoCompras.jsp");
 
             }
-            
+
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -191,10 +200,13 @@ public class Carrinhos extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
+
         } catch (SQLException ex) {
-            Logger.getLogger(Carrinhos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Carrinhos.class
+                    .getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Carrinhos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Carrinhos.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -211,10 +223,13 @@ public class Carrinhos extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
+
         } catch (SQLException ex) {
-            Logger.getLogger(Carrinhos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Carrinhos.class
+                    .getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Carrinhos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Carrinhos.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
