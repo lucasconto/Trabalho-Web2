@@ -72,7 +72,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <form action="./Clientes?action=pesquisar" method="post" class="form-horizontal">
+                        <form action="./Comuns?action=pesquisar" method="post" class="form-horizontal">
                         <div class="col-md-5 col-md-offset-1" style="padding: 0px">
                             <input type="text" name="str"  class="form-control" placeholder="Pesquisar por..." />
                         </div>
@@ -95,24 +95,24 @@
                         <div class="panel pull-right" >
                             Ordenar por:
                                 <c:if test="${ordem != 'AZ'}">
-                                <a href="./Clientes?action=nomeAZ">
+                                <a href="./Comuns?action=nomeAZ">
                                 Nome 
                                     <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                                 </c:if>
                                 <c:if test="${ordem == 'AZ'}">
-                           <a href="./Clientes?action=nomeZA">
+                           <a href="./Comuns?action=nomeZA">
                                 Nome 
                                     <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>
                                 </c:if>
                             </a> 
                                  <c:if test="${ordem != 'Asc'}">
-                             <a href="./Clientes?action=Asc"> 
+                             <a href="./Comuns?action=Asc"> 
                                  Preço 
                                      <span class="glyphicon glyphicon-sort-by-attributes"></span>
                              </a>
                                  </c:if>
                                  <c:if test="${ordem == 'Asc'}">
-                             <a href="./Clientes?action=Desc"> 
+                             <a href="./Comuns?action=Desc"> 
                                  Preço 
                                      <span class="glyphicon glyphicon-sort-by-attributes-alt"></span>
                              </a>
@@ -128,7 +128,7 @@
                                             <img src="${pageContext.request.contextPath}/Imagens/${produto.idImg}.jpg" style="width: 100px;height: 120px" class="media-object" alt="">
                                     <div class="caption">
                                         <h4>
-                                            <a href="Clientes?action=visualizarProduto&id=${produto.idProduto}">
+                                            <a href="Comuns?action=visualizarProduto&id=${produto.idProduto}">
                                                 ${produto.titulo}
                                             </a>
                                         </h4>

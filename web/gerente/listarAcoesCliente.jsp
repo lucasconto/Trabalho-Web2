@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -8,16 +10,16 @@
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
         <title>Cadastro de Categoria</title>
-        
-         <!--JQuery CSS-->
+
+        <!--JQuery CSS-->
         <link rel="stylesheet" href="../js/jquery-ui.css">
 
         <!-- Bootstrap -->
         <link href="../css/bootstrap.min.css" rel="stylesheet">
-        
-                <!-- Custom CSS -->
+
+        <!-- Custom CSS -->
         <link href="../css/shop-homepage.css" rel="stylesheet">
-        
+
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="../js/jquery.min.js"></script>
         <script src="../js/jquery-ui.js"></script>
@@ -30,124 +32,88 @@
         <![endif]-->
         <script>
             $(function () {
-            
-            var start = new Date();
-            start.setFullYear(start.getFullYear() - 100);
-            var end = new Date();
-            end.setFullYear(end.getFullYear() - 13);
+
+                var start = new Date();
+                start.setFullYear(start.getFullYear() - 100);
+                var end = new Date();
+                end.setFullYear(end.getFullYear() - 13);
                 $('#de').datepicker({
-                            dateFormat: 'dd/mm/yy',
-                            dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
-                            dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
-                            dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
-                            monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
-                            monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
-                            nextText: 'Próximo',
-                            prevText: 'Anterior',
-                            changeMonth: true,
-                            changeYear: true,
-                            minDate: start,
-                            maxDate: end,
-                            yearRange: -100 + ':' + end.getFullYear(),
-                            onClose: function( selectedDate ) {
-                    $( "#ate" ).datepicker( "option", "minDate", selectedDate );
-                  }
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Próximo',
+                    prevText: 'Anterior',
+                    changeMonth: true,
+                    changeYear: true,
+                    minDate: start,
+                    maxDate: end,
+                    yearRange: -100 + ':' + end.getFullYear(),
+                    onClose: function (selectedDate) {
+                        $("#ate").datepicker("option", "minDate", selectedDate);
+                    }
                 });
 
                 $('#ate').datepicker({
-                            dateFormat: 'dd/mm/yy',
-                            dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
-                            dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
-                            dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
-                            monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
-                            monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
-                            nextText: 'Próximo',
-                            prevText: 'Anterior',
-                            changeMonth: true,
-                            changeYear: true,
-                            minDate: start,
-                            maxDate: end,
-                            yearRange: -100 + ':' + end.getFullYear(),
-                            onClose: function( selectedDate ) {
-                    $( "#de" ).datepicker( "option", "maxDate", selectedDate );
-                  }
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Próximo',
+                    prevText: 'Anterior',
+                    changeMonth: true,
+                    changeYear: true,
+                    minDate: start,
+                    maxDate: end,
+                    yearRange: -100 + ':' + end.getFullYear(),
+                    onClose: function (selectedDate) {
+                        $("#de").datepicker("option", "maxDate", selectedDate);
+                    }
                 });
-           });
+            });
         </script>
-        
+
     </head>
     <body>
         <!--Inclui cabeçalho-->
         <jsp:include page="navGerente.jsp"/>
-                       
-        <div class="container">
-           <div class="row">
-            <jsp:include page="menuGerente.jsp"/>
-            <div class="col-md-9 ">   
-            <h1>Ações do Cliente</h1>
-             <div class="row">
-                 <form class="form">
-                     <div class="form-group">
-                        <div class="col-md-3">
-                            <strong>Pesquisar por data:</strong>
-                        </div>
-                        <div class="col-md-2" style="padding: 0px">
-                            de <input type="text" class="f" maxlength="10" id="de" style="width: 90px" placeholder="dd/mm/aaa" OnKeyPress="formatar(this,'##/##/####')" required/>
-                        </div>
-                        <div class="col-md-2" style="padding: 0px">
-                            até <input type="text" class="f" maxlength="10" id="ate" style="width: 90px" placeholder="dd/mm/aaa" OnKeyPress="formatar(this,'##/##/####')" required/>
-                        </div>
-                        <div class="col-md-1" >
-                            <button class="btn btn-default form-control" type="text">
-                                <span class="glyphicon glyphicon-search"></span>
-                            </button>
-                        </div>
-                     </div>
-                 </form>
-                    </div>
 
-            <br/>
-            <strong>Nome: Evandro Machado</strong>
-                           <table class="table table-striped table-bordered">
-                               <tr>
-                                   <th>Ação</th>
-                                   <th>Data</th>
-                                   <th>Hora</th>
-                               </tr>
-                               <tr>
-                                   <td>Produto #789 visualizado.</td>
-                                   <td>11/09/2011</td>
-                                   <td>10:40</td>
-                                </tr>
-                                                              <tr>
-                                   <td>Compra #856 solicitada.</td>
-                                   <td>12/11/2015</td>
-                                   <td>17:30</td>
-                                </tr>
-                                                              <tr>
-                                   <td>Compra #856 efetivada.</td>
-                                   <td>13/11/2015</td>
-                                   <td>10:00</td>
-                                </tr>
-                                <tr>
-                                   <td>Usuário efetuou login.</td>
-                                   <td>12/11/2015</td>
-                                   <td>13:15</td>
-                               </tr>
-                                <tr>
-                                   <td>Usuário efetuou logout.</td>
-                                   <td>12/11/2015</td>
-                                   <td>13:20</td>
-                               </tr>
-                               
-                           </table>
-                
-           </div>
-        </div>
+        <div class="container">
+            <div class="row">
+                <jsp:include page="menuGerente.jsp"/>
+                <div class="col-md-9 ">   
+                    <h1>Ações do Cliente</h1>
+                    <h4>Nome: ${nome}</h4>
+                    <table class="table table-striped table-bordered">
+                        <tr>
+                            <th>Ação</th>
+                            <th>Cliente #</th>
+                            <th>Produto #</th>
+                            <th>Data</th>
+                            <th>Hora</th>
+                        </tr>
+                        <c:forEach var="log" items="${listaLogs}">
+                            
+                        <tr>
+                            <td>${log.acao}</td>
+                            <td>${log.idCliente}</td>
+                            <td>${log.idProduto}</td>
+                            <td><fmt:formatDate value="${log.data}" pattern="dd/MM/yyyy" /></td>
+                            <td><fmt:formatDate value="${log.data}" pattern="HH:mm:ss" /></td>
+                        </tr>
+                        </c:forEach>
+                    </table>
+
+                </div>
+            </div>
         </div>
         <!--Inclui Rodapé-->
         <jsp:include page="../comum/rodape.jsp"/>
-        
+
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="../js/bootstrap.min.js"></script>
     </body>

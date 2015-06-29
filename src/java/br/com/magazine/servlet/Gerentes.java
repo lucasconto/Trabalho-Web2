@@ -8,10 +8,12 @@ package br.com.magazine.servlet;
 import br.com.magazine.dao.ClienteDAO;
 import br.com.magazine.dao.EditoraDAO;
 import br.com.magazine.dao.GeneroDAO;
+import br.com.magazine.dao.LogDAO;
 import br.com.magazine.dao.PedidoDAO;
 import br.com.magazine.entidade.Cliente;
 import br.com.magazine.entidade.Editora;
 import br.com.magazine.entidade.Genero;
+import br.com.magazine.entidade.Log;
 import br.com.magazine.entidade.Pedido;
 import br.com.magazine.util.ConnectionFactory;
 import java.io.IOException;
@@ -604,6 +606,25 @@ public class Gerentes extends HttpServlet {
                     request.setAttribute("str", str);
                     RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/Gerentes?action=buscarc");
                     rd.forward(request,response);
+                }
+                if ("visualizarAcoes".equals(request.getParameter("action"))) {
+                    String escolha = request.getParameter("escolha");
+                    String str = request.getParameter("str");
+                    String nome = request.getParameter("nome");
+                    String de = request.getParameter("de");
+                    String ate = request.getParameter("ate");
+                    int id = Integer.parseInt(request.getParameter("id"));
+                    LogDAO logDAO = new LogDAO();
+                    List<Log> listaLogs = logDAO.listarLogs(id, de, ate);
+                    
+                    request.setAttribute("escolha", escolha);
+                    request.setAttribute("str", str);
+                    request.setAttribute("id", id);
+                    request.setAttribute("nome", nome);
+                    request.setAttribute("listaLogs", listaLogs);
+                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/listarAcoesCliente.jsp");
+                    rd.forward(request,response);
+                    return;
                 }
             }
         }

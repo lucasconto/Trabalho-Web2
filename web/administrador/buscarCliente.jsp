@@ -38,7 +38,7 @@
              <jsp:include page="menuAdministrador.jsp"/>
             <div class="col-md-9 ">
                 <h1>Buscar Cliente</h1>
-                <form action="./Gerentes?action=buscarc" method="post" class="form-horizontal">
+                <form action="./Administradores?action=buscarc" method="post" class="form-horizontal">
                         <div class="form-group">
                         <div class="row">
                             <label class="col-md-2 control-label pull-left clearfix" for="">Buscar por:</label>
