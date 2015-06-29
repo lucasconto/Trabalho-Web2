@@ -40,7 +40,7 @@
                 <h1>Login</h1>
                 
                     <div class="alert alert-danger" role="alert">
-                        ${mensagem}
+                        ${mensagem ? mensagem : "Para continuar, efetue o login" }
                     </div>
                 
                 <form id="signupform" action="../comum/Login?action=login" method="POST" role="form">
