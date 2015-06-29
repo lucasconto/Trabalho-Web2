@@ -73,6 +73,7 @@ public class Login extends HttpServlet {
                         session.setAttribute("nome", cliente.getNome());
                         session.setAttribute("idcliente", cliente.getIdCliente());
                         session.setAttribute("logado", 1);
+                        session.setAttribute("perfil", cliente.getPerfil());
                         response.sendRedirect("../cliente/Clientes");
 //                        RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
 //                        rd.forward(request, response);

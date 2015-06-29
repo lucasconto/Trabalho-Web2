@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -32,6 +33,13 @@
     <body>
         <!--Inclui cabeçalho-->
         <jsp:include page="navGerente.jsp"/>
+        <c:if test="${sessionScope.logado eq null }">
+            <jsp:forward page="/comum/login.jsp" />
+        </c:if>
+            <c:if test="${sessionScope.cliente.getPerfil()  < 3}">
+            perfil negado
+            <jsp:forward page="semPermissao.jsp" />
+        </c:if> 
         
         <div class="container">
            <div class="row">

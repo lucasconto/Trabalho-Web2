@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -9,15 +10,15 @@
 
         <title>Cadastro de Categoria</title>
 
-         <!--JQuery CSS-->
+        <!--JQuery CSS-->
         <link rel="stylesheet" href="../js/jquery-ui.css">
 
         <!-- Bootstrap -->
         <link href="../css/bootstrap.min.css" rel="stylesheet">
-        
-                <!-- Custom CSS -->
+
+        <!-- Custom CSS -->
         <link href="../css/shop-homepage.css" rel="stylesheet">
-        
+
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="../js/jquery.min.js"></script>
         <script src="../js/jquery-ui.js"></script>
@@ -32,42 +33,51 @@
     <body>
         <!--Inclui cabeçalho-->
         <jsp:include page="navAdministrador.jsp"/>
-        
-        <div class="container">
-           <div class="row">
-             <jsp:include page="menuAdministrador.jsp"/>
+
+        <c:if test="${sessionScope.logado eq null }">
+            <jsp:forward page="/comum/login.jsp" />
+        </c:if>
+            <c:if test="${sessionScope.cliente.getPerfil()  < 2}">
+            perfil negado
+            <jsp:forward page="semPermissao.jsp" />
+        </c:if>        
+
+
+    <div class="container">
+        <div class="row">
+            <jsp:include page="menuAdministrador.jsp"/>
             <div class="col-md-9 ">
                 <h1>Buscar Cliente</h1>
                 <form action="./Administradores?action=buscarc" method="post" class="form-horizontal">
-                        <div class="form-group">
+                    <div class="form-group">
                         <div class="row">
                             <label class="col-md-2 control-label pull-left clearfix" for="">Buscar por:</label>
                         </div>
-                           <div class="col-md-2">
+                        <div class="col-md-2">
                             <select name="escolha" class="form-control">
                                 <option value="nome">Nome</option>
                                 <option value="cpf">CPF</option>
                                 <option value="email">Email</option>
                             </select>
                         </div>
-                            <div class="col-md-7">
-                                <input type="text" name="str" id="" class="form-control" placeholder="1234">
-                            </div>
+                        <div class="col-md-7">
+                            <input type="text" name="str" id="" class="form-control" placeholder="1234">
+                        </div>
                         <div class="col-md-2">
                             <button type="submit" class="btn btn-success  btn-block ">Buscar</button>
                         </div>
                     </div>
 
                 </form>
-                    </div>
             </div>
         </div>
-        <!--Inclui Rodapé-->
-        <jsp:include page="../comum/rodape.jsp"/>
-        
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="../js/jquery.min.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="../js/bootstrap.min.js"></script>
-    </body>
+    </div>
+    <!--Inclui Rodapé-->
+    <jsp:include page="../comum/rodape.jsp"/>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="../js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../js/bootstrap.min.js"></script>
+</body>
 </html>

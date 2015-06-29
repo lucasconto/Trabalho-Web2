@@ -36,6 +36,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
 
@@ -59,324 +60,370 @@ public class Gerentes extends HttpServlet {
             throws ServletException, IOException, ParseException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        if ("maisVendido".equals(request.getParameter("action"))){
-                String de = request.getParameter("de");
-                String ate = request.getParameter("ate");
-                de = dateFormat(de);
-                ate = dateFormat(ate);
-                Connection con = null;
-                try{
-                    con = ConnectionFactory.getConnection();
-                
-                    // Caminho físico do relatório compilado
-                    String jasper = request.getContextPath() +"/maisVendidos.jasper";
+        if ("maisVendido".equals(request.getParameter("action"))) {
+            String de = request.getParameter("de");
+            String ate = request.getParameter("ate");
+            de = dateFormat(de);
+            ate = dateFormat(ate);
+            Connection con = null;
+            try {
+                con = ConnectionFactory.getConnection();
 
-                    // Host onde o servlet esta executando 
-                    String host = "http://" + request.getServerName() +":" + request.getServerPort();
+                // Caminho físico do relatório compilado
+                String jasper = request.getContextPath() + "/maisVendidos.jasper";
 
-                    // URL para acesso ao relatório
-                    URL jasperURL = new URL(host + jasper);
+                // Host onde o servlet esta executando 
+                String host = "http://" + request.getServerName() + ":" + request.getServerPort();
 
-                    HashMap params = new HashMap();
-                    params.put("de", de);
-                    params.put("ate", ate);
-                    byte[] bytes = JasperRunManager.runReportToPdf(jasperURL.openStream(), params, con);
-                    if (bytes != null) { 
-                        // A página será mostrada em PDF
-                        response.setContentType("application/pdf");
-                        
-                        // Envia o PDF para o Cliente
-                        OutputStream ops =null;  
-                        ops = response.getOutputStream();
-                        ops.write(bytes); 
+                // URL para acesso ao relatório
+                URL jasperURL = new URL(host + jasper);
+
+                HashMap params = new HashMap();
+                params.put("de", de);
+                params.put("ate", ate);
+                byte[] bytes = JasperRunManager.runReportToPdf(jasperURL.openStream(), params, con);
+                if (bytes != null) {
+                    // A página será mostrada em PDF
+                    response.setContentType("application/pdf");
+
+                    // Envia o PDF para o Cliente
+                    OutputStream ops = null;
+                    ops = response.getOutputStream();
+                    ops.write(bytes);
+                }
+            } catch (ClassNotFoundException e) {
+                // erro de driver
+                response.setContentType("text/html;charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<html><head>");
+                out.println("<title>Servlet Gerentes</title>");
+                out.println("</head><body>");
+                out.println("<h1>Erro de Driver (" + e.getMessage() + ") no Servlet Gerentes at " + request.getContextPath() + "</h1>");
+                out.println("</body></html>");
+                out.flush();
+            } catch (SQLException e) {
+                // erro de SQL
+                response.setContentType("text/html;charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<html><head>");
+                out.println("<title>Servlet Gerentes</title>");
+                out.println("</head><body>");
+                out.println("<h1>Erro de SQL (" + e.getMessage() + ") no Servlet Gerentes at " + request.getContextPath() + "</h1>");
+                out.println("</body></html>");
+                out.flush();
+            } catch (JRException e) {
+                // erro de Jasper
+                response.setContentType("text/html;charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<html><head>");
+                out.println("<title>Servlet Gerentes</title>");
+                out.println("</head><body>");
+                out.println("<h1>Erro de Jasper (" + e.getMessage() + ") no Servlet Gerentes at " + request.getContextPath() + "</h1>");
+                out.println("</body></html>");
+                out.flush();
+            } finally {
+                if (con != null) {
+                    try {
+                        con.close();
+                    } catch (Exception e) {
                     }
                 }
-                catch(ClassNotFoundException e) {
-                    // erro de driver
-                    response.setContentType("text/html;charset=UTF-8");
-                    PrintWriter out = response.getWriter();
-                    out.println("<html><head>");
-                    out.println("<title>Servlet Gerentes</title>");
-                    out.println("</head><body>");
-                    out.println("<h1>Erro de Driver (" + e.getMessage() + ") no Servlet Gerentes at " +request.getContextPath () + "</h1>");
-                    out.println("</body></html>");
-                    out.flush();
-                }
-                catch(SQLException e) {
-                    // erro de SQL
-                    response.setContentType("text/html;charset=UTF-8");
-                    PrintWriter out = response.getWriter();
-                    out.println("<html><head>");
-                    out.println("<title>Servlet Gerentes</title>");
-                    out.println("</head><body>");
-                    out.println("<h1>Erro de SQL (" + e.getMessage() +") no Servlet Gerentes at " +request.getContextPath () +"</h1>");
-                    out.println("</body></html>");
-                    out.flush();
-                }
-                catch(JRException e) {
-                    // erro de Jasper
-                    response.setContentType("text/html;charset=UTF-8");
-                    PrintWriter out = response.getWriter();
-                    out.println("<html><head>");
-                    out.println("<title>Servlet Gerentes</title>");  
-                    out.println("</head><body>");
-                    out.println("<h1>Erro de Jasper (" + e.getMessage() + ") no Servlet Gerentes at " +request.getContextPath () + "</h1>");
-                    out.println("</body></html>");
-                    out.flush();
-                }
-                finally {if (con!=null)try { con.close(); }catch(Exception e) {}}
-        }
-        else if ("compras".equals(request.getParameter("action"))){
-                Connection con = null;
-                try{
-                    con = ConnectionFactory.getConnection();
-                
-                    // Caminho físico do relatório compilado
-                    String jasper = request.getContextPath() +"/compras.jasper";
+            }
+        } else if ("compras".equals(request.getParameter("action"))) {
 
-                    // Host onde o servlet esta executando 
-                    String host = "http://" + request.getServerName() +":" + request.getServerPort();
+            HttpSession session = request.getSession();
+            Integer logado;
+            try {
+                logado = (int) session.getAttribute("logado");
+            } catch (Exception f) {
+                logado = 0;
+            }
+            if (logado > 0) {
+                int perfil = (int) session.getAttribute("perfil");
+                if (perfil < 3) {
+                    response.sendRedirect("../gerente/semPermissao.jsp");
+                } else {
 
-                    // URL para acesso ao relatório
-                    URL jasperURL = new URL(host + jasper);
+                    Connection con = null;
+                    try {
+                        con = ConnectionFactory.getConnection();
+                        // Caminho físico do relatório compilado
+                        String jasper = request.getContextPath() + "/compras.jasper";
+                        // Host onde o servlet esta executando 
+                        String host = "http://" + request.getServerName() + ":" + request.getServerPort();
+                        // URL para acesso ao relatório
+                        URL jasperURL = new URL(host + jasper);
+                        HashMap params = new HashMap();
+                        byte[] bytes = JasperRunManager.runReportToPdf(jasperURL.openStream(), params, con);
+                        if (bytes != null) {
+                            // A página será mostrada em PDF
+                            response.setContentType("application/pdf");
 
-                    HashMap params = new HashMap();
-                    byte[] bytes = JasperRunManager.runReportToPdf(jasperURL.openStream(), params, con);
-                    if (bytes != null) { 
-                        // A página será mostrada em PDF
-                        response.setContentType("application/pdf");
-                        
-                        // Envia o PDF para o Cliente
-                        OutputStream ops =null;  
-                        ops = response.getOutputStream();
-                        ops.write(bytes); 
+                            // Envia o PDF para o Cliente
+                            OutputStream ops = null;
+                            ops = response.getOutputStream();
+                            ops.write(bytes);
+                        }
+                    } catch (ClassNotFoundException e) {
+                        // erro de driver
+                        response.setContentType("text/html;charset=UTF-8");
+                        PrintWriter out = response.getWriter();
+                        out.println("<html><head>");
+                        out.println("<title>Servlet Gerentes</title>");
+                        out.println("</head><body>");
+                        out.println("<h1>Erro de Driver (" + e.getMessage() + ") no Servlet Gerentes at " + request.getContextPath() + "</h1>");
+                        out.println("</body></html>");
+                        out.flush();
+                    } catch (SQLException e) {
+                        // erro de SQL
+                        response.setContentType("text/html;charset=UTF-8");
+                        PrintWriter out = response.getWriter();
+                        out.println("<html><head>");
+                        out.println("<title>Servlet Gerentes</title>");
+                        out.println("</head><body>");
+                        out.println("<h1>Erro de SQL (" + e.getMessage() + ") no Servlet Gerentes at " + request.getContextPath() + "</h1>");
+                        out.println("</body></html>");
+                        out.flush();
+                    } catch (JRException e) {
+                        // erro de Jasper
+                        response.setContentType("text/html;charset=UTF-8");
+                        PrintWriter out = response.getWriter();
+                        out.println("<html><head>");
+                        out.println("<title>Servlet Gerentes</title>");
+                        out.println("</head><body>");
+                        out.println("<h1>Erro de Jasper (" + e.getMessage() + ") no Servlet Gerentes at " + request.getContextPath() + "</h1>");
+                        out.println("</body></html>");
+                        out.flush();
+                    } finally {
+                        if (con != null) {
+                            try {
+                                con.close();
+                            } catch (Exception e) {
+                            }
+                        }
+                    }
+
+                }
+            } else {
+                response.sendRedirect("../comum/login.jsp");
+            }
+
+        } else if ("perfilCliente".equals(request.getParameter("action"))) {
+
+            HttpSession session = request.getSession();
+            Integer logado;
+            try {
+                logado = (int) session.getAttribute("logado");
+            } catch (Exception f) {
+                logado = 0;
+            }
+            if (logado > 0) {
+                int perfil = (int) session.getAttribute("perfil");
+                if (perfil < 3) {
+                    response.sendRedirect("../gerente/semPermissao.jsp");
+                } else {
+
+                    Connection con = null;
+                    try {
+                        con = ConnectionFactory.getConnection();
+
+                        // Caminho físico do relatório compilado
+                        String jasper = request.getContextPath() + "/perfilCliente.jasper";
+
+                        // Host onde o servlet esta executando 
+                        String host = "http://" + request.getServerName() + ":" + request.getServerPort();
+
+                        // URL para acesso ao relatório
+                        URL jasperURL = new URL(host + jasper);
+
+                        HashMap params = new HashMap();
+                        byte[] bytes = JasperRunManager.runReportToPdf(jasperURL.openStream(), params, con);
+                        if (bytes != null) {
+                            // A página será mostrada em PDF
+                            response.setContentType("application/pdf");
+
+                            // Envia o PDF para o Cliente
+                            OutputStream ops = null;
+                            ops = response.getOutputStream();
+                            ops.write(bytes);
+                        }
+                    } catch (ClassNotFoundException e) {
+                        // erro de driver
+                        response.setContentType("text/html;charset=UTF-8");
+                        PrintWriter out = response.getWriter();
+                        out.println("<html><head>");
+                        out.println("<title>Servlet Gerentes</title>");
+                        out.println("</head><body>");
+                        out.println("<h1>Erro de Driver (" + e.getMessage() + ") no Servlet Gerentes at " + request.getContextPath() + "</h1>");
+                        out.println("</body></html>");
+                        out.flush();
+                    } catch (SQLException e) {
+                        // erro de SQL
+                        response.setContentType("text/html;charset=UTF-8");
+                        PrintWriter out = response.getWriter();
+                        out.println("<html><head>");
+                        out.println("<title>Servlet Gerentes</title>");
+                        out.println("</head><body>");
+                        out.println("<h1>Erro de SQL (" + e.getMessage() + ") no Servlet Gerentes at " + request.getContextPath() + "</h1>");
+                        out.println("</body></html>");
+                        out.flush();
+                    } catch (JRException e) {
+                        // erro de Jasper
+                        response.setContentType("text/html;charset=UTF-8");
+                        PrintWriter out = response.getWriter();
+                        out.println("<html><head>");
+                        out.println("<title>Servlet Gerentes</title>");
+                        out.println("</head><body>");
+                        out.println("<h1>Erro de Jasper (" + e.getMessage() + ") no Servlet Gerentes at " + request.getContextPath() + "</h1>");
+                        out.println("</body></html>");
+                        out.flush();
+                    } finally {
+                        if (con != null) {
+                            try {
+                                con.close();
+                            } catch (Exception e) {
+                            }
+                        }
+                    }
+
+                }
+            } else {
+                response.sendRedirect("../comum/login.jsp");
+            }
+
+        } else if ("faturamentoMensal".equals(request.getParameter("action"))) {
+            String mes = request.getParameter("mes");
+            String ano = request.getParameter("ano");
+            Connection con = null;
+            try {
+                con = ConnectionFactory.getConnection();
+
+                // Caminho físico do relatório compilado
+                String jasper = request.getContextPath() + "/faturamentoMensal.jasper";
+
+                // Host onde o servlet esta executando 
+                String host = "http://" + request.getServerName() + ":" + request.getServerPort();
+
+                // URL para acesso ao relatório
+                URL jasperURL = new URL(host + jasper);
+
+                HashMap params = new HashMap();
+                params.put("mes", mes);
+                params.put("ano", ano);
+                byte[] bytes = JasperRunManager.runReportToPdf(jasperURL.openStream(), params, con);
+                if (bytes != null) {
+                    // A página será mostrada em PDF
+                    response.setContentType("application/pdf");
+
+                    // Envia o PDF para o Cliente
+                    OutputStream ops = null;
+                    ops = response.getOutputStream();
+                    ops.write(bytes);
+                }
+            } catch (ClassNotFoundException e) {
+                // erro de driver
+                response.setContentType("text/html;charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<html><head>");
+                out.println("<title>Servlet Gerentes</title>");
+                out.println("</head><body>");
+                out.println("<h1>Erro de Driver (" + e.getMessage() + ") no Servlet Gerentes at " + request.getContextPath() + "</h1>");
+                out.println("</body></html>");
+                out.flush();
+            } catch (SQLException e) {
+                // erro de SQL
+                response.setContentType("text/html;charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<html><head>");
+                out.println("<title>Servlet Gerentes</title>");
+                out.println("</head><body>");
+                out.println("<h1>Erro de SQL (" + e.getMessage() + ") no Servlet Gerentes at " + request.getContextPath() + "</h1>");
+                out.println("</body></html>");
+                out.flush();
+            } catch (JRException e) {
+                // erro de Jasper
+                response.setContentType("text/html;charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<html><head>");
+                out.println("<title>Servlet Gerentes</title>");
+                out.println("</head><body>");
+                out.println("<h1>Erro de Jasper (" + e.getMessage() + ") no Servlet Gerentes at " + request.getContextPath() + "</h1>");
+                out.println("</body></html>");
+                out.flush();
+            } finally {
+                if (con != null) {
+                    try {
+                        con.close();
+                    } catch (Exception e) {
                     }
                 }
-                catch(ClassNotFoundException e) {
-                    // erro de driver
-                    response.setContentType("text/html;charset=UTF-8");
-                    PrintWriter out = response.getWriter();
-                    out.println("<html><head>");
-                    out.println("<title>Servlet Gerentes</title>");
-                    out.println("</head><body>");
-                    out.println("<h1>Erro de Driver (" + e.getMessage() + ") no Servlet Gerentes at " +request.getContextPath () + "</h1>");
-                    out.println("</body></html>");
-                    out.flush();
-                }
-                catch(SQLException e) {
-                    // erro de SQL
-                    response.setContentType("text/html;charset=UTF-8");
-                    PrintWriter out = response.getWriter();
-                    out.println("<html><head>");
-                    out.println("<title>Servlet Gerentes</title>");
-                    out.println("</head><body>");
-                    out.println("<h1>Erro de SQL (" + e.getMessage() +") no Servlet Gerentes at " +request.getContextPath () +"</h1>");
-                    out.println("</body></html>");
-                    out.flush();
-                }
-                catch(JRException e) {
-                    // erro de Jasper
-                    response.setContentType("text/html;charset=UTF-8");
-                    PrintWriter out = response.getWriter();
-                    out.println("<html><head>");
-                    out.println("<title>Servlet Gerentes</title>");  
-                    out.println("</head><body>");
-                    out.println("<h1>Erro de Jasper (" + e.getMessage() + ") no Servlet Gerentes at " +request.getContextPath () + "</h1>");
-                    out.println("</body></html>");
-                    out.flush();
-                }
-                finally {if (con!=null)try { con.close(); }catch(Exception e) {}}
-        }
-        else if ("perfilCliente".equals(request.getParameter("action"))){
-                Connection con = null;
-                try{
-                    con = ConnectionFactory.getConnection();
-                
-                    // Caminho físico do relatório compilado
-                    String jasper = request.getContextPath() +"/perfilCliente.jasper";
+            }
+        } else if ("faturamentoAnual".equals(request.getParameter("action"))) {
+            String ano = request.getParameter("ano");
+            Connection con = null;
+            try {
+                con = ConnectionFactory.getConnection();
 
-                    // Host onde o servlet esta executando 
-                    String host = "http://" + request.getServerName() +":" + request.getServerPort();
+                // Caminho físico do relatório compilado
+                String jasper = request.getContextPath() + "/faturamentoAnual.jasper";
 
-                    // URL para acesso ao relatório
-                    URL jasperURL = new URL(host + jasper);
+                // Host onde o servlet esta executando 
+                String host = "http://" + request.getServerName() + ":" + request.getServerPort();
 
-                    HashMap params = new HashMap();
-                    byte[] bytes = JasperRunManager.runReportToPdf(jasperURL.openStream(), params, con);
-                    if (bytes != null) { 
-                        // A página será mostrada em PDF
-                        response.setContentType("application/pdf");
-                        
-                        // Envia o PDF para o Cliente
-                        OutputStream ops =null;  
-                        ops = response.getOutputStream();
-                        ops.write(bytes); 
+                // URL para acesso ao relatório
+                URL jasperURL = new URL(host + jasper);
+
+                HashMap params = new HashMap();
+                params.put("ano", ano);
+                byte[] bytes = JasperRunManager.runReportToPdf(jasperURL.openStream(), params, con);
+                if (bytes != null) {
+                    // A página será mostrada em PDF
+                    response.setContentType("application/pdf");
+
+                    // Envia o PDF para o Cliente
+                    OutputStream ops = null;
+                    ops = response.getOutputStream();
+                    ops.write(bytes);
+                }
+            } catch (ClassNotFoundException e) {
+                // erro de driver
+                response.setContentType("text/html;charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<html><head>");
+                out.println("<title>Servlet Gerentes</title>");
+                out.println("</head><body>");
+                out.println("<h1>Erro de Driver (" + e.getMessage() + ") no Servlet Gerentes at " + request.getContextPath() + "</h1>");
+                out.println("</body></html>");
+                out.flush();
+            } catch (SQLException e) {
+                // erro de SQL
+                response.setContentType("text/html;charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<html><head>");
+                out.println("<title>Servlet Gerentes</title>");
+                out.println("</head><body>");
+                out.println("<h1>Erro de SQL (" + e.getMessage() + ") no Servlet Gerentes at " + request.getContextPath() + "</h1>");
+                out.println("</body></html>");
+                out.flush();
+            } catch (JRException e) {
+                // erro de Jasper
+                response.setContentType("text/html;charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<html><head>");
+                out.println("<title>Servlet Gerentes</title>");
+                out.println("</head><body>");
+                out.println("<h1>Erro de Jasper (" + e.getMessage() + ") no Servlet Gerentes at " + request.getContextPath() + "</h1>");
+                out.println("</body></html>");
+                out.flush();
+            } finally {
+                if (con != null) {
+                    try {
+                        con.close();
+                    } catch (Exception e) {
                     }
                 }
-                catch(ClassNotFoundException e) {
-                    // erro de driver
-                    response.setContentType("text/html;charset=UTF-8");
-                    PrintWriter out = response.getWriter();
-                    out.println("<html><head>");
-                    out.println("<title>Servlet Gerentes</title>");
-                    out.println("</head><body>");
-                    out.println("<h1>Erro de Driver (" + e.getMessage() + ") no Servlet Gerentes at " +request.getContextPath () + "</h1>");
-                    out.println("</body></html>");
-                    out.flush();
-                }
-                catch(SQLException e) {
-                    // erro de SQL
-                    response.setContentType("text/html;charset=UTF-8");
-                    PrintWriter out = response.getWriter();
-                    out.println("<html><head>");
-                    out.println("<title>Servlet Gerentes</title>");
-                    out.println("</head><body>");
-                    out.println("<h1>Erro de SQL (" + e.getMessage() +") no Servlet Gerentes at " +request.getContextPath () +"</h1>");
-                    out.println("</body></html>");
-                    out.flush();
-                }
-                catch(JRException e) {
-                    // erro de Jasper
-                    response.setContentType("text/html;charset=UTF-8");
-                    PrintWriter out = response.getWriter();
-                    out.println("<html><head>");
-                    out.println("<title>Servlet Gerentes</title>");  
-                    out.println("</head><body>");
-                    out.println("<h1>Erro de Jasper (" + e.getMessage() + ") no Servlet Gerentes at " +request.getContextPath () + "</h1>");
-                    out.println("</body></html>");
-                    out.flush();
-                }
-                finally {if (con!=null)try { con.close(); }catch(Exception e) {}}
-        }
-        else if ("faturamentoMensal".equals(request.getParameter("action"))){
-                String mes = request.getParameter("mes");
-                String ano = request.getParameter("ano");
-                Connection con = null;
-                try{
-                    con = ConnectionFactory.getConnection();
-                
-                    // Caminho físico do relatório compilado
-                    String jasper = request.getContextPath() +"/faturamentoMensal.jasper";
-
-                    // Host onde o servlet esta executando 
-                    String host = "http://" + request.getServerName() +":" + request.getServerPort();
-
-                    // URL para acesso ao relatório
-                    URL jasperURL = new URL(host + jasper);
-
-                    HashMap params = new HashMap();
-                    params.put("mes", mes);
-                    params.put("ano", ano);
-                    byte[] bytes = JasperRunManager.runReportToPdf(jasperURL.openStream(), params, con);
-                    if (bytes != null) { 
-                        // A página será mostrada em PDF
-                        response.setContentType("application/pdf");
-                        
-                        // Envia o PDF para o Cliente
-                        OutputStream ops =null;  
-                        ops = response.getOutputStream();
-                        ops.write(bytes); 
-                    }
-                }
-                catch(ClassNotFoundException e) {
-                    // erro de driver
-                    response.setContentType("text/html;charset=UTF-8");
-                    PrintWriter out = response.getWriter();
-                    out.println("<html><head>");
-                    out.println("<title>Servlet Gerentes</title>");
-                    out.println("</head><body>");
-                    out.println("<h1>Erro de Driver (" + e.getMessage() + ") no Servlet Gerentes at " +request.getContextPath () + "</h1>");
-                    out.println("</body></html>");
-                    out.flush();
-                }
-                catch(SQLException e) {
-                    // erro de SQL
-                    response.setContentType("text/html;charset=UTF-8");
-                    PrintWriter out = response.getWriter();
-                    out.println("<html><head>");
-                    out.println("<title>Servlet Gerentes</title>");
-                    out.println("</head><body>");
-                    out.println("<h1>Erro de SQL (" + e.getMessage() +") no Servlet Gerentes at " +request.getContextPath () +"</h1>");
-                    out.println("</body></html>");
-                    out.flush();
-                }
-                catch(JRException e) {
-                    // erro de Jasper
-                    response.setContentType("text/html;charset=UTF-8");
-                    PrintWriter out = response.getWriter();
-                    out.println("<html><head>");
-                    out.println("<title>Servlet Gerentes</title>");  
-                    out.println("</head><body>");
-                    out.println("<h1>Erro de Jasper (" + e.getMessage() + ") no Servlet Gerentes at " +request.getContextPath () + "</h1>");
-                    out.println("</body></html>");
-                    out.flush();
-                }
-                finally {if (con!=null)try { con.close(); }catch(Exception e) {}}
-        }
-        else if ("faturamentoAnual".equals(request.getParameter("action"))){
-                String ano = request.getParameter("ano");
-                Connection con = null;
-                try{
-                    con = ConnectionFactory.getConnection();
-                
-                    // Caminho físico do relatório compilado
-                    String jasper = request.getContextPath() +"/faturamentoAnual.jasper";
-
-                    // Host onde o servlet esta executando 
-                    String host = "http://" + request.getServerName() +":" + request.getServerPort();
-
-                    // URL para acesso ao relatório
-                    URL jasperURL = new URL(host + jasper);
-
-                    HashMap params = new HashMap();
-                    params.put("ano", ano);
-                    byte[] bytes = JasperRunManager.runReportToPdf(jasperURL.openStream(), params, con);
-                    if (bytes != null) { 
-                        // A página será mostrada em PDF
-                        response.setContentType("application/pdf");
-                        
-                        // Envia o PDF para o Cliente
-                        OutputStream ops =null;  
-                        ops = response.getOutputStream();
-                        ops.write(bytes); 
-                    }
-                }
-                catch(ClassNotFoundException e) {
-                    // erro de driver
-                    response.setContentType("text/html;charset=UTF-8");
-                    PrintWriter out = response.getWriter();
-                    out.println("<html><head>");
-                    out.println("<title>Servlet Gerentes</title>");
-                    out.println("</head><body>");
-                    out.println("<h1>Erro de Driver (" + e.getMessage() + ") no Servlet Gerentes at " +request.getContextPath () + "</h1>");
-                    out.println("</body></html>");
-                    out.flush();
-                }
-                catch(SQLException e) {
-                    // erro de SQL
-                    response.setContentType("text/html;charset=UTF-8");
-                    PrintWriter out = response.getWriter();
-                    out.println("<html><head>");
-                    out.println("<title>Servlet Gerentes</title>");
-                    out.println("</head><body>");
-                    out.println("<h1>Erro de SQL (" + e.getMessage() +") no Servlet Gerentes at " +request.getContextPath () +"</h1>");
-                    out.println("</body></html>");
-                    out.flush();
-                }
-                catch(JRException e) {
-                    // erro de Jasper
-                    response.setContentType("text/html;charset=UTF-8");
-                    PrintWriter out = response.getWriter();
-                    out.println("<html><head>");
-                    out.println("<title>Servlet Gerentes</title>");  
-                    out.println("</head><body>");
-                    out.println("<h1>Erro de Jasper (" + e.getMessage() + ") no Servlet Gerentes at " +request.getContextPath () + "</h1>");
-                    out.println("</body></html>");
-                    out.flush();
-                }
-                finally {if (con!=null)try { con.close(); }catch(Exception e) {}}
-        }
-        else{
+            }
+        } else {
             try (PrintWriter out = response.getWriter()) {
                 /* TODO output your page here. You may use following sample code. */
                 if ("cadastrar".equals(request.getParameter("action"))) {
@@ -408,42 +455,42 @@ public class Gerentes extends HttpServlet {
                     clienteDAO.cadastrarCliente(cliente);
                     response.sendRedirect("./buscarFuncionario.jsp");
                     return;
-                } 
+                }
                 if ("buscarf".equals(request.getParameter("action"))) {
                     List<Cliente> listaClientes = new ArrayList();
                     ClienteDAO clienteDAO = new ClienteDAO();
                     String escolha = request.getParameter("escolha");
                     String str = request.getParameter("str");
-                    if("nome".equals(escolha)){
+                    if ("nome".equals(escolha)) {
                         listaClientes = clienteDAO.buscarFuncionarioNome(str);
-                    } else if("cpf".equals(escolha)){
+                    } else if ("cpf".equals(escolha)) {
                         listaClientes = clienteDAO.buscarFuncionarioCPF(str);
-                    } else if("email".equals(escolha)){
+                    } else if ("email".equals(escolha)) {
                         listaClientes = clienteDAO.buscarFuncionarioEmail(str);
                     }
                     request.setAttribute("listaClientes", listaClientes);
                     request.setAttribute("escolha", escolha);
                     request.setAttribute("str", str);
                     RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/listarFuncionario.jsp");
-                    rd.forward(request,response);
+                    rd.forward(request, response);
                 }
                 if ("buscarc".equals(request.getParameter("action"))) {
                     List<Cliente> listaClientes = new ArrayList();
                     ClienteDAO clienteDAO = new ClienteDAO();
                     String escolha = request.getParameter("escolha");
                     String str = request.getParameter("str");
-                    if("nome".equals(escolha)){
+                    if ("nome".equals(escolha)) {
                         listaClientes = clienteDAO.buscarClienteNome(str);
-                    } else if("cpf".equals(escolha)){
+                    } else if ("cpf".equals(escolha)) {
                         listaClientes = clienteDAO.buscarClienteCPF(str);
-                    } else if("email".equals(escolha)){
+                    } else if ("email".equals(escolha)) {
                         listaClientes = clienteDAO.buscarClienteEmail(str);
                     }
                     request.setAttribute("listaClientes", listaClientes);
                     request.setAttribute("escolha", escolha);
                     request.setAttribute("str", str);
                     RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/listarCliente.jsp");
-                    rd.forward(request,response);
+                    rd.forward(request, response);
                 }
                 if ("visualizarf".equals(request.getParameter("action"))) {
                     String escolha = request.getParameter("escolha");
@@ -456,7 +503,7 @@ public class Gerentes extends HttpServlet {
                     request.setAttribute("escolha", escolha);
                     request.setAttribute("str", str);
                     RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/visualizarFuncionario.jsp");
-                    rd.forward(request,response);
+                    rd.forward(request, response);
                 }
                 if ("visualizarCompras".equals(request.getParameter("action"))) {
                     String escolha = request.getParameter("escolha");
@@ -472,7 +519,7 @@ public class Gerentes extends HttpServlet {
                     request.setAttribute("escolha", escolha);
                     request.setAttribute("str", str);
                     RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/listarComprasCliente.jsp");
-                    rd.forward(request,response);
+                    rd.forward(request, response);
                 }
                 if ("visualizarc".equals(request.getParameter("action"))) {
                     String escolha = request.getParameter("escolha");
@@ -485,7 +532,7 @@ public class Gerentes extends HttpServlet {
                     request.setAttribute("escolha", escolha);
                     request.setAttribute("str", str);
                     RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/visualizarCliente.jsp");
-                    rd.forward(request,response);
+                    rd.forward(request, response);
                 }
                 if ("valterarf".equals(request.getParameter("action"))) {
                     String escolha = request.getParameter("escolha");
@@ -498,7 +545,7 @@ public class Gerentes extends HttpServlet {
                     request.setAttribute("escolha", escolha);
                     request.setAttribute("str", str);
                     RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/alterarFuncionario.jsp");
-                    rd.forward(request,response);
+                    rd.forward(request, response);
                 }
                 if ("valterarc".equals(request.getParameter("action"))) {
                     String escolha = request.getParameter("escolha");
@@ -511,7 +558,7 @@ public class Gerentes extends HttpServlet {
                     request.setAttribute("escolha", escolha);
                     request.setAttribute("str", str);
                     RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/alterarCliente.jsp");
-                    rd.forward(request,response);
+                    rd.forward(request, response);
                 }
                 if ("alterarf".equals(request.getParameter("action"))) {
                     String escolha = request.getParameter("escolha");
@@ -546,7 +593,7 @@ public class Gerentes extends HttpServlet {
                     request.setAttribute("escolha", escolha);
                     request.setAttribute("str", str);
                     RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/Gerentes?action=buscarf");
-                    rd.forward(request,response);
+                    rd.forward(request, response);
                 }
                 if ("alterarc".equals(request.getParameter("action"))) {
                     String escolha = request.getParameter("escolha");
@@ -581,7 +628,7 @@ public class Gerentes extends HttpServlet {
                     request.setAttribute("escolha", escolha);
                     request.setAttribute("str", str);
                     RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/Gerentes?action=buscarc");
-                    rd.forward(request,response);
+                    rd.forward(request, response);
                 }
                 if ("excluirf".equals(request.getParameter("action"))) {
                     String escolha = request.getParameter("escolha");
@@ -593,7 +640,7 @@ public class Gerentes extends HttpServlet {
                     request.setAttribute("escolha", escolha);
                     request.setAttribute("str", str);
                     RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/Gerentes?action=buscarf");
-                    rd.forward(request,response);
+                    rd.forward(request, response);
                 }
                 if ("excluirc".equals(request.getParameter("action"))) {
                     String escolha = request.getParameter("escolha");
@@ -605,7 +652,7 @@ public class Gerentes extends HttpServlet {
                     request.setAttribute("escolha", escolha);
                     request.setAttribute("str", str);
                     RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/Gerentes?action=buscarc");
-                    rd.forward(request,response);
+                    rd.forward(request, response);
                 }
                 if ("visualizarAcoes".equals(request.getParameter("action"))) {
                     String escolha = request.getParameter("escolha");
@@ -616,21 +663,21 @@ public class Gerentes extends HttpServlet {
                     int id = Integer.parseInt(request.getParameter("id"));
                     LogDAO logDAO = new LogDAO();
                     List<Log> listaLogs = logDAO.listarLogs(id, de, ate);
-                    
+
                     request.setAttribute("escolha", escolha);
                     request.setAttribute("str", str);
                     request.setAttribute("id", id);
                     request.setAttribute("nome", nome);
                     request.setAttribute("listaLogs", listaLogs);
                     RequestDispatcher rd = getServletContext().getRequestDispatcher("/gerente/listarAcoesCliente.jsp");
-                    rd.forward(request,response);
+                    rd.forward(request, response);
                     return;
                 }
             }
         }
     }
-    
-    private String dateFormat (String date){
+
+    private String dateFormat(String date) {
         //this function will change the Date String format from dd/mm/yyyy to yyyy-mm-dd
         String day, month, year;
         day = date.substring(0, 2);

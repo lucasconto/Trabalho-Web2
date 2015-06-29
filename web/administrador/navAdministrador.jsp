@@ -44,25 +44,15 @@
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <!--                <ul class="nav navbar-nav">
-                                        <li>
-                                            <a href="#">Home</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Serviços</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Contato</a>
-                                        </li>
-                                    </ul>-->
+
                     <ul class="nav pull-right navbar-nav">
                         <li class="dropdown" id="menuCliente">
                             <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navCliente">
-                                <span class="glyphicon glyphicon-picture"></span> Razer Administrador<strong class="caret"></strong>
+                                <span class="glyphicon glyphicon-picture"></span> ${sessionScope.cliente.getNome()} <strong class="caret"></strong>
                             </a>
                             <div class="dropdown-menu pull-right" style="padding:5px;  min-width: 200px;">
                                 <ul>
-                                    <a href="../comum/index.jsp">
+                                    <a href="../comum/Login?action=logout">
                                         <li>Logout</li>
                                     </a>
                                 </ul>

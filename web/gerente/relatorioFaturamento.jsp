@@ -55,7 +55,14 @@
     <body>
         <!--Inclui cabeçalho-->
         <jsp:include page="navGerente.jsp"/>
-
+        <c:if test="${sessionScope.logado eq null }">
+            <jsp:forward page="/comum/login.jsp" />
+        </c:if>
+            <c:if test="${sessionScope.cliente.getPerfil()  < 3}">
+            perfil negado
+            <jsp:forward page="semPermissao.jsp" />
+        </c:if>
+        
         <div class="container">
             <div class="row">
                 <jsp:include page="menuGerente.jsp"/>

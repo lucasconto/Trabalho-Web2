@@ -6,6 +6,7 @@
 package br.com.magazine.servlet;
 
 import br.com.magazine.dao.EditoraDAO;
+import br.com.magazine.entidade.Cliente;
 import br.com.magazine.entidade.Editora;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,6 +21,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -42,7 +44,7 @@ public class Editoras extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
-           if ("cadastrar".equals(request.getParameter("action"))) {
+            if ("cadastrar".equals(request.getParameter("action"))) {
                 Editora editora = new Editora();
                 editora.setNome(request.getParameter("editora"));
                 EditoraDAO editoraDAO = new EditoraDAO();
@@ -50,8 +52,8 @@ public class Editoras extends HttpServlet {
                 response.sendRedirect("./Editoras");
                 return;
             }
-           if ("editar".equals(request.getParameter("action"))) {
-               System.out.println("oi");
+            if ("editar".equals(request.getParameter("action"))) {
+                System.out.println("oi");
                 Editora editora = new Editora();
                 editora.setNome(request.getParameter("editora-nome"));
                 editora.setIdEditora(Integer.parseInt(request.getParameter("editora-id")));
@@ -59,7 +61,7 @@ public class Editoras extends HttpServlet {
                 editoraDAO.atualizarEditora(editora);
                 response.sendRedirect("./Editoras");
                 return;
-            }           
+            }
             if ("remover".equals(request.getParameter("action"))) {
                 Editora editora = new Editora();
                 editora.setIdEditora(Integer.parseInt(request.getParameter("id")));
@@ -67,17 +69,31 @@ public class Editoras extends HttpServlet {
                 editoraDAO.removerEditora(editora);
                 response.sendRedirect("./Editoras");
                 return;
-            }
-            else{
-                
-                List<Editora> listaEditoras = new ArrayList();
-                EditoraDAO editoraDAO = new EditoraDAO();
-                listaEditoras = editoraDAO.listarEditoras();
-                
-                request.setAttribute("editoraLista", listaEditoras);
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/administrador/cadastrarEditora.jsp");
-                rd.forward(request,response);
-                
+            } else {
+                HttpSession session = request.getSession();
+                Integer logado;
+                try {
+                    logado = (int) session.getAttribute("logado");
+                } catch (Exception f) {
+                    logado = 0;
+                }
+                if (logado > 0) {
+                    int perfil = (int) session.getAttribute("perfil");
+                    if (perfil < 2) {
+                        response.sendRedirect("../administrador/semPermissao.jsp");
+                    } else {
+                        List<Editora> listaEditoras = new ArrayList();
+                        EditoraDAO editoraDAO = new EditoraDAO();
+                        listaEditoras = editoraDAO.listarEditoras();
+
+                        request.setAttribute("editoraLista", listaEditoras);
+                        RequestDispatcher rd = getServletContext().getRequestDispatcher("/administrador/cadastrarEditora.jsp");
+                        rd.forward(request, response);
+                    }
+                } else {
+                    response.sendRedirect("../comum/login.jsp");
+                }
+
             }
         }
     }

@@ -20,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -58,24 +59,38 @@ public class Generos extends HttpServlet {
                 gdao.atualizarGenero(genero);
                 response.sendRedirect("./Generos");
                 return;
-            }            
+            }
             if ("remover".equals(request.getParameter("action"))) {
                 Genero genero = new Genero();
                 genero.setIdGenero(Integer.parseInt(request.getParameter("id")));
                 GeneroDAO generoDAO = new GeneroDAO();
                 generoDAO.removerGenero(genero);
                 response.sendRedirect("./Generos");
-            }
-            else{
-                
-                List<Genero> listaGeneros = new ArrayList();
-                GeneroDAO generoDAO = new GeneroDAO();
-                listaGeneros = generoDAO.listarGeneros();
-                
-                request.setAttribute("generoLista", listaGeneros);
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/administrador/cadastrarGenero.jsp");
-                rd.forward(request,response);
-                
+            } else {
+                HttpSession session = request.getSession();
+                Integer logado;
+                try {
+                    logado = (int) session.getAttribute("logado");
+                } catch (Exception f) {
+                    logado = 0;
+                }
+                if (logado > 0) {
+                    int perfil = (int) session.getAttribute("perfil");
+                    if (perfil < 2) {
+                        response.sendRedirect("../administrador/semPermissao.jsp");
+                    } else {
+                        List<Genero> listaGeneros = new ArrayList();
+                        GeneroDAO generoDAO = new GeneroDAO();
+                        listaGeneros = generoDAO.listarGeneros();
+
+                        request.setAttribute("generoLista", listaGeneros);
+                        RequestDispatcher rd = getServletContext().getRequestDispatcher("/administrador/cadastrarGenero.jsp");
+                        rd.forward(request, response);
+                    }
+                } else {
+                    response.sendRedirect("../comum/login.jsp");
+                }
+
             }
         }
     }
