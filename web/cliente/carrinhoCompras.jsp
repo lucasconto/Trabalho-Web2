@@ -58,7 +58,7 @@
                                         
                                         <a class="btn btn-default" href="../Carrinhos?action=diminuiQuantidade&id=${itemCarrinho.produto.idProduto}">
                                             <span class="glyphicon glyphicon-minus"></span></a> 
-                                        <input type="text" class="form-control"  value="${itemCarrinho.quantidade}" style="width: 50px; display: inline;"/> 
+                                        <input type="text" class="form-control"  value="${itemCarrinho.quantidade}" style="width: 50px; display: inline;" disabled="disabled"/> 
                                         <a class="btn btn-default" href="../Carrinhos?action=aumentaQuantidade&id=${itemCarrinho.produto.idProduto}">
                                             <span class="glyphicon glyphicon-plus"></span></a>
                                     </form>

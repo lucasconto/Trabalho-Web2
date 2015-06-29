@@ -72,22 +72,23 @@
                         </div>
                     </div>
                     <div class="row">
+                        <form action="./Clientes?action=pesquisar" method="post" class="form-horizontal">
                         <div class="col-md-5 col-md-offset-1" style="padding: 0px">
-                            <input type="text" class="form-control" placeholder="Pesquisar por..." />
+                            <input type="text" name="str"  class="form-control" placeholder="Pesquisar por..." />
                         </div>
                         <div class="col-md-3" style="padding: 0px">
-                            <select name="sexo" id="sexo" class="form-control " >
-                                <option >Tudo</option>
-                                <option value="t" required>Título</option>
-                                <option value="g" required>Gênero</option>
-                                <option value="a" required>Autor</option>
-                            </select>
+                                    <select name="escolha" id="escolha" class="form-control " >
+                                        <option value="titulo" ${escolha == 'titulo' ? 'selected' : ''} required>Título</option>
+                                        <option value="genero" ${escolha == 'genero' ? 'selected' : ''} required>Gênero</option>
+                                        <option value="autor" ${escolha == 'autor' ? 'selected' : ''} required>Autor</option>
+                                    </select>
                         </div>
                         <div class="col-md-1" style="padding: 0px">
-                            <button class="btn btn-default form-control" type="text">
+                            <button class="btn btn-default form-control" type="submit">
                                 <span class="glyphicon glyphicon-search"></span>
                             </button>
                         </div>
+                            </form>
                     </div>
                     <br/>
                     <div class="row">

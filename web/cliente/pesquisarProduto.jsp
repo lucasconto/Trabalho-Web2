@@ -68,8 +68,6 @@
                                         <option value="titulo" ${escolha == 'titulo' ? 'selected' : ''} required>Título</option>
                                         <option value="genero" ${escolha == 'genero' ? 'selected' : ''} required>Gênero</option>
                                         <option value="autor" ${escolha == 'autor' ? 'selected' : ''} required>Autor</option>
-                                        <select name="escolha" class="form-control">
-                                        </select>
                                     </select>
                                 </div>
                                 <div class="col-md-1" style="padding: 0px">
