@@ -37,6 +37,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
 
@@ -570,9 +574,14 @@ public class Gerentes extends HttpServlet {
                             cliente.setInativo(false);
                             cliente.setPerfil(Integer.parseInt(request.getParameter("perfil")));
 
-                            ClienteDAO clienteDAO = new ClienteDAO();
-                            clienteDAO.cadastrarCliente(cliente);
+//                            ClienteDAO clienteDAO = new ClienteDAO();
+//                            clienteDAO.cadastrarCliente(cliente);
+                            
+                            Client client = ClientBuilder.newClient();
+                            client.target("http://localhost:8080/WSTrabalho/webresources/generic").request(MediaType.APPLICATION_JSON).post(Entity.json(cliente), Cliente.class);
+                            
                             response.sendRedirect("./buscarFuncionario.jsp");
+                            
                             return;
                         }
                         if ("buscarf".equals(request.getParameter("action"))) {
