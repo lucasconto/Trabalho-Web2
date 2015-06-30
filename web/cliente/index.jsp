@@ -36,7 +36,7 @@
         <div class="container">
 
             <div class="row">
-
+${sessionScope.logado == null }
                 <jsp:include page="menuCliente.jsp"/>
 
                 <div class="col-md-9">

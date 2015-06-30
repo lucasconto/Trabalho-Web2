@@ -35,122 +35,127 @@
     <body>
         <!--Inclui cabeçalho-->
         <jsp:include page="navAdministrador.jsp"/>
+    <c:if test="${empty sessionScope.logado}">
+        <jsp:forward page="/comum/login.jsp" />
+    </c:if>
+    <c:if test="${sessionScope.cliente.getPerfil()  != 2}">
+        <jsp:forward page="semPermissao.jsp" />
+    </c:if> 
+    <div class="container">
+        <div class=" col-sm-offset-3 col-sm-6">
+            <h1>Dados Cadastrais</h1>
+            <form class="form-horizontal" id="form" action="./Administradores?action=buscarc" method="post">
+                <div class="form-group">
+                    <label  class="col-sm-4 control-label">Nome Completo</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" placeholder="" value="${cliente.nome}" disabled="disabled">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label  class="col-sm-4 control-label">Sexo</label>
+                    <div class="col-sm-8">
+                        <select name="sexo" id="sexo" class="form-control" disabled="disabled" required="">
+                            <option value="m" ${cliente.sexo == 'm' ? 'selected' : ''} >Masculino</option>
+                            <option value="f" ${cliente.sexo == 'f' ? 'selected' : ''} >Feminino</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label  class="col-sm-4 control-label">CPF</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" maxlength="14" id="cpf" value="${cliente.cpf}" placeholder="000.000.000-00"  disabled="disabled"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-sm-4 control-label">Data de Nascimento</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" maxlength="10" value="<fmt:formatDate value="${cliente.nascimento}" pattern="dd/MM/yyyy" />" id="datepicker" placeholder="dd/mm/aaaa" disabled="disabled"/>
+                    </div>
+                </div>      
+                <div class="form-group">
+                    <label for="" class="col-sm-4 control-label">Telefone</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" maxlength="14" id="" value="${cliente.telefone}" placeholder="DDD-0000-00000"  disabled="disabled"/>
+                    </div>
+                </div>  
+                <div class="form-group">
+                    <label for="" class="col-sm-4 control-label">Email</label>
+                    <div class="col-sm-8">
+                        <input type="email" class="form-control"  id="" placeholder="seuemail@dominio.com" value="${cliente.email}" disabled="disabled"/>
+                    </div>
+                </div>             
+                <div class="form-group">
+                    <label for="" class="col-sm-4 control-label">Senha</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control" value="" id="" placeholder="" disabled="disabled"/>
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <label for="" class="col-sm-4 control-label">Confirme sua Senha</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control" id="" value="" placeholder="" disabled="disabled"/>
+                    </div>
+                </div>       
 
-        <div class="container">
-            <div class=" col-sm-offset-3 col-sm-6">
-                <h1>Dados Cadastrais</h1>
-                <form class="form-horizontal" id="form" action="./Administradores?action=buscarc" method="post">
-                    <div class="form-group">
-                        <label  class="col-sm-4 control-label">Nome Completo</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" placeholder="" value="${cliente.nome}" disabled="disabled">
-                        </div>
+                <h2>Endereço de Entrega</h2>
+                <div class="form-group">
+                    <label for="" class="col-sm-4 control-label">CEP</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" value="${cliente.cep}" maxlength="9" id="" placeholder="00000-000" OnKeyPress="formatar(this, '#####-###')" disabled="disabled" />
                     </div>
-                    <div class="form-group">
-                        <label  class="col-sm-4 control-label">Sexo</label>
-                        <div class="col-sm-8">
-                            <select name="sexo" id="sexo" class="form-control" disabled="disabled" required="">
-                                <option value="m" ${cliente.sexo == 'm' ? 'selected' : ''} >Masculino</option>
-                                <option value="f" ${cliente.sexo == 'f' ? 'selected' : ''} >Feminino</option>
-                            </select>
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-sm-4 control-label">Endereço</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" value="${cliente.endereco}" id="" placeholder="" disabled="disabled" />
                     </div>
-                    <div class="form-group">
-                        <label  class="col-sm-4 control-label">CPF</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" maxlength="14" id="cpf" value="${cliente.cpf}" placeholder="000.000.000-00"  disabled="disabled"/>
-                        </div>
+                </div>            
+                <div class="form-group">
+                    <label for="" class="col-sm-4 control-label">Número</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" value="${cliente.endNumero}" id="" placeholder="" disabled="disabled" />
                     </div>
-                    <div class="form-group">
-                        <label for="" class="col-sm-4 control-label">Data de Nascimento</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" maxlength="10" value="<fmt:formatDate value="${cliente.nascimento}" pattern="dd/MM/yyyy" />" id="datepicker" placeholder="dd/mm/aaaa" disabled="disabled"/>
-                        </div>
-                    </div>      
-                    <div class="form-group">
-                        <label for="" class="col-sm-4 control-label">Telefone</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" maxlength="14" id="" value="${cliente.telefone}" placeholder="DDD-0000-00000"  disabled="disabled"/>
-                        </div>
-                    </div>  
-                    <div class="form-group">
-                        <label for="" class="col-sm-4 control-label">Email</label>
-                        <div class="col-sm-8">
-                            <input type="email" class="form-control"  id="" placeholder="seuemail@dominio.com" value="${cliente.email}" disabled="disabled"/>
-                        </div>
-                    </div>             
-                    <div class="form-group">
-                        <label for="" class="col-sm-4 control-label">Senha</label>
-                        <div class="col-sm-8">
-                            <input type="password" class="form-control" value="" id="" placeholder="" disabled="disabled"/>
-                        </div>
-                    </div> 
-                    <div class="form-group">
-                        <label for="" class="col-sm-4 control-label">Confirme sua Senha</label>
-                        <div class="col-sm-8">
-                            <input type="password" class="form-control" id="" value="" placeholder="" disabled="disabled"/>
-                        </div>
-                    </div>       
-
-                    <h2>Endereço de Entrega</h2>
-                    <div class="form-group">
-                        <label for="" class="col-sm-4 control-label">CEP</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" value="${cliente.cep}" maxlength="9" id="" placeholder="00000-000" OnKeyPress="formatar(this, '#####-###')" disabled="disabled" />
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-sm-4 control-label">Complemento</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" value="${cliente.endComplemento}" id="" placeholder="" disabled="disabled" />
                     </div>
-                    <div class="form-group">
-                        <label for="" class="col-sm-4 control-label">Endereço</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" value="${cliente.endereco}" id="" placeholder="" disabled="disabled" />
-                        </div>
-                    </div>            
-                    <div class="form-group">
-                        <label for="" class="col-sm-4 control-label">Número</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" value="${cliente.endNumero}" id="" placeholder="" disabled="disabled" />
-                        </div>
+                </div>            
+                <div class="form-group">
+                    <label for="" class="col-sm-4 control-label">Bairro</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" value="${cliente.bairro}" id="" placeholder="" disabled="disabled" />
                     </div>
-                    <div class="form-group">
-                        <label for="" class="col-sm-4 control-label">Complemento</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" value="${cliente.endComplemento}" id="" placeholder="" disabled="disabled" />
-                        </div>
-                    </div>            
-                    <div class="form-group">
-                        <label for="" class="col-sm-4 control-label">Bairro</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" value="${cliente.bairro}" id="" placeholder="" disabled="disabled" />
-                        </div>
-                    </div>  
-                    <div class="form-group">
-                        <label for="" class="col-sm-4 control-label">Cidade</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" value="${cliente.cidade}" id="" placeholder="" disabled="disabled" />
-                        </div>
+                </div>  
+                <div class="form-group">
+                    <label for="" class="col-sm-4 control-label">Cidade</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" value="${cliente.cidade}" id="" placeholder="" disabled="disabled" />
                     </div>
-                    <div class="form-group">
-                        <label for="" class="col-sm-4 control-label">Estado</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" value="${cliente.estado}" id="" placeholder="" disabled="disabled" />
-                        </div>
-                    </div> 
-                    <div class="form-group">
-                            <input type="hidden" value="${escolha}" name="escolha"/>
-                            <input type="hidden" value="${str}" name="str"/>
-                            <div class="col-sm-offset-4 col-sm-8">
-                                <button type="submit" class="btn btn-success btn-lg btn-block ">Voltar</button>
-                            </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-sm-4 control-label">Estado</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" value="${cliente.estado}" id="" placeholder="" disabled="disabled" />
                     </div>
-                </form>
-            </div>
+                </div> 
+                <div class="form-group">
+                    <input type="hidden" value="${escolha}" name="escolha"/>
+                    <input type="hidden" value="${str}" name="str"/>
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <button type="submit" class="btn btn-success btn-lg btn-block ">Voltar</button>
+                    </div>
+                </div>
+            </form>
         </div>
+    </div>
 
-        <!--Inclui Rodapé-->
-        <jsp:include page="../comum/rodape.jsp"/>    
+    <!--Inclui Rodapé-->
+    <jsp:include page="../comum/rodape.jsp"/>    
 
 
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="../js/bootstrap.min.js"></script>
-    </body>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../js/bootstrap.min.js"></script>
+</body>
 </html>

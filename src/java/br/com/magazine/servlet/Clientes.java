@@ -59,156 +59,160 @@ public class Clientes extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            if ("cadastrar".equals(request.getParameter("action"))) {
-                Cliente cliente = new Cliente();
-
-                cliente.setNome(request.getParameter("nome"));
-                cliente.setSexo(request.getParameter("sexo"));
-                cliente.setCpf(request.getParameter("cpf"));
-
-                String nascimentoStr = request.getParameter("nascimento");
-                DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-                java.util.Date nascimentoUtil = format.parse(nascimentoStr);
-                java.sql.Date nascimentoSql = new java.sql.Date(nascimentoUtil.getTime());
-                cliente.setNascimento(nascimentoSql);
-
-                cliente.setTelefone(request.getParameter("telefone"));
-                cliente.setEmail(request.getParameter("email"));
-                cliente.setSenha(request.getParameter("senha"));
-                cliente.setCep(request.getParameter("cep"));
-                cliente.setEndereco(request.getParameter("endereco"));
-                cliente.setEndNumero(request.getParameter("numero"));
-                cliente.setEndComplemento(request.getParameter("complemento"));
-                cliente.setBairro(request.getParameter("bairro"));
-                cliente.setCidade(request.getParameter("cidade"));
-                cliente.setEstado(request.getParameter("estado"));
-
-                ClienteDAO clienteDAO = new ClienteDAO();
-                int idCliente = clienteDAO.cadastrarCliente(cliente);
-                Log log = new Log();
-                log.setAcao("Cliente cadastrado");
-                log.setPagina("/cliente/cadastrarCliente.jsp");
-                Timestamp dataLog = new Timestamp(System.currentTimeMillis());
-                log.setData(dataLog);
-                log.setIdCliente(idCliente);
-                LogDAO logDAO = new LogDAO();
-                logDAO.insereLog(log);
+            HttpSession session = request.getSession();
+            int logado;
+            int perfil;
+            try {
+                logado = (int) session.getAttribute("logado");
+                perfil = (int) session.getAttribute("perfil");
+            } catch (Exception f) {
+                logado = 0;
+                perfil = 0;
             }
-            if ("alterarPerfil".equals(request.getParameter("action"))) {
-                ClienteDAO clienteDAO = new ClienteDAO();
-                Cliente clienteSessao = new Cliente();
-                clienteSessao.setIdCliente(3);
-                Cliente cliente = clienteDAO.buscarClienteId(clienteSessao);
-                request.setAttribute("cliente", cliente);
+
+            if (logado > 0 && perfil == 1) {
+                System.out.println(logado +" "+ perfil);
+                if ("cadastrar".equals(request.getParameter("action"))) {
+                    Cliente cliente = new Cliente();
+
+                    cliente.setNome(request.getParameter("nome"));
+                    cliente.setSexo(request.getParameter("sexo"));
+                    cliente.setCpf(request.getParameter("cpf"));
+
+                    String nascimentoStr = request.getParameter("nascimento");
+                    DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                    java.util.Date nascimentoUtil = format.parse(nascimentoStr);
+                    java.sql.Date nascimentoSql = new java.sql.Date(nascimentoUtil.getTime());
+                    cliente.setNascimento(nascimentoSql);
+
+                    cliente.setTelefone(request.getParameter("telefone"));
+                    cliente.setEmail(request.getParameter("email"));
+                    cliente.setSenha(request.getParameter("senha"));
+                    cliente.setCep(request.getParameter("cep"));
+                    cliente.setEndereco(request.getParameter("endereco"));
+                    cliente.setEndNumero(request.getParameter("numero"));
+                    cliente.setEndComplemento(request.getParameter("complemento"));
+                    cliente.setBairro(request.getParameter("bairro"));
+                    cliente.setCidade(request.getParameter("cidade"));
+                    cliente.setEstado(request.getParameter("estado"));
+
+                    ClienteDAO clienteDAO = new ClienteDAO();
+                    int idCliente = clienteDAO.cadastrarCliente(cliente);
+                    Log log = new Log();
+                    log.setAcao("Cliente cadastrado");
+                    log.setPagina("/cliente/cadastrarCliente.jsp");
+                    Timestamp dataLog = new Timestamp(System.currentTimeMillis());
+                    log.setData(dataLog);
+                    log.setIdCliente(idCliente);
+                    LogDAO logDAO = new LogDAO();
+                    logDAO.insereLog(log);
+                }
+                if ("alterarPerfil".equals(request.getParameter("action"))) {
+                    ClienteDAO clienteDAO = new ClienteDAO();
+                    Cliente clienteSessao = new Cliente();
+                    clienteSessao.setIdCliente(3);
+                    Cliente cliente = clienteDAO.buscarClienteId(clienteSessao);
+                    request.setAttribute("cliente", cliente);
 //                response.sendRedirect("./alterarCliente.jsp");
 //                return;
-                
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/alterarCliente.jsp");
-                rd.forward(request, response);
-            }
-            if ("alterar".equals(request.getParameter("action"))) {
-                Cliente cliente = new Cliente();
 
-                cliente.setIdCliente(Integer.parseInt(request.getParameter("idCliente")));
-                cliente.setNome(request.getParameter("nome"));
-                cliente.setSexo(request.getParameter("sexo"));
-                cliente.setCpf(request.getParameter("cpf"));
-
-                String nascimentoStr = request.getParameter("nascimento");
-                DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-                java.util.Date nascimentoUtil = format.parse(nascimentoStr);
-                java.sql.Date nascimentoSql = new java.sql.Date(nascimentoUtil.getTime());
-                cliente.setNascimento(nascimentoSql);
-
-                cliente.setTelefone(request.getParameter("telefone"));
-                cliente.setEmail(request.getParameter("email"));
-                cliente.setSenha(request.getParameter("senha"));
-                cliente.setCep(request.getParameter("cep"));
-                cliente.setEndereco(request.getParameter("endereco"));
-                cliente.setEndNumero(request.getParameter("numero"));
-                cliente.setEndComplemento(request.getParameter("complemento"));
-                cliente.setBairro(request.getParameter("bairro"));
-                cliente.setCidade(request.getParameter("cidade"));
-                cliente.setEstado(request.getParameter("estado"));
-                cliente.setInativo(false);
-                cliente.setPerfil(1);
-                
-                Log log = new Log();
-                log.setAcao("Perfil do cliente alterado.");
-                log.setPagina("/cliente/alterarPerfil.jsp");
-                Timestamp dataLog = new Timestamp(System.currentTimeMillis());
-                log.setData(dataLog);
-                log.setIdCliente(3);
-                LogDAO logDAO = new LogDAO();
-                logDAO.insereLog(log);
-                
-                ClienteDAO clienteDAO = new ClienteDAO();
-                clienteDAO.atualizarCliente(cliente);
-            }
-            if ("excluir".equals(request.getParameter("action"))) {
-                Cliente cliente = new Cliente();
-                ClienteDAO clienteDAO = new ClienteDAO();
-                cliente.setIdCliente(Integer.parseInt(request.getParameter("cliente-id")));
-                System.out.println(Integer.parseInt(request.getParameter("cliente-id")));
-                
-                Log log = new Log();
-                log.setAcao("Conta excluida pelo cliente.");
-                log.setPagina("/cliente/menuCliente.jsp");
-                Timestamp dataLog = new Timestamp(System.currentTimeMillis());
-                log.setData(dataLog);
-                log.setIdCliente(3);
-                LogDAO logDAO = new LogDAO();
-                logDAO.insereLog(log);
-                
-                clienteDAO.removerCliente(cliente);
-            }
-            if ("nomeAZ".equals(request.getParameter("action"))) {
-                ProdutoDAO produtoDAO = new ProdutoDAO();
-                List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidosAZ();
-                request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
-                request.setAttribute("ordem", "AZ");
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
-                rd.forward(request, response);
-            }
-            if ("nomeZA".equals(request.getParameter("action"))) {
-                ProdutoDAO produtoDAO = new ProdutoDAO();
-
-                List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidosZA();
-                request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
-                request.setAttribute("ordem", "ZA");
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
-                rd.forward(request, response);
-            }
-            if ("Asc".equals(request.getParameter("action"))) {
-                ProdutoDAO produtoDAO = new ProdutoDAO();
-
-                List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidosAsc();
-                request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
-                request.setAttribute("ordem", "Asc");
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
-                rd.forward(request, response);
-            }
-            if ("Desc".equals(request.getParameter("action"))) {
-                ProdutoDAO produtoDAO = new ProdutoDAO();
-
-                List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidosDesc();
-                request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
-                request.setAttribute("ordem", "Desc");
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
-                rd.forward(request, response);
-            }
-            if ("pedidos".equals(request.getParameter("action"))) {
-
-                HttpSession session = request.getSession();
-                Integer logado;
-                try {
-                    logado = (int) session.getAttribute("logado");
-                } catch (Exception f) {
-                    logado = 0;
+                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/alterarCliente.jsp");
+                    rd.forward(request, response);
                 }
-                if (logado > 0) {
+                if ("alterar".equals(request.getParameter("action"))) {
                     Cliente cliente = new Cliente();
-                    cliente.setIdCliente((int)session.getAttribute("idcliente"));
+
+                    cliente.setIdCliente(Integer.parseInt(request.getParameter("idCliente")));
+                    cliente.setNome(request.getParameter("nome"));
+                    cliente.setSexo(request.getParameter("sexo"));
+                    cliente.setCpf(request.getParameter("cpf"));
+
+                    String nascimentoStr = request.getParameter("nascimento");
+                    DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                    java.util.Date nascimentoUtil = format.parse(nascimentoStr);
+                    java.sql.Date nascimentoSql = new java.sql.Date(nascimentoUtil.getTime());
+                    cliente.setNascimento(nascimentoSql);
+
+                    cliente.setTelefone(request.getParameter("telefone"));
+                    cliente.setEmail(request.getParameter("email"));
+                    cliente.setSenha(request.getParameter("senha"));
+                    cliente.setCep(request.getParameter("cep"));
+                    cliente.setEndereco(request.getParameter("endereco"));
+                    cliente.setEndNumero(request.getParameter("numero"));
+                    cliente.setEndComplemento(request.getParameter("complemento"));
+                    cliente.setBairro(request.getParameter("bairro"));
+                    cliente.setCidade(request.getParameter("cidade"));
+                    cliente.setEstado(request.getParameter("estado"));
+                    cliente.setInativo(false);
+                    cliente.setPerfil(1);
+
+                    Log log = new Log();
+                    log.setAcao("Perfil do cliente alterado.");
+                    log.setPagina("/cliente/alterarPerfil.jsp");
+                    Timestamp dataLog = new Timestamp(System.currentTimeMillis());
+                    log.setData(dataLog);
+                    log.setIdCliente(3);
+                    LogDAO logDAO = new LogDAO();
+                    logDAO.insereLog(log);
+
+                    ClienteDAO clienteDAO = new ClienteDAO();
+                    clienteDAO.atualizarCliente(cliente);
+                }
+                if ("excluir".equals(request.getParameter("action"))) {
+                    Cliente cliente = new Cliente();
+                    ClienteDAO clienteDAO = new ClienteDAO();
+                    cliente.setIdCliente(Integer.parseInt(request.getParameter("cliente-id")));
+                    System.out.println(Integer.parseInt(request.getParameter("cliente-id")));
+
+                    Log log = new Log();
+                    log.setAcao("Conta excluida pelo cliente.");
+                    log.setPagina("/cliente/menuCliente.jsp");
+                    Timestamp dataLog = new Timestamp(System.currentTimeMillis());
+                    log.setData(dataLog);
+                    log.setIdCliente(3);
+                    LogDAO logDAO = new LogDAO();
+                    logDAO.insereLog(log);
+
+                    clienteDAO.removerCliente(cliente);
+                }
+                if ("nomeAZ".equals(request.getParameter("action"))) {
+                    ProdutoDAO produtoDAO = new ProdutoDAO();
+                    List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidosAZ();
+                    request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
+                    request.setAttribute("ordem", "AZ");
+                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
+                    rd.forward(request, response);
+                }
+                if ("nomeZA".equals(request.getParameter("action"))) {
+                    ProdutoDAO produtoDAO = new ProdutoDAO();
+
+                    List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidosZA();
+                    request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
+                    request.setAttribute("ordem", "ZA");
+                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
+                    rd.forward(request, response);
+                }
+                if ("Asc".equals(request.getParameter("action"))) {
+                    ProdutoDAO produtoDAO = new ProdutoDAO();
+
+                    List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidosAsc();
+                    request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
+                    request.setAttribute("ordem", "Asc");
+                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
+                    rd.forward(request, response);
+                }
+                if ("Desc".equals(request.getParameter("action"))) {
+                    ProdutoDAO produtoDAO = new ProdutoDAO();
+
+                    List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidosDesc();
+                    request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
+                    request.setAttribute("ordem", "Desc");
+                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
+                    rd.forward(request, response);
+                }
+                if ("pedidos".equals(request.getParameter("action"))) {
+                    Cliente cliente = new Cliente();
+                    cliente.setIdCliente((int) session.getAttribute("idcliente"));
                     PedidoDAO pedidoDAO = new PedidoDAO();
                     List<Pedido> listaPedidosAbertos = pedidoDAO.listaPedidosAbertosCliente(cliente);
                     List<Pedido> listaPedidosFinalizados = pedidoDAO.listaPedidosFinalizadosCliente(cliente);
@@ -219,130 +223,130 @@ public class Clientes extends HttpServlet {
                     RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/visualizarCompra.jsp");
                     rd.forward(request, response);
                     return;
-                } else {
-                    request.setAttribute("mensagem", "Para continuar é necessário fazer login");
-                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/comum/login.jsp");
-                    rd.forward(request, response);
+
                 }
+                if ("confirmarRecebimento".equals(request.getParameter("action"))) {
 
-            }
-            if ("confirmarRecebimento".equals(request.getParameter("action"))) {
+                    Pedido pedido = new Pedido();
+                    pedido.setIdPedido(Integer.parseInt(request.getParameter("id")));
+                    StatusPedido statusPedido = new StatusPedido();
+                    statusPedido.setIdStatusPedido(2);
+                    pedido.setStatusPedido(statusPedido);
+                    PedidoDAO pedidoDAO = new PedidoDAO();
+                    pedidoDAO.atualizarStatusPedido(pedido);
 
-                Pedido pedido = new Pedido();
-                pedido.setIdPedido(Integer.parseInt(request.getParameter("id")));
-                StatusPedido statusPedido = new StatusPedido();
-                statusPedido.setIdStatusPedido(2);
-                pedido.setStatusPedido(statusPedido);
-                PedidoDAO pedidoDAO = new PedidoDAO();
-                pedidoDAO.atualizarStatusPedido(pedido);
-                
-                Log log = new Log();
-                log.setAcao("Pedido confirmado.");
-                log.setPagina("/cliente/visualizarPedidos.jsp");
-                Timestamp dataLog = new Timestamp(System.currentTimeMillis());
-                log.setData(dataLog);
-                log.setIdCliente(3);
-                LogDAO logDAO = new LogDAO();
-                logDAO.insereLog(log);
+                    Log log = new Log();
+                    log.setAcao("Pedido confirmado.");
+                    log.setPagina("/cliente/visualizarPedidos.jsp");
+                    Timestamp dataLog = new Timestamp(System.currentTimeMillis());
+                    log.setData(dataLog);
+                    log.setIdCliente(3);
+                    LogDAO logDAO = new LogDAO();
+                    logDAO.insereLog(log);
 
-                response.sendRedirect("./Clientes?action=pedidos");
-                return;
-            }
-            if ("cancelar".equals(request.getParameter("action"))) {
+                    response.sendRedirect("./Clientes?action=pedidos");
+                    return;
+                }
+                if ("cancelar".equals(request.getParameter("action"))) {
 
-                Pedido pedido = new Pedido();
-                pedido.setIdPedido(Integer.parseInt(request.getParameter("id")));
-                StatusPedido statusPedido = new StatusPedido();
-                statusPedido.setIdStatusPedido(0);
-                pedido.setStatusPedido(statusPedido);
-                PedidoDAO pedidoDAO = new PedidoDAO();
-                pedidoDAO.atualizarStatusPedido(pedido);
+                    Pedido pedido = new Pedido();
+                    pedido.setIdPedido(Integer.parseInt(request.getParameter("id")));
+                    StatusPedido statusPedido = new StatusPedido();
+                    statusPedido.setIdStatusPedido(0);
+                    pedido.setStatusPedido(statusPedido);
+                    PedidoDAO pedidoDAO = new PedidoDAO();
+                    pedidoDAO.atualizarStatusPedido(pedido);
 
-                Log log = new Log();
-                log.setAcao("Pedido cancelado.");
-                log.setPagina("/cliente/visualizarPedidos.jsp");
-                Timestamp dataLog = new Timestamp(System.currentTimeMillis());
-                log.setData(dataLog);
-                log.setIdCliente(3);
-                LogDAO logDAO = new LogDAO();
-                logDAO.insereLog(log);
-                
-                response.sendRedirect("./Clientes?action=pedidos");
-                return;
-            }
-            if ("visualizarProduto".equals(request.getParameter("action"))) {
-                ProdutoDAO produtoDAO = new ProdutoDAO();
-                int id = Integer.parseInt(request.getParameter("id"));
-                Produto produto = produtoDAO.listarProdutoPorId(id);
-                String escolha = request.getParameter("escolha");
-                String str = request.getParameter("str");
-                String idGenero = request.getParameter("genero");
-                request.setAttribute("escolha", escolha);
-                request.setAttribute("str", str);
-                request.setAttribute("genero", idGenero);
-                request.setAttribute("produto", produto);
-                
-                Log log = new Log();
-                log.setAcao("Item visualizado.");
-                log.setPagina("/cliente/visualizarProduto.jsp");
-                Timestamp dataLog = new Timestamp(System.currentTimeMillis());
-                log.setData(dataLog);
-                log.setIdProduto(id);
-                log.setIdCliente(3);
-                LogDAO logDAO = new LogDAO();
-                logDAO.insereLog(log);
-                
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/visualizarProduto.jsp");
-                rd.forward(request, response);
-            }
-            if ("pesquisarProduto".equals(request.getParameter("action"))) {
-                GeneroDAO generoDAO = new GeneroDAO();
-                List<Genero> listaGeneros = generoDAO.listarGeneros();
-                request.setAttribute("listaGeneros", listaGeneros);
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/pesquisarProduto.jsp");
-                
-                rd.forward(request, response);
-                return;
-            }
-            if ("pesquisar".equals(request.getParameter("action"))) {
-                GeneroDAO generoDAO = new GeneroDAO();
-                List<Genero> listaGeneros = generoDAO.listarGeneros();
-                request.setAttribute("listaGeneros", listaGeneros);
-                ProdutoDAO produtoDAO = new ProdutoDAO();
-                if (request.getParameter("genero") != null) {
-                    int idGenero = Integer.parseInt(request.getParameter("genero"));
-                    List<Produto> listaProdutos = produtoDAO.listarProdutoPorGenero(idGenero);
-                    request.setAttribute("genero", idGenero);
-                    request.setAttribute("listaProdutos", listaProdutos);
-                } else if (request.getParameter("str") != null) {
-                    List<Produto> listaProdutos = new ArrayList();
+                    Log log = new Log();
+                    log.setAcao("Pedido cancelado.");
+                    log.setPagina("/cliente/visualizarPedidos.jsp");
+                    Timestamp dataLog = new Timestamp(System.currentTimeMillis());
+                    log.setData(dataLog);
+                    log.setIdCliente(3);
+                    LogDAO logDAO = new LogDAO();
+                    logDAO.insereLog(log);
+
+                    response.sendRedirect("./Clientes?action=pedidos");
+                    return;
+                }
+                if ("visualizarProduto".equals(request.getParameter("action"))) {
+                    ProdutoDAO produtoDAO = new ProdutoDAO();
+                    int id = Integer.parseInt(request.getParameter("id"));
+                    Produto produto = produtoDAO.listarProdutoPorId(id);
                     String escolha = request.getParameter("escolha");
                     String str = request.getParameter("str");
-                    if ("titulo".equals(escolha)) {
-                        listaProdutos = produtoDAO.buscarTituloProduto(str);
-                    } else if ("genero".equals(escolha)) {
-                        listaProdutos = produtoDAO.buscarGeneroProduto(str);
-                    } else if ("autor".equals(escolha)) {
-                        listaProdutos = produtoDAO.buscarAutorProduto(str);
-                    }
+                    String idGenero = request.getParameter("genero");
                     request.setAttribute("escolha", escolha);
                     request.setAttribute("str", str);
-                    request.setAttribute("listaProdutos", listaProdutos);
+                    request.setAttribute("genero", idGenero);
+                    request.setAttribute("produto", produto);
+
+                    Log log = new Log();
+                    log.setAcao("Item visualizado.");
+                    log.setPagina("/cliente/visualizarProduto.jsp");
+                    Timestamp dataLog = new Timestamp(System.currentTimeMillis());
+                    log.setData(dataLog);
+                    log.setIdProduto(id);
+                    log.setIdCliente(3);
+                    LogDAO logDAO = new LogDAO();
+                    logDAO.insereLog(log);
+
+                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/visualizarProduto.jsp");
+                    rd.forward(request, response);
+                }
+                if ("pesquisarProduto".equals(request.getParameter("action"))) {
+                    GeneroDAO generoDAO = new GeneroDAO();
+                    List<Genero> listaGeneros = generoDAO.listarGeneros();
+                    request.setAttribute("listaGeneros", listaGeneros);
                     RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/pesquisarProduto.jsp");
+
                     rd.forward(request, response);
                     return;
                 }
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/pesquisarProduto.jsp");
-                rd.forward(request, response);
-                return;
-            } else {
-                ProdutoDAO produtoDAO = new ProdutoDAO();
+                if ("pesquisar".equals(request.getParameter("action"))) {
+                    GeneroDAO generoDAO = new GeneroDAO();
+                    List<Genero> listaGeneros = generoDAO.listarGeneros();
+                    request.setAttribute("listaGeneros", listaGeneros);
+                    ProdutoDAO produtoDAO = new ProdutoDAO();
+                    if (request.getParameter("genero") != null) {
+                        int idGenero = Integer.parseInt(request.getParameter("genero"));
+                        List<Produto> listaProdutos = produtoDAO.listarProdutoPorGenero(idGenero);
+                        request.setAttribute("genero", idGenero);
+                        request.setAttribute("listaProdutos", listaProdutos);
+                    } else if (request.getParameter("str") != null) {
+                        List<Produto> listaProdutos = new ArrayList();
+                        String escolha = request.getParameter("escolha");
+                        String str = request.getParameter("str");
+                        if ("titulo".equals(escolha)) {
+                            listaProdutos = produtoDAO.buscarTituloProduto(str);
+                        } else if ("genero".equals(escolha)) {
+                            listaProdutos = produtoDAO.buscarGeneroProduto(str);
+                        } else if ("autor".equals(escolha)) {
+                            listaProdutos = produtoDAO.buscarAutorProduto(str);
+                        }
+                        request.setAttribute("escolha", escolha);
+                        request.setAttribute("str", str);
+                        request.setAttribute("listaProdutos", listaProdutos);
+                        RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/pesquisarProduto.jsp");
+                        rd.forward(request, response);
+                        return;
+                    }
+                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/pesquisarProduto.jsp");
+                    rd.forward(request, response);
+                    return;
+                } else {
+                    ProdutoDAO produtoDAO = new ProdutoDAO();
 
-                List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidos();
-                request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
+                    List<Produto> listaProdutosMaisVendidos = produtoDAO.listarProdutosMaisVendidos();
+                    request.setAttribute("listaProdutos", listaProdutosMaisVendidos);
+                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
+                    rd.forward(request, response);
+                    return;
+                }
+            } else {
+                request.setAttribute("mensagem", "Para continuar é necessário fazer login");
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/comum/login.jsp");
                 rd.forward(request, response);
-                return;
             }
         }
     }

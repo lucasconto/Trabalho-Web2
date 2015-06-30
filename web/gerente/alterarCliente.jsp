@@ -1,5 +1,5 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -129,7 +129,12 @@
     <body>
         <!--Inclui cabeçalho-->
         <jsp:include page="navGerente.jsp"/>
-
+        <c:if test="${empty sessionScope.logado}">
+            <jsp:forward page="/comum/login.jsp" />
+        </c:if>
+        <c:if test="${sessionScope.cliente.getPerfil()  != 3}">
+            <jsp:forward page="semPermissao.jsp" />
+        </c:if>
         <div class="container">
             <div class=" col-sm-offset-3 col-sm-6">
                 <h1>Dados Cadastrais</h1>

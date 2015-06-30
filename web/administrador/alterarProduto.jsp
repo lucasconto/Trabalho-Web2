@@ -44,6 +44,12 @@
     <body>
         <!--Inclui cabeçalho-->
         <jsp:include page="navAdministrador.jsp"/>
+        <c:if test="${empty sessionScope.logado}">
+            <jsp:forward page="/comum/login.jsp" />
+        </c:if>
+        <c:if test="${sessionScope.cliente.getPerfil()  != 2}">
+            <jsp:forward page="semPermissao.jsp" />
+        </c:if>  
         <div class="container">
             <div class="row">
                 <jsp:include page="menuAdministrador.jsp"/>
@@ -60,6 +66,12 @@
                         <label  class="col-sm-4 control-label">Autor</label>
                         <div class="col-sm-8">
                             <input name="autor" id="autor" value = "${produto.autor}" type="text" class="form-control"  placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-4 control-label">Quantidade em Estoque</label>
+                        <div class="col-sm-8">
+                            <input name="estoque" id="autor" value = "${produto.estoque}" type="text" class="form-control"  placeholder="">
                         </div>
                     </div>
                     <div class="form-group">
@@ -88,8 +100,6 @@
                             <div class="input-group">
                             <span class="input-group-addon">R$</span>
                             <input name="preco" id="preco" value = "<fmt:formatNumber value="${produto.preco}" minFractionDigits="2" type="number"/>" type="text" class="form-control" placeholder="">
-
-                            
                             </div>
                         </div>
                     </div>                     

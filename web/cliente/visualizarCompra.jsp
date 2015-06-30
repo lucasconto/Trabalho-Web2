@@ -101,12 +101,12 @@
                                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                                                                     </div>
                                                                     <div class="col-md-2 col-md-offset-3">
-                                                                        <a href="Clientes?action=confirmarRecebimento&id=${pedido.idPedido}">
+                                                                        <a href="Clientes?action=cancelarRecebimento&id=${pedido.idPedido}">
                                                                         <button type="button" class="btn btn-danger">Cancelar Pedido</button>
                                                                         </a>
                                                                     </div>
                                                                     <div class="col-md-2 col-md-offset-1">
-                                                                        <a href="Clientes?action=cancelar&id=${pedido.idPedido}">
+                                                                        <a href="Clientes?action=confirmar&id=${pedido.idPedido}">
                                                                         <button type="button" class="btn btn-success">Confirmar Recebimento</button>
                                                                         </a>
                                                                     </div>

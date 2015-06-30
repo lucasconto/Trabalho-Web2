@@ -62,7 +62,12 @@
     <body>
         <!--Inclui cabeçalho-->
         <jsp:include page="./navAdministrador.jsp"/>
-
+        <c:if test="${empty sessionScope.logado}">
+            <jsp:forward page="/comum/login.jsp" />
+        </c:if>
+        <c:if test="${sessionScope.cliente.getPerfil()  != 2}">
+            <jsp:forward page="semPermissao.jsp" />
+        </c:if> 
         <div class="container">
             <div class="row">
                 <jsp:include page="menuAdministrador.jsp"/>
@@ -94,7 +99,7 @@
                             <th>Genero</th>
                             <th>Preço</th>
                             <th>Ações</th>
-                            
+
                         </tr>
                         <c:forEach var="produto" items="${listaProdutos}">
                             <tr>

@@ -34,6 +34,8 @@ public class ItemPedidoDAO {
             stmt.setInt(2, p.getProduto().getIdProduto());
             stmt.setInt(3, p.getQuantidade());
             stmt.setDouble(4, p.getValorUnitario());
+            ProdutoDAO produtoDAO = new ProdutoDAO();
+            produtoDAO.atualizarEstoque(p);
             stmt.executeUpdate();
             con.commit();
 

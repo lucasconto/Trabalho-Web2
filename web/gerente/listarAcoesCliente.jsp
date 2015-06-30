@@ -81,7 +81,12 @@
     <body>
         <!--Inclui cabeçalho-->
         <jsp:include page="navGerente.jsp"/>
-
+        <c:if test="${empty sessionScope.logado}">
+            <jsp:forward page="/comum/login.jsp" />
+        </c:if>
+        <c:if test="${sessionScope.cliente.getPerfil()  != 3}">
+            <jsp:forward page="semPermissao.jsp" />
+        </c:if>
         <div class="container">
             <div class="row">
                 <jsp:include page="menuGerente.jsp"/>
@@ -97,14 +102,14 @@
                             <th>Hora</th>
                         </tr>
                         <c:forEach var="log" items="${listaLogs}">
-                            
-                        <tr>
-                            <td>${log.acao}</td>
-                            <td>${log.idCliente}</td>
-                            <td>${log.idProduto}</td>
-                            <td><fmt:formatDate value="${log.data}" pattern="dd/MM/yyyy" /></td>
-                            <td><fmt:formatDate value="${log.data}" pattern="HH:mm:ss" /></td>
-                        </tr>
+
+                            <tr>
+                                <td>${log.acao}</td>
+                                <td>${log.idCliente}</td>
+                                <td>${log.idProduto}</td>
+                                <td><fmt:formatDate value="${log.data}" pattern="dd/MM/yyyy" /></td>
+                                <td><fmt:formatDate value="${log.data}" pattern="HH:mm:ss" /></td>
+                            </tr>
                         </c:forEach>
                     </table>
 

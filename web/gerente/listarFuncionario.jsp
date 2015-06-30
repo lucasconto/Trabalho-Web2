@@ -61,32 +61,37 @@
     <body>
         <!--Inclui cabeçalho-->
         <jsp:include page="navGerente.jsp"/>
-
+        <c:if test="${empty sessionScope.logado}">
+            <jsp:forward page="/comum/login.jsp" />
+        </c:if>
+        <c:if test="${sessionScope.cliente.getPerfil()  != 3}">
+            <jsp:forward page="semPermissao.jsp" />
+        </c:if>
         <div class="container">
             <div class="row">
                 <jsp:include page="menuGerente.jsp"/>
                 <div class="col-md-9 ">   
                     <h1>Funcionários</h1>
-                <form action="./Gerentes?action=buscarf" method="post" class="form-horizontal">
+                    <form action="./Gerentes?action=buscarf" method="post" class="form-horizontal">
                         <div class="form-group">
-                        <div class="row">
-                            <label class="col-md-2 control-label pull-left clearfix" for="">Buscar por:</label>
-                        </div>
-                           <div class="col-md-2">
-                            <select name="escolha" class="form-control">
-                                <option value="nome" ${escolha == 'nome' ? 'selected' : ''}>Nome</option>
-                                <option value="cpf" ${escolha == 'cpf' ? 'selected' : ''}>CPF</option>
-                                <option value="email" ${escolha == 'email' ? 'selected' : ''}>Email</option>
-                            </select>
-                        </div>
+                            <div class="row">
+                                <label class="col-md-2 control-label pull-left clearfix" for="">Buscar por:</label>
+                            </div>
+                            <div class="col-md-2">
+                                <select name="escolha" class="form-control">
+                                    <option value="nome" ${escolha == 'nome' ? 'selected' : ''}>Nome</option>
+                                    <option value="cpf" ${escolha == 'cpf' ? 'selected' : ''}>CPF</option>
+                                    <option value="email" ${escolha == 'email' ? 'selected' : ''}>Email</option>
+                                </select>
+                            </div>
                             <div class="col-md-7">
                                 <input type="text" name="str" id="" class="form-control" placeholder="1234" value="${str}">
                             </div>
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-success  btn-block ">Buscar</button>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-success  btn-block ">Buscar</button>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
                     <table class="table table-striped table-bordered">
                         <tr>
                             <th>Nome</th>
@@ -98,38 +103,38 @@
                             <tr>
                                 <td>${usuario.nome}</td>
                                 <td>${usuario.cpf}</td>
-                            <c:if test="${usuario.perfil == 2}">
-                                <td>Administrador</td>
-                            </c:if>
-                            <c:if test="${usuario.perfil == 3}">
-                                <td>Gerente</td>
-                            </c:if>
-                            <td>
-                                <div class="text-center">
-                                    <form action="./Gerentes?action=visualizarf&id=${usuario.idCliente}" method="post" style="display: inline">
-                                        <a href="#" onclick="this.parentNode.submit();">
-                                            <span class="glyphicon glyphicon-eye-open" style="font-size: 20px"></span>
-                                            <input type="hidden" value="${escolha}" name="escolha"/>
-                                            <input type="hidden" value="${str}" name="str"/>
-                                        </a>
-                                    </form>
-                                    <form action="./Gerentes?action=valterarf&id=${usuario.idCliente}" method="post" style="display: inline">
-                                        <a href="#" onclick="this.parentNode.submit();">
-                                            <span class="glyphicon glyphicon-pencil" style="font-size: 20px"></span>
-                                            <input type="hidden" value="${escolha}" name="escolha"/>
-                                            <input type="hidden" value="${str}" name="str"/>
-                                        </a>
-                                    </form>
-                                    <form action="./Gerentes?action=excluirf&id=${usuario.idCliente}" method="post" style="display: inline">
-                                        <a href="#" onclick="this.parentNode.submit();">
-                                            <span class="glyphicon glyphicon-trash" style="font-size: 20px"></span>
-                                            <input type="hidden" value="${escolha}" name="escolha"/>
-                                            <input type="hidden" value="${usuario.perfil}" name="perfil"/>
-                                            <input type="hidden" value="${str}" name="str"/>
-                                        </a>
-                                    </form>
-                                </div>
-                            </td>
+                                <c:if test="${usuario.perfil == 2}">
+                                    <td>Administrador</td>
+                                </c:if>
+                                <c:if test="${usuario.perfil == 3}">
+                                    <td>Gerente</td>
+                                </c:if>
+                                <td>
+                                    <div class="text-center">
+                                        <form action="./Gerentes?action=visualizarf&id=${usuario.idCliente}" method="post" style="display: inline">
+                                            <a href="#" onclick="this.parentNode.submit();">
+                                                <span class="glyphicon glyphicon-eye-open" style="font-size: 20px"></span>
+                                                <input type="hidden" value="${escolha}" name="escolha"/>
+                                                <input type="hidden" value="${str}" name="str"/>
+                                            </a>
+                                        </form>
+                                        <form action="./Gerentes?action=valterarf&id=${usuario.idCliente}" method="post" style="display: inline">
+                                            <a href="#" onclick="this.parentNode.submit();">
+                                                <span class="glyphicon glyphicon-pencil" style="font-size: 20px"></span>
+                                                <input type="hidden" value="${escolha}" name="escolha"/>
+                                                <input type="hidden" value="${str}" name="str"/>
+                                            </a>
+                                        </form>
+                                        <form action="./Gerentes?action=excluirf&id=${usuario.idCliente}" method="post" style="display: inline">
+                                            <a href="#" onclick="this.parentNode.submit();">
+                                                <span class="glyphicon glyphicon-trash" style="font-size: 20px"></span>
+                                                <input type="hidden" value="${escolha}" name="escolha"/>
+                                                <input type="hidden" value="${usuario.perfil}" name="perfil"/>
+                                                <input type="hidden" value="${str}" name="str"/>
+                                            </a>
+                                        </form>
+                                    </div>
+                                </td>
                             </tr>
                         </c:forEach>
                     </table>

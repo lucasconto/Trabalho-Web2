@@ -74,7 +74,13 @@ public class Login extends HttpServlet {
                         session.setAttribute("idcliente", cliente.getIdCliente());
                         session.setAttribute("logado", 1);
                         session.setAttribute("perfil", cliente.getPerfil());
-                        response.sendRedirect("../cliente/Clientes");
+                        if (cliente.getPerfil() == 1) {
+                            response.sendRedirect("../cliente/Clientes");
+                        } else if (cliente.getPerfil() == 2) {
+                            response.sendRedirect("../administrador/buscarCliente.jsp");
+                        } else if (cliente.getPerfil() == 3) {
+                            response.sendRedirect("../gerente/buscarCliente.jsp");
+                        }
 //                        RequestDispatcher rd = getServletContext().getRequestDispatcher("/cliente/index.jsp");
 //                        rd.forward(request, response);
                     } else {

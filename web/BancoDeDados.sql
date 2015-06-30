@@ -30,7 +30,8 @@ Create table Produto(
     fkgenero int,
     preco real,
     idImg serial,
-    inativo boolean
+    inativo boolean,
+    estoque int
 );
 
 

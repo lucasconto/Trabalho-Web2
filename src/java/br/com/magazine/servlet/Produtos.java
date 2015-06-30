@@ -60,6 +60,7 @@ public class Produtos extends HttpServlet {
                 Editora editora = new Editora();
 
                 produto.setTitulo(request.getParameter("titulo"));
+                produto.setEstoque(Integer.parseInt(request.getParameter("estoque")));
                 produto.setAutor(request.getParameter("autor"));
                 editora.setIdEditora(Integer.parseInt(request.getParameter("editora")));
                 produto.setEditora(editora);
@@ -188,6 +189,7 @@ public class Produtos extends HttpServlet {
                 Editora editora = new Editora();
                 produto.setTitulo(request.getParameter("titulo"));
                 produto.setAutor(request.getParameter("autor"));
+                produto.setEstoque(Integer.parseInt(request.getParameter("estoque")));
                 editora.setIdEditora(Integer.parseInt(request.getParameter("editora")));
                 produto.setEditora(editora);
                 produto.setPreco(Double.parseDouble(request.getParameter("preco")));

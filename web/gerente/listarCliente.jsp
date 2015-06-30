@@ -61,7 +61,12 @@
     <body>
         <!--Inclui cabeçalho-->
         <jsp:include page="./navGerente.jsp"/>
-
+      <c:if test="${empty sessionScope.logado}">
+            <jsp:forward page="/comum/login.jsp" />
+        </c:if>
+        <c:if test="${sessionScope.cliente.getPerfil()  != 3}">
+            <jsp:forward page="semPermissao.jsp" />
+        </c:if>
         <div class="container">
             <div class="row">
                 <jsp:include page="menuGerente.jsp"/>
@@ -176,11 +181,11 @@
                             </div>
                             <div class="modal-body">
                                 <form class="form-horizontal" action="./Gerentes?action=visualizarAcoes" method="post">
-                                <input type="hidden" class="form-control" id="cliente-id" name="id"/>
-                                <input type="hidden" class="form-control" id="escolha-id" name="escolha"/>
-                                <input type="hidden" class="form-control" id="cliente-nome" name="nome"/>
-                                <input type="hidden" class="form-control" id="str-id" name="str"/>
-                                <label for="genero-nome" class="control-label">Escolha o intervalo desejado.</label>
+                                    <input type="hidden" class="form-control" id="cliente-id" name="id"/>
+                                    <input type="hidden" class="form-control" id="escolha-id" name="escolha"/>
+                                    <input type="hidden" class="form-control" id="cliente-nome" name="nome"/>
+                                    <input type="hidden" class="form-control" id="str-id" name="str"/>
+                                    <label for="genero-nome" class="control-label">Escolha o intervalo desejado.</label>
                                     <div class="form-group">
                                         <div class="col-md-10">
                                             <label for="de" class="col-md-1 control-label">de</label>

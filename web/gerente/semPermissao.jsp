@@ -1,4 +1,5 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -34,23 +35,22 @@
     </head>
     <body>
         <!--Inclui cabeçalho-->
-        <jsp:include page="navAdministrador.jsp"/>
-
-        <div class="container">
-            <div class=" col-sm-offset-3 col-sm-6">
-                <div class="alert alert-warning alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Área restrita!</strong> 
-                    Você não possui permissão de acesso a essa área do sistema.
-                </div>
+        <jsp:include page="navGerente.jsp"/>
+    <div class="container">
+        <div class=" col-sm-offset-3 col-sm-6">
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Área restrita!</strong> 
+                Você não possui permissão de acesso a essa área do sistema.
             </div>
         </div>
+    </div>
 
-        <!--Inclui Rodapé-->
-        <jsp:include page="../comum/rodape.jsp"/>    
+    <!--Inclui Rodapé-->
+    <jsp:include page="../comum/rodape.jsp"/>    
 
 
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="../js/bootstrap.min.js"></script>
-    </body>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../js/bootstrap.min.js"></script>
+</body>
 </html>

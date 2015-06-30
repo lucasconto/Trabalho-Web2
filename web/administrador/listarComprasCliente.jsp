@@ -62,6 +62,12 @@
     <body>
         <!--Inclui cabeçalho-->
         <jsp:include page="./navAdministrador.jsp"/>
+        <c:if test="${empty sessionScope.logado}">
+            <jsp:forward page="/comum/login.jsp" />
+        </c:if>
+        <c:if test="${sessionScope.cliente.getPerfil()  != 2}">
+            <jsp:forward page="semPermissao.jsp" />
+        </c:if> 
         <fmt:setLocale value="pt-BR" />  
         <div class="container">
             <div class="row">
