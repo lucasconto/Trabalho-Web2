@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="faturamentoMensal" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ad4114ee-f391-47be-97c7-00d4812bee58">
+	<property name="ireport.zoom" value="2.1435888100000016"/>
+	<property name="ireport.x" value="4"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="mes" class="java.lang.String"/>
+	<parameter name="ano" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT TO_CHAR(SUM(VALORTOTAL), 'L9G999G990D99')AS FATURAMENTO
+FROM PEDIDO
+WHERE DATE_PART('month', DATA) = $P{mes}::real
+AND DATE_PART('year', DATA) = $P{ano}::real]]>
+	</queryString>
+	<field name="faturamento" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="58" splitType="Stretch">
+			<staticText>
+				<reportElement x="180" y="0" width="195" height="31" uuid="84366885-bdaa-4360-a33b-68c411350b1f"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Faturamento Mensal]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="3" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<elementGroup>
+				<staticText>
+					<reportElement x="130" y="0" width="141" height="20" uuid="0257a834-c0cd-4c08-b6e6-ed166d95915b"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<text><![CDATA[O faturamento no mês de ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="273" y="0" width="36" height="20" uuid="e9323e43-9065-4d3c-94f2-3ab2a792c2ad"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{mes}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="338" y="0" width="53" height="20" uuid="8cce2126-80c6-4022-8a5d-ba3ba0a66ef0"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{ano}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="373" y="0" width="100" height="20" uuid="7788888b-c186-47fb-bd75-0e1141d5707d"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<text><![CDATA[foi de:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="292" y="0" width="54" height="20" uuid="eb06d3d8-51aa-4217-8a78-5c588fc4792e"/>
+					<textElement>
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[do ano de   ]]></text>
+				</staticText>
+			</elementGroup>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="49" splitType="Stretch">
+			<textField>
+				<reportElement x="228" y="0" width="100" height="20" uuid="9439b919-f7ca-430a-ad27-5083707a2325"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{faturamento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

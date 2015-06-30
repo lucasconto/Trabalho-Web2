@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="faturamentoAnual" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1e539f4c-1f75-42e4-b5b4-0b83c6bc0507">
+	<property name="ireport.zoom" value="2.143588810000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ano" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT DATE_PART('month', DATA) AS MES, TO_CHAR(SUM(VALORTOTAL), 'L9G999G990D99')AS FATURAMENTO, TO_CHAR(A.TOTAL, 'L9G999G990D99') AS TOTAL
+FROM PEDIDO
+LEFT OUTER JOIN (
+SELECT DATE_PART('YEAR', DATA) AS ANO, SUM(VALORTOTAL) AS TOTAL
+FROM PEDIDO
+WHERE DATE_PART('year', DATA) = $P{ano}::real
+GROUP BY ANO
+) A ON 1=1
+WHERE DATE_PART('year', DATA) = $P{ano}::real
+GROUP BY 1,3
+ORDER BY 1]]>
+	</queryString>
+	<field name="mes" class="java.lang.Double"/>
+	<field name="faturamento" class="java.lang.String"/>
+	<field name="total" class="java.lang.String"/>
+	<variable name="mensal_SUM" class="java.lang.String" resetType="None" incrementType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{faturamento}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="47" splitType="Stretch">
+			<staticText>
+				<reportElement x="190" y="0" width="174" height="28" uuid="97c7a8d2-2eb0-41ff-bbed-35f0fdecd98d"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Faturamento Anual]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="154" y="0" width="160" height="20" uuid="9d4663d1-05b4-4c4f-9c7c-08aa1e858041"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[O faturamento no ano de ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="314" y="0" width="53" height="20" uuid="efa0e5a2-6a61-42ca-9e76-396543c1deb1"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ano}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="351" y="0" width="100" height="20" uuid="0fe773b1-b6a2-47ec-940e-fa017e8813ba"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[foi de:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="144" y="0" width="25" height="20" uuid="ae99b321-f4cb-43d9-8eec-0adad80d2371"/>
+				<text><![CDATA[Mês:]]></text>
+			</staticText>
+			<textField pattern="###0" isBlankWhenNull="true">
+				<reportElement x="169" y="0" width="21" height="20" uuid="d2550b30-99c1-485b-beb4-f9181b9b445f"/>
+				<textFieldExpression><![CDATA[$F{mes}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="190" y="0" width="79" height="20" uuid="09134846-6a4e-4c4b-860f-a1eb0035b3cb"/>
+				<text><![CDATA[ - Faturamento: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="267" y="0" width="100" height="20" uuid="baedc8d2-223a-46e1-a5e3-31d8badd207c"/>
+				<textFieldExpression><![CDATA[$F{faturamento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<textField>
+				<reportElement x="267" y="0" width="100" height="20" uuid="67d741db-340c-4006-b4b3-0a9ec7715b72"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="201" y="0" width="68" height="20" uuid="6679f2dd-1a7b-4483-8292-46d4441e8033"/>
+				<text><![CDATA[Total do ano: ]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
